@@ -5,6 +5,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import { corsOptions } from './cors-configuration.js';
+import contactRoutes from '../src/contact/contact.routes.js';
 
 const BASE_PATH = '/portafolio/v1';
 
@@ -15,6 +16,8 @@ export const initApp = () => {
   app.use(cors(corsOptions));
   app.use(helmet());
   app.use(morgan('dev'));
+
+  app.use(`${BASE_PATH}/contact`, contactRoutes);
 
   app.get(`${BASE_PATH}/health`, (req, res) => {
     res.status(200).json({
