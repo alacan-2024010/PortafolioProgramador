@@ -1,15 +1,11 @@
 'use strict'
 
-import {Router} from 'express';
+import { Router } from 'express';
 import { createContact, getContacts } from './contact.controller.js';
 
 const router = Router();
 
-router.post(
-    '/contact', 
-    createContact);
-router.get(
-    '/contacts', 
-    getContacts);
+router.post('/', createContact);
+router.get('/', getContacts);
 
 export default router;
