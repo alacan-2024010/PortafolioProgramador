@@ -1,4 +1,3 @@
-/* ===== Variables globales ===== */
 :root {
   --color-bg: #0a0a0a;
   --color-bg-alt: #111318;
@@ -50,7 +49,6 @@
   --transition-normal: 0.35s ease;
 }
 
-/* ===== Reset y base ===== */
 * {
   margin: 0;
   padding: 0;
@@ -64,7 +62,7 @@ body {
   min-height: 100vh;
 }
 
-/* ===== Seccion Home ===== */
+/*  Seccion Home */
 .home {
   min-height: 100vh;
   display: flex;
@@ -76,7 +74,7 @@ body {
   background-color: var(--color-bg);
 }
 
-/* ===== Simbolo </>  ===== */
+/* ===== Simbolo </> con rebote */
 .home-intro-simbolo {
   position: absolute;
   display: flex;
@@ -88,43 +86,25 @@ body {
 
 .simbolo-parte {
   display: inline-block;
-  background: linear-gradient(
-    90deg,
-    var(--color-celeste) 0%,
-    var(--color-celeste) 20%,
-    var(--color-morado) 20%,
-    var(--color-morado) 40%,
-    var(--color-rosa) 40%,
-    var(--color-rosa) 60%,
-    var(--color-verde) 60%,
-    var(--color-verde) 80%,
-    var(--color-celeste) 80%,
-    var(--color-celeste) 100%
-  );
-  background-size: 400% 100%;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  animation: simbolo-color-real 3s steps(5) infinite;
+  animation: simbolo-color-solido 3s steps(1) infinite;
 }
 
 .simbolo-parte--izq {
-  animation: simbolo-color-real 3s steps(5) infinite, home-rebote 1s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+  animation: simbolo-color-solido 3s steps(1) infinite, home-rebote 1s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
 }
 
 .simbolo-parte--der {
-  animation: simbolo-color-real 3s steps(5) infinite reverse, home-rebote 1s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
+  animation: simbolo-color-solido 3s steps(1) infinite, home-rebote 1s cubic-bezier(0.28, 0.84, 0.42, 1) infinite;
   animation-delay: 0s, 0.08s;
 }
 
-@keyframes simbolo-color-real {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
-}
-
-@keyframes simbolo-giro {
-  0%, 100% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(-8deg) scale(1.1); }
+@keyframes simbolo-color-solido {
+  0%   { color: var(--color-celeste); }
+  20%  { color: var(--color-morado); }
+  40%  { color: var(--color-rosa); }
+  60%  { color: var(--color-verde); }
+  80%  { color: var(--color-celeste-suave); }
+  100% { color: var(--color-celeste); }
 }
 
 @keyframes home-rebote {
@@ -143,14 +123,10 @@ body {
   animation: chico-pulso 1.6s ease-in-out infinite;
 }
 
-.home-intro-simbolo--chico .simbolo-parte--izq {
-  animation: simbolo-color-real 4s linear infinite;
-  animation-delay: 0s;
-}
-
+.home-intro-simbolo--chico .simbolo-parte--izq,
 .home-intro-simbolo--chico .simbolo-parte--der {
-  animation: simbolo-color-real 4s linear infinite;
-  animation-delay: -1.2s;
+  animation: simbolo-color-solido 4s steps(1) infinite;
+  animation-delay: 0s;
 }
 
 @keyframes chico-pulso {
@@ -286,7 +262,39 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===== Responsive ===== */
+.home-frase-bloque {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: fit-content;
+}
+
+.home-divisor {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+  margin-bottom: var(--spacing-sm);
+}
+
+.home-frase {
+  text-align: center;
+  font-size: 1.6rem;
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--color-celeste-suave);
+  text-shadow: 0 0 20px rgba(56, 189, 248, 0.45);
+  letter-spacing: 0.01em;
+}
+
+.home-frase-comilla {
+  color: var(--color-celeste-suave);
+  font-style: normal;
+  font-weight: 800;
+  font-size: 1.9rem;
+  text-shadow: 0 0 24px rgba(56, 189, 248, 0.6);
+}
+
 @media (max-width: 500px) {
   .home-header {
     flex-direction: column;
@@ -304,5 +312,14 @@ body {
 
   .home-foto span {
     font-size: 1.4rem;
+  }
+
+  .home-frase-bloque {
+    width: 100%;
+  }
+
+  .home-frase {
+    font-size: 0.9rem;
+    white-space: normal;
   }
 }

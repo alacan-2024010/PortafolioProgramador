@@ -3,7 +3,7 @@ import { PortafolioPage } from '../../portafolio/pages/PortafolioPage.jsx';
 import '../../../styles/home.css';
 
 const TIEMPO_SIMBOLO_MS = 1500;
-const TIEMPO_TOTAL_BIENVENIDA_MS = 4000;
+const TIEMPO_TOTAL_BIENVENIDA_MS = 8000;
 
 export const HomePage = () => {
   const [faseCargada, setFaseCargada] = useState(false);
@@ -46,6 +46,15 @@ export const HomePage = () => {
               Desarrollador full stack junior
             </p>
           </div>
+        </div>
+
+        <div className="home-frase-bloque">
+          <div className="home-divisor" />
+          <p className="home-frase">
+            <span className="home-frase-comilla">"</span>
+            Por más alta que parezca la montaña, siempre hay un camino a la cima
+            <span className="home-frase-comilla">"</span>
+          </p>
         </div>
       </div>
     </section>
