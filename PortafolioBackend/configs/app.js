@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import { corsOptions } from './cors-configuration.js';
 import contactRoutes from '../src/contact/contact.routes.js';
+import { errorHandler } from '../src/middlewares/error-handler.js';
 
 const BASE_PATH = '/portafolio/v1';
 
@@ -26,6 +27,8 @@ export const initApp = () => {
       timestamp: new Date().toISOString(),
     });
   });
+
+  app.use(errorHandler);
 
   return app;
 };
