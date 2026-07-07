@@ -1,6 +1,6 @@
 import '../../../styles/hero.css';
 
-function Hero() {
+export function Hero () {
   return (
     <section className="hero">
       <svg className="hero-lines" viewBox="0 0 1440 900" preserveAspectRatio="none">
@@ -30,5 +30,3 @@ function Hero() {
     </section>
   );
 }
-
-export default Hero;

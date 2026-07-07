@@ -1,7 +1,7 @@
-import React from 'react'
+import { Hero } from '../components/HeroComponents.jsx';
 
 export const HeroPage = () => {
   return (
-    <div>HeroPage</div>
-  )
-}
+    <Hero />
+  );
+};
