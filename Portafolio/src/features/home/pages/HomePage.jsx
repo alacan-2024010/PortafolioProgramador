@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PortafolioPage } from '../../portafolio/pages/PortafolioPage.jsx';
-import '../../../styles/home.css';
+import '../../../styles/Home.css';
 
 const TIEMPO_SIMBOLO_MS = 1500;
 const TIEMPO_TOTAL_BIENVENIDA_MS = 8000;

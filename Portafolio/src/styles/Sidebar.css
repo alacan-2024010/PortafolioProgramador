@@ -1,0 +1,127 @@
+.sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  background: #0a0a0f;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* ---- Perfil ---- */
+.sidebar-perfil {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.sidebar-foto-wrap {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(
+    from 180deg,
+    var(--color-celeste, #22d3ee),
+    var(--color-azul, #3b82f6),
+    var(--color-morado, #a78bfa),
+    var(--color-verde, #4ade80),
+    var(--color-celeste, #22d3ee)
+  );
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+}
+
+.sidebar-foto-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  background: #0a0a0f;
+}
+
+.sidebar-foto-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #12121a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.sidebar-nombre {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  background: linear-gradient(90deg, #a78bfa, #34d399);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.sidebar-rol {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.sidebar-punto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+  display: inline-block;
+}
+
+/* ---- Navegación ---- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 12px 14px;
+  font-size: 14.5px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.sidebar-item.activo {
+  background: rgba(255, 255, 255, 0.06);
+  border-left-color: #34d399;
+  color: #fff;
+  font-weight: 600;
+}
+
+.sidebar-num {
+  font-size: 11px;
+  color: #34d399;
+  font-family: monospace;
+  min-width: 18px;
+}
