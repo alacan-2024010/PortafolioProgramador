@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&display=swap');
+
+:root {
+  --font-pixel: 'Baloo 2', var(--font-mono), sans-serif;
+}
+
 .sobremi-frame {
   position: relative;
   flex: 1;
-  padding: 44px 56px;
-  overflow: hidden;
+  padding: 32px 56px;
+  overflow: visible;
 }
 
 .frame-scan {
@@ -26,7 +32,7 @@
   100% { top: -120px; }
 }
 
-/* ---- Esquinas tipo mira de cámara (sin texto) ---- */
+/* ---- Esquinas tipo mira de cámara ---- */
 .frame-corner {
   position: absolute;
   width: 26px;
@@ -60,117 +66,201 @@
 /* ---- Contenido ---- */
 .sobremi-contenido {
   position: relative;
-  height: 100%;
+  min-height: 480px;
   display: flex;
-  padding: 20px 10px;
+  flex-direction: column;  
+  padding: 16px 10px;
 }
 
+/* ---- GRID PRINCIPAL: 2 columnas fijas en desktop, misma altura ---- */
 .sobremi-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, auto);
   align-items: stretch;
-  justify-content: space-between;
-  gap: 48px;
+  gap: 40px;
   width: 100%;
-  flex-wrap: wrap;
-  height: 100%;
 }
 
+.sobremi-footer{
+    width:100%;
+    margin-top:40px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:24px;
+}
+
+/* ---- Columna de texto: todo centrado, frase empujada al fondo ---- */
 .sobremi-texto {
-  flex: 1 1 380px;
-  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  min-width: 0;
+  max-width: 560px;
+  height: 100%;
+  margin: 0 auto;
 }
 
-.sobremi-saludo {
-  display: block;
+.sobremi-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-mono);
-  font-size: 1.6rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-text-primary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-celeste);
+  opacity: 0.75;
   margin-bottom: 10px;
 }
 
-.sobremi-titulo-fila {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
-.sobremi-barra {
-  width: 4px;
-  height: 30px;
-  border-radius: var(--radius-full);
+.sobremi-eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
   background: var(--gradient-brand);
-  flex-shrink: 0;
+  border-radius: var(--radius-full);
 }
 
-.sobremi-texto {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  flex: 1 1 380px;
-  max-width: 520px;
-}
-
-.sobremi-texto h2 {
-  display: flex;
-  align-items: baseline;
-  gap: 16px;
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-}
-
-.titulo-mono {
-  font-family: var(--font-mono);
-  font-weight: 500;
-  font-size: 1.3rem;
-  color: var(--color-celeste);
-  opacity: 0.6;
+/* ---- Título grande estilo pixel/retro ---- */
+.sobremi-titulo-pixel {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  line-height: 1.15;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, var(--color-celeste), var(--color-morado));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 16px;
+  width: fit-content;
 }
 
 .seccion-parrafo {
-  font-size: 1.15rem;
-  line-height: 1.9;
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--color-text-secondary);
   margin-bottom: 0;
+  max-width: 480px;
 }
 
-/* ---- Frase de cierre: más pequeña, pegada al fondo ---- */
-.sobremi-frase {
-  margin-top: auto;
-  padding-top: 40px;
-  font-size: 1.3rem;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: -0.01em;
-  background: linear-gradient(90deg, var(--color-celeste), var(--color-morado));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  border-left: 3px solid var(--color-celeste);
-  padding-left: 20px;
+/* ---- Contacto rápido: centrado en grid de 2 columnas, debajo del párrafo ---- */
+.sobremi-contacto{
+    display:grid;
+    grid-template-columns:repeat(2,max-content);
+    justify-content:center;
+    align-items:center;
+    gap:14px 40px;
+    width:100%;
 }
 
-/* ---- Lista vertical de habilidades ---- */
-.sobremi-lista {
+.contacto-item {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 42px;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.contacto-icono {
+  width: 28px;
+  height: 28px;
   flex-shrink: 0;
-  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-celeste);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.contacto-icono svg {
+  width: 13px;
+  height: 13px;
+}
+
+.contacto-item:hover .contacto-icono {
+  border-color: var(--color-celeste);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+}
+
+.contacto-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* ---- Frase de cierre: empujada al fondo, centrada, estilo cita ---- */
+.sobremi-frase{
+    position:relative;
+
+    padding:18px 28px;
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(56,189,248,.08),
+        rgba(168,85,247,.08)
+    );
+
+    box-shadow:inset 0 0 0 1px rgba(56,189,248,.25);
+
+    font-family:var(--font-pixel);
+    font-weight:700;
+    font-size:clamp(.95rem,1.6vw,1.2rem);
+
+    color:var(--color-celeste);
+
+    text-align:center;
+
+    margin:0 auto;
+
+    max-width:480px;
+}
+
+.sobremi-frase::before,
+.sobremi-frase::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-celeste), var(--color-morado));
+  border-radius: var(--radius-full);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sobremi-frase::before { top: -1px; }
+.sobremi-frase::after { bottom: -1px; }
+
+/* ---- Grilla de habilidades (columna derecha) ---- */
+.sobremi-lista {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(120px, 1fr));
+  gap: 16px 20px;
+  align-self: start;
 }
 
 .lista-item {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
 }
 
 .lista-item-icono {
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -183,16 +273,16 @@
 }
 
 .lista-item-icono svg {
-  width: 26px;
-  height: 26px;
+  width: 18px;
+  height: 18px;
 }
 
 .lista-item-label {
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.02em;
   color: var(--color-text-secondary);
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 .lista-item:hover .lista-item-icono {
@@ -249,35 +339,128 @@
   to { transform: rotate(360deg); }
 }
 
+/* ---- Responsive: en tablet/mobile se apila en 1 columna ---- */
 @media (max-width: 900px) {
-  .sobremi-top {
-    justify-content: center;
-    text-align: center;
+  .sobremi-contenido {
+    min-height: 0;
   }
 
-  .sobremi-titulo-fila {
-    justify-content: center;
+  .sobremi-top {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .sobremi-texto {
+    max-width: 100%;
+    height: auto;
   }
 
   .sobremi-frase {
-    text-align: left;
+    margin-top: 28px;
+  }
+
+  .sobremi-lista {
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 20px 18px;
+    justify-items: center;
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .lista-item {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+
+  .lista-item-label {
+    white-space: normal;
+    text-align: center;
+    max-width: 110px;
   }
 }
 
 @media (max-width: 700px) {
   .sobremi-frame {
-    padding: 32px 28px;
+    padding: 24px 20px;
   }
 
   .frame-linea {
     display: none;
   }
 
+  .frame-corner {
+    width: 18px;
+    height: 18px;
+  }
+
+  .sobremi-titulo-pixel {
+    font-size: clamp(1.4rem, 8vw, 1.9rem);
+    margin-bottom: 14px;
+  }
+
+  .seccion-parrafo {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .sobremi-contacto {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 14px;
+    margin-top: 18px;
+  }
+
+  .contacto-label {
+    white-space: normal;
+    word-break: break-word;
+    text-align: left;
+  }
+
   .sobremi-frase {
-    font-size: 1.4rem;
+    margin-top: 24px;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .lista-item-icono {
+    width: 38px;
+    height: 38px;
+  }
+
+  .lista-item-icono svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .lista-item-label {
+    font-size: 11px;
   }
 
   .frame-deco {
     display: none;
+  }
+}
+
+@media (max-width: 420px) {
+  .sobremi-frame {
+    padding: 18px 14px;
+  }
+
+  .sobremi-titulo-pixel {
+    font-size: 1.3rem;
+  }
+
+  .sobremi-lista {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 12px;
+  }
+
+  .lista-item-icono {
+    width: 34px;
+    height: 34px;
   }
 }
