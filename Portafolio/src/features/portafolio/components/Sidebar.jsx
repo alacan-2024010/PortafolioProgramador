@@ -10,8 +10,7 @@ const SECCIONES = [
 ];
 
 export const Sidebar = ({
-  nombre = "Alan Lacán Flores",
-  rol = "Desarrollador Full Stack Junior",
+  nombre = "Alan Francisco Lacán Flores",
   fotoUrl = null, // pásale una URL cuando tengas la foto
   activeSection,
   onSectionClick,
@@ -39,10 +38,6 @@ export const Sidebar = ({
           )}
         </div>
         <h1 className="sidebar-nombre">{nombre}</h1>
-        <p className="sidebar-rol">
-          <span className="sidebar-punto" />
-          {rol.toUpperCase()}
-        </p>
       </div>
 
       <nav className="sidebar-nav">

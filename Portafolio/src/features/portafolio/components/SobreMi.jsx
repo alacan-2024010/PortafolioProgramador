@@ -125,14 +125,13 @@ const HABILIDADES = [
   { id: "puntual", label: "Puntual", icono: <IconReloj />, color: "verde" },
   { id: "perseverante", label: "Perseverante", icono: <IconMontana />, color: "celeste" },
   { id: "equipo", label: "Trabajo en equipo", icono: <IconEquipo />, color: "azul" },
-  { id: "problemas", label: "Resolución de problemas", icono: <IconRompecabezas />, color: "morado" },
+  { id: "problemas", label: "Resolver problemas", icono: <IconRompecabezas />, color: "morado" },
   { id: "proactivo", label: "Proactivo", icono: <IconRayo />, color: "verde" },
 ];
 
 export const SobreMi = () => {
   return (
     <div className="sobremi-frame">
-      <span className="frame-scan" />
 
       {/* Esquinas del marco (solo líneas, sin texto) */}
       <span className="frame-corner frame-corner--tl" />
@@ -199,7 +198,7 @@ export const SobreMi = () => {
           </div>
 
           <p className="sobremi-frase">
-            Nunca dejo de aprender, nunca dejo de crecer.
+            En la vida siempre hay algo por descubrir.
           </p>
 
         </div>
