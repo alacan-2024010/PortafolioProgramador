@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Sidebar } from "../components/Sidebar.jsx";
 import { SobreMi } from "../components/SobreMi.jsx";
+import { DatosGenerales } from "../components/DatosGenerales.jsx";
 import "../../../styles/Portafolio.css";
 
 const VISTAS = {
   "sobre-mi": SobreMi,
-  //"datos-generales": DatosGenerales,
+  "datos-generales": DatosGenerales,
   //"habilidades": Habilidades,
   //"curriculum": Curriculum,
   //"proyectos": Proyectos,
