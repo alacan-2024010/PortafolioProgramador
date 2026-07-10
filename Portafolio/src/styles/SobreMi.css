@@ -8,10 +8,10 @@
   position: relative;
   flex: 1;
   min-height: 0;
+  height: 100%;
   box-sizing: border-box;
-  padding: 40px 56px 32px;
-  overflow: visible;
-
+  padding: 64px 56px;
+  overflow: hidden;
   background-color: #0a0f1a;
   background-image:
     radial-gradient(circle at 12% 10%, rgba(56, 189, 248, 0.16), transparent 48%),
@@ -26,9 +26,10 @@
 /* ---- Esquinas tipo mira de cámara ---- */
 .frame-corner {
   position: absolute;
-  width: 30px;
-  height: 30px;
-  border: 2px solid rgba(56, 189, 248, 0.7);
+  width: 44px;
+  height: 44px;
+  border: 3px solid var(--color-celeste);
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
 }
 
 .frame-corner--tl { top: 0; left: 0; border-right: none; border-bottom: none; }
@@ -39,14 +40,14 @@
 /* ---- Líneas guía verticales ---- */
 .frame-linea {
   position: absolute;
-  top: 30px;
-  bottom: 30px;
-  width: 2px;
+  top: 44px;
+  bottom: 44px;
+  width: 3px;
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(56, 189, 248, 0.5) 15%,
-    rgba(56, 189, 248, 0.5) 85%,
+    rgba(56, 189, 248, 0.75) 15%,
+    rgba(56, 189, 248, 0.75) 85%,
     transparent
   );
 }
@@ -54,38 +55,36 @@
 .frame-linea--izq { left: 13px; }
 .frame-linea--der { right: 13px; }
 
-/* ---- Contenido ---- */
 .sobremi-contenido {
   position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: 0 20px 28px;
+  justify-content: center;
+  align-items: stretch;
+  gap: 56px;
+  padding: 48px 20px 28px;
 }
 
-/* ---- GRID PRINCIPAL: 2 columnas fijas en desktop, misma altura ---- */
 .sobremi-top {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, auto);
-  align-items: stretch;
+  align-items: center;
   gap: 56px;
   width: 100%;
 }
 
-.sobremi-footer{
-    width: 100%;
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-
-    transform: translateY(40px); 
+.sobremi-footer {
+  width: 100%;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
 }
 
-/* ---- Columna de texto: todo centrado, frase empujada al fondo ---- */
+/* ---- Columna de texto ---- */
 .sobremi-texto {
   display: flex;
   flex-direction: column;
@@ -120,12 +119,12 @@
 }
 
 /* ---- Título grande estilo pixel/retro ---- */
-.sobremi-titulo-pixel {
+.sobremi-frame .sobremi-titulo-pixel {
   display: inline-block;
   font-family: var(--font-pixel);
   font-weight: 800;
-  font-size: clamp(2.1rem, 3.8vw, 3rem);
-  line-height: 1.15;
+  font-size: clamp(2.5rem, 3.5vw, 3rem);
+  line-height: 1.1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   background: linear-gradient(90deg, var(--color-celeste), var(--color-morado));
@@ -147,14 +146,14 @@
   text-align-last: left;
 }
 
-/* ---- Contacto rápido: centrado en grid de 2 columnas, debajo del párrafo ---- */
-.sobremi-contacto{
-    display:grid;
-    grid-template-columns:repeat(2,max-content);
-    justify-content:center;
-    align-items:center;
-    gap:18px 48px;
-    width:100%;
+/* ---- Contacto rápido ---- */
+.sobremi-contacto {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  justify-content: center;
+  align-items: center;
+  gap: 18px 48px;
+  width: 100%;
 }
 
 .contacto-item {
@@ -197,31 +196,31 @@
   white-space: nowrap;
 }
 
-/* ---- Frase de cierre: empujada al fondo, centrada, estilo cita ---- */
-.sobremi-frase{
-    position:relative;
+/* ---- Frase de cierre ---- */
+.sobremi-frase-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 auto;
+}
 
-    padding:22px 34px;
-    border-radius:14px;
-
-    background:linear-gradient(
-        135deg,
-        rgba(56,189,248,.08),
-        rgba(168,85,247,.08)
-    );
-
-    box-shadow:inset 0 0 0 1px rgba(56,189,248,.25);
-
-    font-family:var(--font-pixel);
-    font-weight:700;
-    font-size:clamp(1.05rem,1.8vw,1.3rem);
-
-    color:var(--color-celeste);
-
-    text-align:center;
-
-    margin: 0 auto;
-    max-width: 520px;
+.sobremi-frase {
+  position: relative;
+  padding: 22px 34px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, .08),
+    rgba(168, 85, 247, .08)
+  );
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, .25);
+  font-family: var(--font-pixel);
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  color: var(--color-celeste);
+  text-align: center;
+  margin: 0 auto;
+  max-width: 520px;
 }
 
 .sobremi-frase::before,
@@ -239,7 +238,37 @@
 .sobremi-frase::before { top: -1px; }
 .sobremi-frase::after { bottom: -1px; }
 
-/* ---- Grilla de habilidades (columna derecha) ---- */
+/* ---- Ícono girando, montado sobre el borde inferior del cuadro de la frase ---- */
+.sobremi-frase-wrap .frame-deco--frase {
+  position: absolute;
+  top: auto;
+  bottom: -11px;
+  right: -11px;
+  left: auto;
+  transform: none;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-celeste);
+  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
+  animation: deco-girar 4s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.sobremi-frase-wrap .frame-deco--frase svg {
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes deco-girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---- Grilla de habilidades ---- */
 .sobremi-lista {
   display: grid;
   grid-template-columns: repeat(2, minmax(120px, 1fr));
@@ -308,33 +337,7 @@
   box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
 }
 
-.frame-deco {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-celeste);
-  filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.6));
-  animation: deco-girar 4s linear infinite;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.frame-deco svg {
-  width: 100%;
-  height: 100%;
-}
-
-@keyframes deco-girar {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* ---- Responsive: en tablet/mobile se apila en 1 columna ---- */
+/* ---- Responsive ---- */
 @media (max-width: 900px) {
   .sobremi-frame {
     height: auto;
@@ -357,7 +360,7 @@
     height: auto;
   }
 
-  .sobremi-frase {
+  .sobremi-frase-wrap {
     margin-top: 28px;
   }
 
@@ -396,7 +399,7 @@
     height: 18px;
   }
 
-  .sobremi-titulo-pixel {
+  .sobremi-frame .sobremi-titulo-pixel {
     font-size: clamp(1.4rem, 8vw, 1.9rem);
     margin-bottom: 14px;
   }
@@ -419,8 +422,11 @@
     text-align: left;
   }
 
-  .sobremi-frase {
+  .sobremi-frase-wrap {
     margin-top: 24px;
+  }
+
+  .sobremi-frase {
     padding: 14px 20px;
     font-size: 0.95rem;
     line-height: 1.5;
@@ -440,7 +446,7 @@
     font-size: 11px;
   }
 
-  .frame-deco {
+  .sobremi-frase-wrap .frame-deco--frase {
     display: none;
   }
 }
@@ -450,7 +456,7 @@
     padding: 18px 14px;
   }
 
-  .sobremi-titulo-pixel {
+  .sobremi-frame .sobremi-titulo-pixel {
     font-size: 1.3rem;
   }
 

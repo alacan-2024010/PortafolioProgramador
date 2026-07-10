@@ -1,0 +1,487 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@500;600;700&display=swap");
+
+:root{
+    --panel:#111827;
+    --panel2:#182338;
+    --line:#23304d;
+    --text:#f5f7fb;
+    --text2:#9fb3c8;
+}
+
+/*==========================
+CONTENEDOR
+==========================*/
+
+.datos-dashboard{
+    width:100%;
+    height:100%;
+    padding:38px;
+    display:grid;
+    grid-template-rows:auto auto 1fr;
+    gap:32px;
+    overflow:hidden;
+    box-sizing:border-box;
+    position:relative;
+    background:
+    radial-gradient(circle at top left,rgba(56,189,248,.10),transparent 35%),
+    radial-gradient(circle at bottom right,rgba(168,85,247,.10),transparent 35%),
+    linear-gradient(180deg,#08101b,#0b1423);
+}
+
+/* líneas decorativas */
+
+.datos-dashboard::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 58px,
+        rgba(255,255,255,.03) 59px
+    );
+    pointer-events:none;
+}
+
+.datos-dashboard::after{
+    content:"";
+    position:absolute;
+    left:0;
+    top:120px;
+    width:100%;
+    height:1px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(56,189,248,.4),
+        transparent
+    );
+}
+
+/*==========================
+HEADER
+==========================*/
+
+.dashboard-header{
+    position:relative;
+    z-index:2;
+}
+
+.dashboard-subtitle{
+    display:inline-block;
+    font-family:var(--font-mono);
+    color:var(--color-celeste);
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-size:.8rem;
+    margin-bottom:12px;
+}
+
+.dashboard-header h2{
+    font-family:var(--font-pixel);
+    font-size:clamp(2rem,3vw,2.8rem);
+    text-transform:uppercase;
+    background:linear-gradient(
+        90deg,
+        var(--color-celeste),
+        var(--color-morado)
+    );
+    -webkit-background-clip:text;
+    color:transparent;
+    margin-bottom:14px;
+}
+
+.dashboard-header p{
+    max-width:620px;
+    color:var(--text2);
+    font-family:'Fredoka',sans-serif;
+    line-height:1.7;
+    font-size:1rem;
+}
+
+/*==========================
+GRID TARJETAS
+==========================*/
+
+.dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:24px;
+    position:relative;
+    z-index:2;
+}
+
+/*==========================
+TARJETA
+==========================*/
+
+.dashboard-card{
+    background:linear-gradient(
+        145deg,
+        rgba(17,24,39,.95),
+        rgba(24,35,56,.85)
+    );
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:22px;
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(56,189,248,.4);
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.35),
+    0 0 18px rgba(56,189,248,.15);
+}
+
+.dashboard-card::before{
+    content:"";
+    position:absolute;
+    left:-120%;
+    top:0;
+    width:100%;
+    height:3px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        currentColor,
+        transparent
+    );
+    transition:.8s;
+}
+
+.dashboard-card:hover::before{
+    left:120%;
+}
+
+/*==========================
+ICONO
+==========================*/
+
+.card-icon{
+    width:66px;
+    height:66px;
+    border-radius:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid currentColor;
+    background:rgba(255,255,255,.03);
+}
+
+.card-icon svg{
+    width:28px;
+    height:28px;
+}
+
+.card-info{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.card-info span{
+    font-family:var(--font-mono);
+    font-size:.75rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    opacity:.8;
+}
+
+.card-info h3{
+    font-family:"Fredoka",sans-serif;
+    font-size:1.35rem;
+    color:var(--text);
+    line-height:1.4;
+}
+
+/*==========================
+COLORES
+==========================*/
+
+.celeste{
+    color:var(--color-celeste);
+}
+
+.azul{
+    color:var(--color-azul);
+}
+
+.morado{
+    color:var(--color-morado);
+}
+
+.verde{
+    color:var(--color-verde);
+}
+
+/*==========================
+BOTTOM
+==========================*/
+
+.dashboard-bottom{
+display:grid;
+grid-template-columns:1.4fr .9fr;
+gap:24px;
+flex:1;
+min-height:0;
+position:relative;
+z-index:2;
+}
+
+/*==========================
+PANELES
+==========================*/
+
+.estadisticas,
+.redes{
+background:linear-gradient(
+145deg,
+rgba(17,24,39,.95),
+rgba(24,35,56,.82)
+);
+border:1px solid var(--line);
+border-radius:22px;
+padding:26px;
+display:flex;
+flex-direction:column;
+overflow:hidden;
+position:relative;
+}
+
+.estadisticas::before,
+.redes::before{
+content:"";
+position:absolute;
+left:0;
+top:0;
+width:100%;
+height:3px;
+background:linear-gradient(
+90deg,
+var(--color-celeste),
+var(--color-morado)
+);
+}
+
+/*==========================
+TITULOS
+==========================*/
+
+.estadisticas h3,
+.redes h3{
+font-family:var(--font-pixel);
+font-size:1.1rem;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:var(--color-celeste);
+margin-bottom:26px;
+}
+
+/*==========================
+PROGRESS
+==========================*/
+
+.progress-item{
+margin-bottom:22px;
+}
+
+.progress-item:last-child{
+margin-bottom:0;
+}
+
+.progress-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+font-family:"Fredoka",sans-serif;
+font-size:.95rem;
+color:var(--text);
+}
+
+.progress-bar{
+height:10px;
+border-radius:999px;
+background:rgba(255,255,255,.05);
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+border-radius:999px;
+background:linear-gradient(
+90deg,
+var(--color-celeste),
+var(--color-morado)
+);
+box-shadow:0 0 15px rgba(56,189,248,.35);
+animation:fillProgress 1.8s ease;
+}
+
+@keyframes fillProgress{
+from{
+width:0!important;
+}
+}
+
+/*==========================
+REDES
+==========================*/
+
+.redes{
+gap:18px;
+}
+
+.red-social{
+display:flex;
+align-items:center;
+gap:18px;
+padding:18px;
+border-radius:18px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.06);
+text-decoration:none;
+transition:.35s;
+}
+
+.red-social:hover{
+transform:translateY(-6px);
+border-color:var(--color-celeste);
+box-shadow:
+0 12px 24px rgba(0,0,0,.25),
+0 0 18px rgba(56,189,248,.18);
+}
+
+.red-icon{
+width:56px;
+height:56px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:16px;
+border:1px solid var(--color-celeste);
+background:rgba(56,189,248,.08);
+color:var(--color-celeste);
+flex-shrink:0;
+}
+
+.red-icon svg{
+width:24px;
+height:24px;
+}
+
+.red-social strong{
+display:block;
+font-family:"Fredoka",sans-serif;
+font-size:1rem;
+color:var(--text);
+margin-bottom:4px;
+}
+
+.red-social span{
+font-family:var(--font-mono);
+font-size:.72rem;
+text-transform:uppercase;
+letter-spacing:.1em;
+color:var(--text2);
+}
+
+/*==========================
+EFECTOS
+==========================*/
+
+.dashboard-card::after{
+content:"";
+position:absolute;
+inset:0;
+background:
+radial-gradient(
+circle at top right,
+rgba(255,255,255,.05),
+transparent 45%
+);
+pointer-events:none;
+}
+
+.dashboard-card:hover .card-icon{
+transform:rotate(-8deg) scale(1.08);
+transition:.35s;
+}
+
+.card-icon{
+transition:.35s;
+}
+
+/*==========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:1100px){
+
+.dashboard-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.dashboard-bottom{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:700px){
+
+.datos-dashboard{
+padding:22px;
+gap:22px;
+}
+
+.dashboard-grid{
+grid-template-columns:1fr;
+gap:18px;
+}
+
+.dashboard-card{
+padding:22px;
+}
+
+.dashboard-bottom{
+gap:18px;
+}
+
+.estadisticas,
+.redes{
+padding:20px;
+}
+
+.red-social{
+padding:15px;
+}
+
+.red-icon{
+width:46px;
+height:46px;
+}
+
+.red-icon svg{
+width:20px;
+height:20px;
+}
+
+.dashboard-header h2{
+font-size:1.8rem;
+}
+
+.dashboard-header p{
+font-size:.92rem;
+}
+
+}

@@ -129,24 +129,19 @@ const HABILIDADES = [
   { id: "proactivo", label: "Proactivo", icono: <IconRayo />, color: "verde" },
 ];
 
+// (todos los Icon... y las constantes CONTACTO_RAPIDO / HABILIDADES quedan igual que ya las tienes)
+
 export const SobreMi = () => {
   return (
     <div className="sobremi-frame">
 
-      {/* Esquinas del marco (solo líneas, sin texto) */}
       <span className="frame-corner frame-corner--tl" />
       <span className="frame-corner frame-corner--tr" />
       <span className="frame-corner frame-corner--bl" />
       <span className="frame-corner frame-corner--br" />
 
-      {/* Líneas guía verticales */}
       <span className="frame-linea frame-linea--izq" />
       <span className="frame-linea frame-linea--der" />
-
-      {/* Ícono decorativo girando */}
-      <span className="frame-deco">
-        <IconSpinner />
-      </span>
 
       <div className="sobremi-contenido">
         <div className="sobremi-top">
@@ -197,9 +192,14 @@ export const SobreMi = () => {
             )}
           </div>
 
-          <p className="sobremi-frase">
-            En la vida siempre hay algo por descubrir.
-          </p>
+          <div className="sobremi-frase-wrap">
+            <p className="sobremi-frase">
+              En la vida siempre hay algo por descubrir.
+            </p>
+            <span className="frame-deco frame-deco--frase">
+              <IconSpinner />
+            </span>
+          </div>
 
         </div>
       </div>

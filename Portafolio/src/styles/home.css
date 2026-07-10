@@ -53,11 +53,19 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
   font-family: var(--font-principal);
-  min-height: 100vh;
+  height: 100%;
 }
 
 /*  Seccion Home */
