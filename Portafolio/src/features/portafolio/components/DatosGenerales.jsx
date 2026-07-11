@@ -5,10 +5,10 @@ import "../../../styles/DatosGenerales.css";
    ICONOS
 =========================== */
 
-const IconUser = () => (
+const IconLocation = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-    <circle cx="12" cy="8" r="3.5" />
-    <path d="M5 20c1.3-3.8 4.5-5.5 7-5.5s5.7 1.7 7 5.5" />
+    <path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" />
+    <circle cx="12" cy="9.5" r="2.3" />
   </svg>
 );
 
@@ -77,12 +77,6 @@ const IconWork = () => (
 
 const datos = [
   {
-    titulo: "Nombre",
-    valor: "Alan Francisco Lacán Flores",
-    color: "cyan",
-    icono: <IconUser />
-  },
-  {
     titulo: "Edad",
     valor: "18 años",
     color: "blue",
@@ -99,6 +93,12 @@ const datos = [
     valor: "Fundación Kinal",
     color: "purple",
     icono: <IconBook />
+  },
+  {
+    titulo: "Ubicación",
+    valor: "Ciudad de Guatemala, Guatemala", 
+    color: "cyan",
+    icono: <IconLocation />
   }
 ];
 
@@ -133,32 +133,22 @@ const redes = [
   {
     nombre: "LinkedIn",
     detalle: "Conecta conmigo",
-    href: "https://linkedin.com",
+    href: "https://www.linkedin.com/in/alan-francisco-lacán-flores-173750421/",
     icono: <IconLinkedin />
   },
   {
     nombre: "Instagram",
-    detalle: "@tu_usuario",
-    href: "https://instagram.com",
+    detalle: "@2211alan",
+    href: "https://instagram.com/2211alan",
     icono: <IconInstagram />
   },
   {
     nombre: "WhatsApp",
     detalle: "Escríbeme",
-    href: "https://wa.me/50258319270",
+    href: "https://wa.me/50258319270", 
     icono: <IconWhatsapp />
-  },
-  {
-    nombre: "CompuTrabajo",
-    detalle: "Mi perfil",
-    href: "https://computrabajo.com",
-    icono: <IconWork />
   }
 ];
-
-/* ===========================
-   CONTADOR ANIMADO
-=========================== */
 
 const useCountUp = (target, duration = 1200) => {
   const [value, setValue] = useState(0);
