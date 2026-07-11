@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Sidebar } from "../components/Sidebar.jsx";
 import { SobreMi } from "../components/SobreMi.jsx";
 import { DatosGenerales } from "../components/DatosGenerales.jsx";
@@ -15,8 +15,15 @@ const VISTAS = {
 
 export const PortafolioPage = () => {
   const [seccionActiva, setSeccionActiva] = useState("sobre-mi");
+  const vistaRef = useRef(null);
 
   const VistaActiva = VISTAS[seccionActiva];
+
+  useEffect(() => {
+    if (vistaRef.current) {
+      vistaRef.current.scrollTop = 0;
+    }
+  }, [seccionActiva]);
 
   return (
     <div className="portafolio-layout">
@@ -25,7 +32,7 @@ export const PortafolioPage = () => {
         onSectionClick={setSeccionActiva}
       />
 
-      <div className="portafolio-vista">
+      <div className="portafolio-vista" ref={vistaRef}>
         <section key={seccionActiva} className="portafolio-seccion vista-fade-in">
           <VistaActiva />
         </section>

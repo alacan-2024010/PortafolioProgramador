@@ -1,42 +1,35 @@
 import { useEffect, useRef, useState } from "react";
 import "../../../styles/DatosGenerales.css";
 
-const IconEdad = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+/* ===========================
+   ICONOS
+=========================== */
+
+const IconUser = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
     <circle cx="12" cy="8" r="3.5" />
-    <path d="M5 20c1.2-3.6 4.2-5.3 7-5.3S17.8 16.4 19 20" />
+    <path d="M5 20c1.3-3.8 4.5-5.5 7-5.5s5.7 1.7 7 5.5" />
   </svg>
 );
 
-const IconExperiencia = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-    <path d="M12 3 21 8l-9 5-9-5 9-5Z"/>
-    <path d="m3 13 9 5 9-5"/>
-    <path d="m3 17 9 5 9-5"/>
+const IconAge = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <circle cx="12" cy="12" r="8"/>
+    <path d="M12 8v5l3 2"/>
   </svg>
 );
 
-const IconFormacion = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
+const IconLaptop = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <rect x="4" y="5" width="16" height="11" rx="2"/>
+    <path d="M2 19h20"/>
+  </svg>
+);
+
+const IconBook = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
     <path d="M4 5h7v15H5.5A1.5 1.5 0 0 1 4 18.5Z"/>
-    <path d="M20 5h-9v15h7.5a1.5 1.5 0 0 0 1.5-1.5Z"/>
-  </svg>
-);
-
-const IconLinkedIn = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-    <rect x="3" y="3" width="18" height="18" rx="3"/>
-    <path d="M7.2 10v7"/>
-    <circle cx="7.2" cy="7.2" r=".8" fill="currentColor" stroke="none"/>
-    <path d="M11.5 17v-4c0-1.3.8-2.2 2-2.2s2 .9 2 2.2v4"/>
-  </svg>
-);
-
-const IconCompuTrabajo = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-    <rect x="3" y="7" width="18" height="12" rx="2"/>
-    <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/>
-    <path d="M3 12h18"/>
+    <path d="M20 5h-9v15h7.5A1.5 1.5 0 0 0 20 18.5Z"/>
   </svg>
 );
 
@@ -47,146 +40,401 @@ const IconArrow = () => (
   </svg>
 );
 
-const tarjetas = [
+const IconLinkedin = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <rect x="3" y="3" width="18" height="18" rx="4"/>
+    <path d="M7 10v7"/>
+    <circle cx="7" cy="7" r=".8" fill="currentColor"/>
+    <path d="M11 17v-4c0-1.3.8-2.2 2-2.2s2 .9 2 2.2v4"/>
+  </svg>
+);
+
+const IconInstagram = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <rect x="3" y="3" width="18" height="18" rx="5"/>
+    <circle cx="12" cy="12" r="4"/>
+    <circle cx="17.2" cy="6.8" r="1" fill="currentColor"/>
+  </svg>
+);
+
+const IconWhatsapp = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <path d="M6.5 17.5L4 20l2.8-.7A8 8 0 1 0 4.7 16"/>
+    <path d="M9 9.5c0 3.5 3 6.5 6.5 6.5.6 0 1-.6.8-1.1l-.5-1.3a1 1 0 0 0-1.2-.6l-.8.3a5 5 0 0 1-2.9-2.9l.3-.8a1 1 0 0 0-.6-1.2l-1.3-.5c-.5-.2-1.1.2-1.1.8Z"/>
+  </svg>
+);
+
+const IconWork = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+    <rect x="3" y="7" width="18" height="12" rx="2"/>
+    <path d="M8 7V5.5A1.5 1.5 0 0 1 9.5 4h5A1.5 1.5 0 0 1 16 5.5V7"/>
+  </svg>
+);
+
+/* ===========================
+   TARJETAS
+=========================== */
+
+const datos = [
+  {
+    titulo: "Nombre",
+    valor: "Alan Francisco Lacán Flores",
+    color: "cyan",
+    icono: <IconUser />
+  },
   {
     titulo: "Edad",
     valor: "18 años",
-    color: "celeste",
-    icono: <IconEdad />,
+    color: "blue",
+    icono: <IconAge />
   },
   {
     titulo: "Experiencia",
     valor: "3 años programando",
-    color: "azul",
-    icono: <IconExperiencia />,
+    color: "green",
+    icono: <IconLaptop />
   },
   {
-    titulo: "Formación",
+    titulo: "Educación",
     valor: "Fundación Kinal",
-    color: "morado",
-    icono: <IconFormacion />,
-  },
+    color: "purple",
+    icono: <IconBook />
+  }
 ];
+
+/* ===========================
+   ESTADÍSTICAS
+=========================== */
 
 const estadisticas = [
-  { nombre: "Backend", porcentaje: 90 },
-  { nombre: "Frontend", porcentaje: 70 },
-  { nombre: "Bases de Datos", porcentaje: 85 },
-  { nombre: "Aprendizaje", porcentaje: 100 },
+  {
+    nombre: "Backend",
+    porcentaje: 90
+  },
+  {
+    nombre: "Frontend",
+    porcentaje: 70
+  },
+  {
+    nombre: "Bases de Datos",
+    porcentaje: 85
+  },
+  {
+    nombre: "Aprendizaje",
+    porcentaje: 100
+  }
 ];
 
-/** Cuenta de 0 hasta el valor objetivo cuando el componente se monta. */
+/* ===========================
+   REDES
+=========================== */
+
+const redes = [
+  {
+    nombre: "LinkedIn",
+    detalle: "Conecta conmigo",
+    href: "https://linkedin.com",
+    icono: <IconLinkedin />
+  },
+  {
+    nombre: "Instagram",
+    detalle: "@tu_usuario",
+    href: "https://instagram.com",
+    icono: <IconInstagram />
+  },
+  {
+    nombre: "WhatsApp",
+    detalle: "Escríbeme",
+    href: "https://wa.me/50258319270",
+    icono: <IconWhatsapp />
+  },
+  {
+    nombre: "CompuTrabajo",
+    detalle: "Mi perfil",
+    href: "https://computrabajo.com",
+    icono: <IconWork />
+  }
+];
+
+/* ===========================
+   CONTADOR ANIMADO
+=========================== */
+
 const useCountUp = (target, duration = 1200) => {
   const [value, setValue] = useState(0);
-  const startRef = useRef(null);
 
   useEffect(() => {
+    let start = null;
     let frame;
-    const step = (timestamp) => {
-      if (startRef.current === null) startRef.current = timestamp;
-      const progress = Math.min((timestamp - startRef.current) / duration, 1);
+
+    const animate = (time) => {
+      if (!start) start = time;
+
+      const progress = Math.min((time - start) / duration, 1);
+
       const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(eased * target));
-      if (progress < 1) frame = requestAnimationFrame(step);
+
+      setValue(Math.round(target * eased));
+
+      if (progress < 1) {
+        frame = requestAnimationFrame(animate);
+      }
     };
-    frame = requestAnimationFrame(step);
+
+    frame = requestAnimationFrame(animate);
+
     return () => cancelAnimationFrame(frame);
   }, [target, duration]);
 
   return value;
 };
 
-const BarraEstadistica = ({ nombre, porcentaje }) => {
-  const valorMostrado = useCountUp(porcentaje);
+/* ===========================
+   TARJETA SUPERIOR
+=========================== */
+
+const InfoCard = ({ titulo, valor, icono, color }) => {
   return (
-    <div className="progress-item">
-      <div className="progress-top">
-        <span>{nombre}</span>
-        <span className="valor-pct">{valorMostrado}%</span>
+    <article className={`info-card ${color}`}>
+      <div className="card-glow"></div>
+
+      <div className="card-icon">
+        {icono}
       </div>
-      <div className="progress-bar">
-        <div
-          className="progress-fill"
-          style={{ "--pct": `${porcentaje}%` }}
-        />
+
+      <div className="card-content">
+        <span>{titulo}</span>
+
+        <h3>{valor}</h3>
       </div>
-    </div>
+    </article>
   );
 };
 
-export const DatosGenerales = () => {
-  return (
-    <section className="datos-dashboard">
-      <span className="dashboard-orb orb-1" aria-hidden="true" />
-      <span className="dashboard-orb orb-2" aria-hidden="true" />
+/* ===========================
+   BARRA DE PROGRESO
+=========================== */
 
-      <header className="dashboard-header">
-        <h2>Datos Generales</h2>
+const ProgressBar = ({ nombre, porcentaje }) => {
+
+  const value = useCountUp(porcentaje);
+
+  return (
+
+    <div className="progress-card">
+
+      <div className="progress-header">
+
+        <span>{nombre}</span>
+
+        <strong>{value}%</strong>
+
+      </div>
+
+      <div className="progress-track">
+
+        <div
+          className="progress-fill"
+          style={{
+            width: `${porcentaje}%`
+          }}
+        >
+          <span className="progress-shine"></span>
+        </div>
+
+      </div>
+
+    </div>
+
+  );
+
+};
+
+/* ===========================
+   TARJETA RED SOCIAL
+=========================== */
+
+const SocialCard = ({ nombre, detalle, href, icono }) => {
+
+  return (
+
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="social-card"
+    >
+
+      <div className="social-icon">
+        {icono}
+      </div>
+
+      <div className="social-info">
+
+        <strong>{nombre}</strong>
+
+        <span>{detalle}</span>
+
+      </div>
+
+      <div className="social-arrow">
+
+        <IconArrow />
+
+      </div>
+
+    </a>
+
+  );
+
+};
+
+const useParallax = () => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const element = ref.current;
+
+    if (!element) return;
+
+    const move = (e) => {
+      const rect = element.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      element.style.setProperty("--mx", `${x}`);
+      element.style.setProperty("--my", `${y}`);
+    };
+    element.addEventListener("mousemove", move);
+    return () => {
+      element.removeEventListener("mousemove", move);
+    };
+  }, []);
+  return ref;
+
+};
+
+/* ===========================
+   COMPONENTE PRINCIPAL
+=========================== */
+
+export const DatosGenerales = () => {
+
+  const panelRef = useParallax();
+
+  return (
+
+    <section
+      className="datos-container"
+      ref={panelRef}
+    >
+
+      <span className="bg-orb orb-1"></span>
+      <span className="bg-orb orb-2"></span>
+      <span className="grid-bg"></span>
+
+      {/* ===========================
+            HEADER
+      =========================== */}
+
+      <header className="datos-header">
+
+        <h2>
+          Datos Generales
+        </h2>
+
         <p>
-          Un resumen rápido sobre mi perfil, experiencia,
-          formación y habilidades actuales.
+          Aquí encontrarás un resumen de mi perfil como
+          desarrollador, mi experiencia, formación y
+          las tecnologías con las que trabajo actualmente.
         </p>
+
       </header>
 
-      <section className="dashboard-grid">
-        {tarjetas.map((item, i) => (
-          <article
+      {/* ===========================
+            TARJETAS
+      =========================== */}
+
+      <section className="cards-grid">
+
+        {datos.map((item) => (
+
+          <InfoCard
             key={item.titulo}
-            className={`dashboard-card ${item.color}`}
-            style={{ "--i": i }}
-          >
-            <div className="card-icon">
-              {item.icono}
-            </div>
-            <div className="card-info">
-              <span>{item.titulo}</span>
-              <h3>{item.valor}</h3>
-            </div>
-          </article>
+            {...item}
+          />
+
         ))}
+
       </section>
 
-      <section className="dashboard-bottom">
-        <div className="estadisticas">
-          <h3>Estadísticas</h3>
-          {estadisticas.map((item) => (
-            <BarraEstadistica key={item.nombre} {...item} />
-          ))}
+      {/* ===========================
+            CONTENIDO INFERIOR
+      =========================== */}
+
+      <section className="bottom-grid">
+
+        {/* ESTADÍSTICAS */}
+
+        <div className="stats-panel">
+
+          <div className="panel-title">
+
+            <span></span>
+
+            <h3>
+              Estadísticas
+            </h3>
+
+          </div>
+
+          <div className="stats-list">
+
+            {estadisticas.map((item) => (
+
+              <ProgressBar
+                key={item.nombre}
+                {...item}
+              />
+
+            ))}
+
+          </div>
+
         </div>
-        <div className="redes">
-          <h3>Conecta conmigo</h3>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noreferrer"
-            className="red-social"
-          >
-            <div className="red-icon">
-              <IconLinkedIn />
-            </div>
-            <div>
-              <strong>LinkedIn</strong>
-              <span>Conectar conmigo</span>
-            </div>
-            <span className="red-arrow"><IconArrow /></span>
-          </a>
-          <a
-            href="https://computrabajo.com"
-            target="_blank"
-            rel="noreferrer"
-            className="red-social"
-          >
-            <div className="red-icon">
-              <IconCompuTrabajo />
-            </div>
-            <div>
-              <strong>CompuTrabajo</strong>
-              <span>Ver perfil</span>
-            </div>
-            <span className="red-arrow"><IconArrow /></span>
-          </a>
+
+        {/* REDES */}
+          <div className="social-panel">
+
+          <div className="panel-title">
+
+            <span></span>
+
+            <h3>
+              Conecta Conmigo
+            </h3>
+
+          </div>
+          <div className="social-list">
+
+            {redes.map((red) => (
+
+              <SocialCard
+                key={red.nombre}
+                {...red}
+              />
+
+            ))}
+          </div>
         </div>
       </section>
+
+      <footer className="datos-footer">
+        <div className="footer-line"></div>
+        <span>
+          Siempre aprendiendo nuevas tecnologías y mejorando mis habilidades.
+        </span>
+      </footer>
     </section>
   );
 };
+
+export default DatosGenerales;

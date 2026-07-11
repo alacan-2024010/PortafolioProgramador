@@ -18,7 +18,7 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 0;                  
-  overflow-y: auto;
+  overflow: hidden;        
   box-sizing: border-box;
 }
 
@@ -28,13 +28,6 @@ html, body, #root {
   flex-direction: column;
   min-height: 0;
   height: 100%;
-}
-
-.portafolio-seccion h2 {
-  font-size: 2rem;      /* ← esto es lo que estás viendo, no tu clamp() */
-  font-weight: 700;
-  color: var(--color-text-primary);
-  flex-shrink: 0;
 }
 
 .vista-fade-in {
