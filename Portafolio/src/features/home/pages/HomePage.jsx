@@ -43,7 +43,7 @@ export const HomePage = () => {
             <h1 className="home-nombre">Alan Lacán Flores</h1>
             <p className="home-titulo">
               <span className="home-titulo-dot" />
-              Desarrollador full stack junior
+              Desarrollador junior full stack 
             </p>
           </div>
         </div>

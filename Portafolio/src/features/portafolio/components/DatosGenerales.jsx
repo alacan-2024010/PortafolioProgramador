@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import "../../../styles/DatosGenerales.css";
 
 const IconEdad = () => (
@@ -22,13 +23,6 @@ const IconFormacion = () => (
   </svg>
 );
 
-const IconUbicacion = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
-    <path d="M12 21s6-5.8 6-11a6 6 0 1 0-12 0c0 5.2 6 11 6 11Z"/>
-    <circle cx="12" cy="10" r="2.2"/>
-  </svg>
-);
-
 const IconLinkedIn = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7">
     <rect x="3" y="3" width="18" height="18" rx="3"/>
@@ -46,6 +40,12 @@ const IconCompuTrabajo = () => (
   </svg>
 );
 
+const IconArrow = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M5 12h14"/>
+    <path d="m13 6 6 6-6 6"/>
+  </svg>
+);
 
 const tarjetas = [
   {
@@ -66,12 +66,6 @@ const tarjetas = [
     color: "morado",
     icono: <IconFormacion />,
   },
-  {
-    titulo: "Ubicación",
-    valor: "Guatemala",
-    color: "verde",
-    icono: <IconUbicacion />,
-  },
 ];
 
 const estadisticas = [
@@ -81,24 +75,65 @@ const estadisticas = [
   { nombre: "Aprendizaje", porcentaje: 100 },
 ];
 
+/** Cuenta de 0 hasta el valor objetivo cuando el componente se monta. */
+const useCountUp = (target, duration = 1200) => {
+  const [value, setValue] = useState(0);
+  const startRef = useRef(null);
+
+  useEffect(() => {
+    let frame;
+    const step = (timestamp) => {
+      if (startRef.current === null) startRef.current = timestamp;
+      const progress = Math.min((timestamp - startRef.current) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(eased * target));
+      if (progress < 1) frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, [target, duration]);
+
+  return value;
+};
+
+const BarraEstadistica = ({ nombre, porcentaje }) => {
+  const valorMostrado = useCountUp(porcentaje);
+  return (
+    <div className="progress-item">
+      <div className="progress-top">
+        <span>{nombre}</span>
+        <span className="valor-pct">{valorMostrado}%</span>
+      </div>
+      <div className="progress-bar">
+        <div
+          className="progress-fill"
+          style={{ "--pct": `${porcentaje}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
 export const DatosGenerales = () => {
   return (
     <section className="datos-dashboard">
+      <span className="dashboard-orb orb-1" aria-hidden="true" />
+      <span className="dashboard-orb orb-2" aria-hidden="true" />
+
       <header className="dashboard-header">
-        <span className="dashboard-subtitle">
-          Perfil Profesional
-        </span>
         <h2>Datos Generales</h2>
         <p>
           Un resumen rápido sobre mi perfil, experiencia,
           formación y habilidades actuales.
         </p>
       </header>
+
       <section className="dashboard-grid">
-        {tarjetas.map((item) => (
+        {tarjetas.map((item, i) => (
           <article
             key={item.titulo}
             className={`dashboard-card ${item.color}`}
+            style={{ "--i": i }}
           >
             <div className="card-icon">
               {item.icono}
@@ -115,18 +150,7 @@ export const DatosGenerales = () => {
         <div className="estadisticas">
           <h3>Estadísticas</h3>
           {estadisticas.map((item) => (
-            <div className="progress-item" key={item.nombre}>
-              <div className="progress-top">
-                <span>{item.nombre}</span>
-                <span>{item.porcentaje}%</span>
-              </div>
-              <div className="progress-bar">
-                <div
-                  className="progress-fill"
-                  style={{ width: `${item.porcentaje}%` }}
-                />
-              </div>
-            </div>
+            <BarraEstadistica key={item.nombre} {...item} />
           ))}
         </div>
         <div className="redes">
@@ -144,6 +168,7 @@ export const DatosGenerales = () => {
               <strong>LinkedIn</strong>
               <span>Conectar conmigo</span>
             </div>
+            <span className="red-arrow"><IconArrow /></span>
           </a>
           <a
             href="https://computrabajo.com"
@@ -158,6 +183,7 @@ export const DatosGenerales = () => {
               <strong>CompuTrabajo</strong>
               <span>Ver perfil</span>
             </div>
+            <span className="red-arrow"><IconArrow /></span>
           </a>
         </div>
       </section>

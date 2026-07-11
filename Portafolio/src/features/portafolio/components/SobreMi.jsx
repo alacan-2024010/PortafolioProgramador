@@ -37,26 +37,6 @@ const IconSpinner = () => (
   </svg>
 );
 
-const IconMail = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-    <rect x="3" y="5" width="18" height="14" rx="2" />
-    <path d="m3.5 6.5 8.5 6.5 8.5-6.5" />
-  </svg>
-);
-
-const IconGithub = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-    <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .26.18.58.69.48A10 10 0 0 0 12 2Z" />
-  </svg>
-);
-
-const IconPin = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
-    <path d="M12 21.5s7-6.1 7-11.5a7 7 0 1 0-14 0c0 5.4 7 11.5 7 11.5Z" />
-    <circle cx="12" cy="10" r="2.4" />
-  </svg>
-);
-
 const IconPhone = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
     <path d="M5 4h3.2l1.3 4-2 1.4a12 12 0 0 0 6.1 6.1l1.4-2 4 1.3V18a2 2 0 0 1-2.2 2A16 16 0 0 1 3 5.2 2 2 0 0 1 5 4Z" />
@@ -91,29 +71,48 @@ const IconRayo = () => (
   </svg>
 );
 
+// Logo real de una app, recortado a un solo color con mask-image
+// (así combina con la paleta celeste/morado en vez de traer el
+// rojo de Gmail o el blanco/negro de GitHub tal cual).
+const IconoMarca = ({ src, alt }) => (
+  <span
+    className="icono-marca"
+    role="img"
+    aria-label={alt}
+    style={{ "--icono-src": `url(${src})` }}
+  />
+);
+
 const CONTACTO_RAPIDO = [
   {
     id: "email",
     label: "alan2007lf@gmail.com",
     href: "mailto:alan2007lf@gmail.com",
-    icono: <IconMail />,
+    color: "celeste",
+    icono: (
+      <IconoMarca
+        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/gmail.svg"
+        alt="Gmail"
+      />
+    ),
   },
   {
     id: "github",
     label: "alacan-2024010",
     href: "https://github.com/alacan-2024010",
-    icono: <IconGithub />,
-  },
-  {
-    id: "ubicacion",
-    label: "Guatemala, Guatemala",
-    href: null,
-    icono: <IconPin />,
+    color: "morado",
+    icono: (
+      <IconoMarca
+        src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/github.svg"
+        alt="GitHub"
+      />
+    ),
   },
   {
     id: "telefono",
     label: "+502 5831 9270",
     href: "tel:+50258319270",
+    color: "verde",
     icono: <IconPhone />,
   },
 ];
@@ -128,8 +127,6 @@ const HABILIDADES = [
   { id: "problemas", label: "Resolver problemas", icono: <IconRompecabezas />, color: "morado" },
   { id: "proactivo", label: "Proactivo", icono: <IconRayo />, color: "verde" },
 ];
-
-// (todos los Icon... y las constantes CONTACTO_RAPIDO / HABILIDADES quedan igual que ya las tienes)
 
 export const SobreMi = () => {
   return (
@@ -151,7 +148,7 @@ export const SobreMi = () => {
             </h2>
 
             <p className="seccion-parrafo">
-              Soy Alan, desarrollador Full Stack Junior con enfoque en backend.
+              Soy Alan, desarrollador Junior Full Stack con enfoque en backend.
               Soy perseverante: no me rindo fácil ante un problema hasta
               resolverlo. Como programador, sé que nunca se deja de aprender,
               y esa es la razón por la que sigo creciendo cada día.
@@ -170,26 +167,25 @@ export const SobreMi = () => {
 
         <div className="sobremi-footer">
 
-          <div className="sobremi-contacto">
-            {CONTACTO_RAPIDO.map((c) =>
-              c.href ? (
+          <div className="contacto-columna">
+            <span className="contacto-titulo">
+              <span className="contacto-titulo-punto" />
+              Contáctame
+            </span>
+            <div className="sobremi-contacto">
+              {CONTACTO_RAPIDO.map((c) => (
                 <a
                   key={c.id}
                   href={c.href}
-                  className="contacto-item"
+                  className={`contacto-item contacto-item--${c.color}`}
                   target={c.href.startsWith("http") ? "_blank" : undefined}
                   rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 >
                   <span className="contacto-icono">{c.icono}</span>
                   <span className="contacto-label">{c.label}</span>
                 </a>
-              ) : (
-                <div key={c.id} className="contacto-item">
-                  <span className="contacto-icono">{c.icono}</span>
-                  <span className="contacto-label">{c.label}</span>
-                </div>
-              )
-            )}
+              ))}
+            </div>
           </div>
 
           <div className="sobremi-frase-wrap">

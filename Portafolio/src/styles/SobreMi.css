@@ -10,7 +10,9 @@
   min-height: 0;
   height: 100%;
   box-sizing: border-box;
-  padding: 64px 56px;
+  padding: 48px 56px;
+  /* El frame en sí ya NO scrollea: overflow:hidden se queda, para
+     que las esquinas/líneas de mira sigan clavadas como marco fijo. */
   overflow: hidden;
   background-color: #0a0f1a;
   background-image:
@@ -23,6 +25,34 @@
   background-size: auto, auto, auto, auto, 34px 34px, 34px 34px;
 }
 
+/* NUEVO: wrapper interno que sí scrollea. En tu HTML, mete
+   .sobremi-contenido adentro de un div con esta clase:
+   <div class="sobremi-frame">
+     ...frame-corner, frame-linea (sin tocar, quedan fijos)...
+     <div class="sobremi-scroll">
+       <div class="sobremi-contenido">...</div>
+     </div>
+   </div> */
+.sobremi-scroll {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(56, 189, 248, 0.4) transparent;
+}
+
+.sobremi-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.sobremi-scroll::-webkit-scrollbar-thumb {
+  background: rgba(56, 189, 248, 0.35);
+  border-radius: var(--radius-full, 999px);
+}
+.sobremi-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 /* ---- Esquinas tipo mira de cámara ---- */
 .frame-corner {
   position: absolute;
@@ -30,12 +60,20 @@
   height: 44px;
   border: 3px solid var(--color-celeste);
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
+  opacity: 0;
+  animation: corner-calibrar .55s ease forwards;
+  pointer-events: none;
 }
 
-.frame-corner--tl { top: 0; left: 0; border-right: none; border-bottom: none; }
-.frame-corner--tr { top: 0; right: 0; border-left: none; border-bottom: none; }
-.frame-corner--bl { bottom: 0; left: 0; border-right: none; border-top: none; }
-.frame-corner--br { bottom: 0; right: 0; border-left: none; border-top: none; }
+.frame-corner--tl { top: 0; left: 0; border-right: none; border-bottom: none; transform-origin: top left; animation-delay: .05s; }
+.frame-corner--tr { top: 0; right: 0; border-left: none; border-bottom: none; transform-origin: top right; animation-delay: .15s; }
+.frame-corner--bl { bottom: 0; left: 0; border-right: none; border-top: none; transform-origin: bottom left; animation-delay: .25s; }
+.frame-corner--br { bottom: 0; right: 0; border-left: none; border-top: none; transform-origin: bottom right; animation-delay: .35s; }
+
+@keyframes corner-calibrar {
+  from { opacity: 0; transform: scale(1.9); }
+  to { opacity: 1; transform: scale(1); }
+}
 
 /* ---- Líneas guía verticales ---- */
 .frame-linea {
@@ -57,31 +95,52 @@
 
 .sobremi-contenido {
   position: relative;
-  height: 100%;
+  min-height: 100%; /* CAMBIO: era height:100% + centrado forzado, que es
+    justo lo que provoca el recorte cuando el contenido es más alto que
+    el frame. Con min-height se centra SOLO si sobra espacio, y si no
+    sobra, crece hacia abajo y el frame se encarga de scrollear. */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  gap: 56px;
-  padding: 48px 20px 28px;
+  gap: 36px; /* CAMBIO: 56px -> 36px, menos aire entre bloques */
+  padding: 40px 20px 32px;
+
+  /* Desvanecido sutil arriba/abajo: sugiere "hay más contenido"
+     sin depender de que se vea el scrollbar. */
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    black 24px,
+    black calc(100% - 24px),
+    transparent 100%
+  );
 }
 
 .sobremi-top {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, auto);
   align-items: center;
-  gap: 56px;
+  gap: 40px; /* CAMBIO: 56px -> 40px */
   width: 100%;
 }
 
 .sobremi-footer {
   width: 100%;
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
+  margin-top: 16px;
+  /* CAMBIO: de columna centrada a dos columnas lado a lado:
+     lista de contactos a la izquierda, frase a la derecha. */
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 18px;
+  gap: 32px;
 }
 
 /* ---- Columna de texto ---- */
@@ -106,8 +165,9 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-celeste);
-  opacity: 0.75;
-  margin-bottom: 10px;
+  opacity: 0;
+  margin-bottom: 8px; /* CAMBIO: 10px -> 8px */
+  animation: sobremi-rise-dim .6s ease forwards .05s;
 }
 
 .sobremi-eyebrow::before {
@@ -123,7 +183,7 @@
   display: inline-block;
   font-family: var(--font-pixel);
   font-weight: 800;
-  font-size: clamp(2.5rem, 3.5vw, 3rem);
+  font-size: clamp(2.1rem, 3vw, 2.5rem); /* CAMBIO: tope 3rem -> 2.5rem */
   line-height: 1.1;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -132,81 +192,222 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
-  margin-bottom: 20px;
+  margin-bottom: 14px; /* CAMBIO: 20px -> 14px */
   width: fit-content;
+  clip-path: inset(0 100% 0 0);
+  animation: sobremi-typewriter 1.1s steps(24) forwards .2s;
+}
+
+.sobremi-frame .sobremi-titulo-pixel::after {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: .8em;
+  margin-left: 6px;
+  vertical-align: -0.1em;
+  background: var(--color-celeste);
+  opacity: 0;
+  animation:
+    sobremi-cursor-blink .8s steps(1) infinite 1.3s,
+    sobremi-cursor-hide .1s linear forwards 4.3s;
+}
+
+@keyframes sobremi-typewriter {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes sobremi-cursor-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes sobremi-cursor-hide {
+  to { opacity: 0; }
 }
 
 .seccion-parrafo {
-  font-size: 1.12rem;
-  line-height: 1.7;
+  font-size: 1.05rem; /* CAMBIO: 1.12rem -> 1.05rem */
+  line-height: 1.65;
   color: var(--color-text-secondary);
   margin-bottom: 0;
   max-width: 520px;
-  text-align: justify;
-  text-align-last: left;
+  text-align: left;
+  opacity: 0;
+  animation: sobremi-rise .6s ease forwards 1.35s;
 }
 
 /* ---- Contacto rápido ---- */
-.sobremi-contacto {
-  display: grid;
-  grid-template-columns: repeat(2, max-content);
-  justify-content: center;
+.contacto-columna {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* CAMBIO: "Contáctame" ya no es la etiqueta mono/uppercase chiquita;
+   ahora usa la misma tipografía redondeada y cálida que las labels
+   de contacto, con un punto pulsante tipo "disponible" en vez de
+   la rayita de acento. */
+.contacto-titulo {
+  display: inline-flex;
   align-items: center;
-  gap: 18px 48px;
+  gap: 10px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: sobremi-rise-dim .5s ease forwards 1.75s;
+}
+
+.contacto-titulo-punto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-verde);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, .55);
+  animation: contacto-pulso 2.2s ease-in-out infinite;
+}
+
+@keyframes contacto-pulso {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, .55); }
+  50% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+}
+
+.sobremi-contacto {
+  /* CAMBIO: ya no son cajitas independientes; es una lista con
+     separadores finos entre filas, sin fondo ni borde propio. */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   width: 100%;
 }
 
 .contacto-item {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   text-decoration: none;
   color: inherit;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  transition: padding-left var(--transition-fast), background var(--transition-fast);
+  opacity: 0;
+  animation: sobremi-rise .5s ease forwards;
+}
+
+.contacto-item:last-child {
+  border-bottom: none;
+}
+
+.contacto-item:nth-child(1) { animation-delay: 1.9s; }
+.contacto-item:nth-child(2) { animation-delay: 1.98s; }
+.contacto-item:nth-child(3) { animation-delay: 2.06s; }
+
+.contacto-item:hover {
+  padding-left: 10px;
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .contacto-icono {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  color: var(--color-celeste);
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-}
-
-.contacto-icono svg {
-  width: 13px;
-  height: 13px;
+  border-radius: 50%; /* CAMBIO: cuadrado con borde -> círculo de color, sin aro gris */
+  overflow: hidden;
+  transition: transform var(--transition-fast);
 }
 
 .contacto-item:hover .contacto-icono {
-  border-color: var(--color-celeste);
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+  transform: scale(1.1);
+}
+
+.contacto-icono svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Cada contacto tiene su propio color de acento, igual que la
+   grilla de habilidades, en vez de un mismo gris para todos. */
+.contacto-item--celeste .contacto-icono { background: rgba(56, 189, 248, 0.14); color: var(--color-celeste); }
+.contacto-item--morado .contacto-icono { background: rgba(168, 85, 247, 0.14); color: var(--color-morado); }
+.contacto-item--verde .contacto-icono { background: rgba(34, 197, 94, 0.14); color: var(--color-verde); }
+
+.contacto-item--celeste:hover { box-shadow: inset 2px 0 0 var(--color-celeste); }
+.contacto-item--morado:hover { box-shadow: inset 2px 0 0 var(--color-morado); }
+.contacto-item--verde:hover { box-shadow: inset 2px 0 0 var(--color-verde); }
+
+/* Si en vez de un SVG monocromo ponés el logo real de la app
+   (Gmail, GitHub, etc.) como <img>, que llene el círculo sin
+   deformarse: */
+.contacto-icono img {
+  width: 55%;
+  height: 55%;
+  object-fit: contain;
+}
+
+/* Logo real de la app recortado a un solo color con mask-image,
+   para que combine con la paleta en vez de traer el rojo/blanco
+   de la marca original. Toma el color del contacto--celeste/morado/verde
+   automáticamente vía currentColor.
+   Uso: <span class="contacto-icono">
+          <span class="icono-marca" style="--icono-src: url('URL_DEL_SVG')"></span>
+        </span> */
+.icono-marca {
+  width: 55%;
+  height: 55%;
+  background-color: currentColor;
+  -webkit-mask-image: var(--icono-src);
+  mask-image: var(--icono-src);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .contacto-label {
   font-family: 'Fredoka', sans-serif;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.92rem;
   color: var(--color-text-secondary);
   white-space: nowrap;
+  transition: color var(--transition-fast);
+}
+
+.contacto-item:hover .contacto-label {
+  color: var(--color-text-primary);
 }
 
 /* ---- Frase de cierre ---- */
 .sobremi-frase-wrap {
   position: relative;
-  display: inline-flex;
+  /* CAMBIO: ya NO se fuerza a height:100% (eso era lo que la
+     inflaba para igualar la lista de 4 contactos). Se centra
+     verticalmente en su columna pero conserva su alto natural,
+     compacto, como antes. */
+  display: flex;
   align-items: center;
-  margin: 0 auto;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  align-self: center;
+  margin: 0;
+  opacity: 0;
+  animation: sobremi-rise .6s ease forwards 2.4s;
 }
 
 .sobremi-frase {
   position: relative;
-  padding: 22px 34px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px 28px;
   border-radius: 14px;
   background: linear-gradient(
     135deg,
@@ -216,11 +417,21 @@
   box-shadow: inset 0 0 0 1px rgba(56, 189, 248, .25);
   font-family: var(--font-pixel);
   font-weight: 700;
-  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
   color: var(--color-celeste);
   text-align: center;
-  margin: 0 auto;
-  max-width: 520px;
+  margin: 0;
+  max-width: none; /* CAMBIO: ya no se limita a 520px, llena la columna */
+  animation: sobremi-frase-glow 3.2s ease-in-out infinite 3s;
+}
+
+@keyframes sobremi-frase-glow {
+  0%, 100% {
+    box-shadow: inset 0 0 0 1px rgba(56, 189, 248, .25), 0 0 0 rgba(56, 189, 248, 0);
+  }
+  50% {
+    box-shadow: inset 0 0 0 1px rgba(56, 189, 248, .45), 0 0 28px rgba(56, 189, 248, .3);
+  }
 }
 
 .sobremi-frase::before,
@@ -272,24 +483,45 @@
 .sobremi-lista {
   display: grid;
   grid-template-columns: repeat(2, minmax(120px, 1fr));
-  gap: 22px 26px;
+  gap: 16px 20px; /* CAMBIO: 22px 26px -> 16px 20px */
   align-self: start;
 }
 
 .lista-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 12px; /* CAMBIO: 14px -> 12px */
+  padding: 10px 14px; /* CAMBIO: 12px 16px -> 10px 14px */
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform .3s, border-color .3s, background .3s, box-shadow .3s;
+  opacity: 0;
+  animation: sobremi-rise .55s ease forwards;
 }
 
+.lista-item:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.lista-item:nth-child(1) { animation-delay: .9s; }
+.lista-item:nth-child(2) { animation-delay: .98s; }
+.lista-item:nth-child(3) { animation-delay: 1.06s; }
+.lista-item:nth-child(4) { animation-delay: 1.14s; }
+.lista-item:nth-child(5) { animation-delay: 1.22s; }
+.lista-item:nth-child(6) { animation-delay: 1.3s; }
+.lista-item:nth-child(7) { animation-delay: 1.38s; }
+.lista-item:nth-child(8) { animation-delay: 1.46s; }
+
 .lista-item-icono {
-  width: 46px;
-  height: 46px;
+  width: 40px; /* CAMBIO: 46px -> 40px */
+  height: 40px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 13px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   transition: transform var(--transition-fast), border-color var(--transition-fast),
@@ -297,20 +529,20 @@
 }
 
 .lista-item-icono svg {
-  width: 20px;
-  height: 20px;
+  width: 18px; /* CAMBIO: 20px -> 18px */
+  height: 18px;
 }
 
 .lista-item-label {
   font-family: var(--font-mono);
-  font-size: 13.5px;
+  font-size: 13px; /* CAMBIO: 13.5px -> 13px */
   letter-spacing: 0.02em;
   color: var(--color-text-primary);
   line-height: 1.3;
 }
 
 .lista-item:hover .lista-item-icono {
-  transform: translateX(4px) scale(1.06);
+  transform: rotate(-6deg) scale(1.08);
 }
 
 .lista-item--celeste .lista-item-icono { color: var(--color-celeste); }
@@ -337,6 +569,47 @@
   box-shadow: 0 0 16px rgba(34, 197, 94, 0.35);
 }
 
+@keyframes sobremi-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes sobremi-rise-dim {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: .75; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .frame-corner,
+  .sobremi-eyebrow,
+  .seccion-parrafo,
+  .lista-item,
+  .contacto-item,
+  .sobremi-frase-wrap,
+  .sobremi-frase,
+  .sobremi-frame .sobremi-titulo-pixel,
+  .sobremi-frame .sobremi-titulo-pixel::after,
+  .sobremi-frase-wrap .frame-deco--frase {
+    animation: none !important;
+  }
+  .frame-corner,
+  .sobremi-eyebrow,
+  .seccion-parrafo,
+  .lista-item,
+  .contacto-item,
+  .sobremi-frase-wrap {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sobremi-eyebrow { opacity: .75 !important; }
+  .sobremi-frame .sobremi-titulo-pixel {
+    clip-path: inset(0 0 0 0) !important;
+  }
+  .sobremi-frame .sobremi-titulo-pixel::after {
+    display: none;
+  }
+}
+
 /* ---- Responsive ---- */
 @media (max-width: 900px) {
   .sobremi-frame {
@@ -360,8 +633,25 @@
     height: auto;
   }
 
+  /* CAMBIO: el footer de dos columnas (contactos | frase) se apila
+     en una sola columna en pantallas angostas, donde ya no hay
+     ancho cómodo para tenerlos lado a lado. */
+  .sobremi-footer {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .sobremi-contacto {
+    align-items: center;
+  }
+
+  .contacto-item {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
   .sobremi-frase-wrap {
-    margin-top: 28px;
+    margin-top: 4px;
   }
 
   .sobremi-lista {
