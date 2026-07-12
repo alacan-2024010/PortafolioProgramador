@@ -720,9 +720,6 @@
     font-size: 11px;
   }
 
-  .sobremi-frase-wrap .frame-deco--frase {
-    display: none;
-  }
 }
 
 @media (max-width: 420px) {

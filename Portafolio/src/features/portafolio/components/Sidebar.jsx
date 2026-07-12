@@ -25,24 +25,23 @@ export const Sidebar = ({
 
   return (
     <>
-      <div className="sidebar-topbar-mobile">
-        <button
-          className="sidebar-toggle"
-          onClick={() => setAbierto((v) => !v)}
-          aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
-          aria-expanded={abierto}
-        >
-          {abierto ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          ) : (
+      {/* La topbar con el botón solo se muestra cuando el sidebar está CERRADO.
+          Al abrirse, el overlay + el propio panel se encargan de cerrarlo,
+          así que el botón ya no queda flotando encima del panel. */}
+      {!abierto && (
+        <div className="sidebar-topbar-mobile">
+          <button
+            className="sidebar-toggle"
+            onClick={() => setAbierto(true)}
+            aria-label="Abrir menú"
+            aria-expanded={abierto}
+          >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M4 7h16M4 12h16M4 17h16" />
             </svg>
-          )}
-        </button>
-      </div>
+          </button>
+        </div>
+      )}
 
       {/* Overlay oscuro detrás del panel, cierra al tocar afuera */}
       {abierto && (
