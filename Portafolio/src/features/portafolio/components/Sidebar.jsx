@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "../../../styles/Sidebar.css";
 
 const SECCIONES = [
@@ -15,43 +16,75 @@ export const Sidebar = ({
   activeSection,
   onSectionClick,
 }) => {
-  return (
-    <aside className="sidebar">
-      <div className="sidebar-perfil">
-        <div className="sidebar-foto-wrap">
-          {fotoUrl ? (
-            <img src={fotoUrl} alt={nombre} className="sidebar-foto-img" />
-          ) : (
-            <div className="sidebar-foto-placeholder">
-              <svg
-                width="34"
-                height="34"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-              >
-                <circle cx="12" cy="8" r="3.6" />
-                <path d="M4.5 20.2c1.4-3.6 4.3-5.4 7.5-5.4s6.1 1.8 7.5 5.4" />
-              </svg>
-            </div>
-          )}
-        </div>
-        <h1 className="sidebar-nombre">{nombre}</h1>
-      </div>
+  const [abierto, setAbierto] = useState(false);
 
-      <nav className="sidebar-nav">
-        {SECCIONES.map((s) => (
-          <button
-            key={s.id}
-            className={`sidebar-item ${activeSection === s.id ? "activo" : ""}`}
-            onClick={() => onSectionClick(s.id)}
-          >
-            <span className="sidebar-num">{s.numero}</span>
-            <span className="sidebar-label">{s.label}</span>
-          </button>
-        ))}
-      </nav>
-    </aside>
+  const handleClick = (id) => {
+    onSectionClick(id);
+    setAbierto(false); // al elegir una sección, cierra el panel en móvil
+  };
+
+  return (
+    <>
+      {/* Botón hamburguesa: solo visible en móvil (ver CSS) */}
+      <button
+        className="sidebar-toggle"
+        onClick={() => setAbierto((v) => !v)}
+        aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
+        aria-expanded={abierto}
+      >
+        {abierto ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M6 6l12 12M18 6L6 18" />
+          </svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        )}
+      </button>
+
+      {/* Overlay oscuro detrás del panel, cierra al tocar afuera */}
+      {abierto && (
+        <div className="sidebar-overlay" onClick={() => setAbierto(false)} />
+      )}
+
+      <aside className={`sidebar ${abierto ? "sidebar--abierto" : ""}`}>
+        <div className="sidebar-perfil">
+          <div className="sidebar-foto-wrap">
+            {fotoUrl ? (
+              <img src={fotoUrl} alt={nombre} className="sidebar-foto-img" />
+            ) : (
+              <div className="sidebar-foto-placeholder">
+                <svg
+                  width="34"
+                  height="34"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                >
+                  <circle cx="12" cy="8" r="3.6" />
+                  <path d="M4.5 20.2c1.4-3.6 4.3-5.4 7.5-5.4s6.1 1.8 7.5 5.4" />
+                </svg>
+              </div>
+            )}
+          </div>
+          <h1 className="sidebar-nombre">{nombre}</h1>
+        </div>
+
+        <nav className="sidebar-nav">
+          {SECCIONES.map((s) => (
+            <button
+              key={s.id}
+              className={`sidebar-item ${activeSection === s.id ? "activo" : ""}`}
+              onClick={() => handleClick(s.id)}
+            >
+              <span className="sidebar-num">{s.numero}</span>
+              <span className="sidebar-label">{s.label}</span>
+            </button>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 };

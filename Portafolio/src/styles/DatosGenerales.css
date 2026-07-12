@@ -78,23 +78,17 @@ CONTENEDOR
 .datos-container{
     width:100%;
     height:100%;
-
     position:relative;
-
     overflow:hidden;
-
     padding:clamp(16px,2vw,28px);
-
     display:flex;
     flex-direction:column;
     justify-content:space-between;
     gap:clamp(12px,1.4vw,18px);
-
     background:
         radial-gradient(circle at 85% 0%, rgba(56,189,248,.12), transparent 55%),
         radial-gradient(circle at 10% 100%, rgba(168,85,247,.14), transparent 55%),
         linear-gradient(160deg, #0b1120 0%, #10182b 45%, #140f24 100%);
-
     border-radius:22px;
 
 }
@@ -103,18 +97,12 @@ CONTENEDOR
 .datos-container::after,
 .datos-container .corner-tl,
 .datos-container .corner-br{
-
     content:"";
-
     position:absolute;
-
     width:34px;
     height:34px;
-
     z-index:3;
-
     pointer-events:none;
-
 }
 
 .datos-container::before{
@@ -1017,80 +1005,261 @@ FOOTER
 RESPONSIVE
 ==========================*/
 
+/* Tablet / pantallas medianas: 2 columnas de tarjetas, paneles apilados */
 @media (max-width:1100px){
 
     .cards-grid{
-
         grid-template-columns:repeat(2,1fr);
-
     }
 
     .bottom-grid{
-
         grid-template-columns:1fr;
-
     }
 
 }
 
+/* Tablet chica / celular grande */
 @media (max-width:768px){
 
     .datos-container{
-
         padding:16px;
+        border-radius:18px;
+        gap:14px;
 
+        /* el contenedor original usaba height:100% + overflow:hidden,
+           lo cual en celular corta el contenido porque no le sobra alto
+           para las 4 tarjetas + 2 paneles apilados. En móvil dejamos que
+           el contenido defina su propia altura y habilitamos scroll vertical. */
+        height:auto;
+        max-height:100dvh;
+        overflow-y:auto;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    /* las esquinas decorativas se reducen para no chocar con el contenido */
+    .datos-container::before,
+    .datos-container::after{
+        width:24px;
+        height:24px;
     }
 
     .cards-grid{
-
         grid-template-columns:1fr;
-
+        gap:10px;
     }
 
     .datos-container .datos-header h2{
-
         font-size:1.8rem;
+        margin-bottom:10px;
+    }
 
+    .datos-header h2::after{
+        bottom:-6px;
+    }
+
+    .bottom-grid{
+        gap:12px;
+    }
+
+    .stats-panel,
+    .social-panel{
+        padding:14px;
     }
 
     .social-card{
-
         padding:10px 12px;
-
     }
 
+    /* los orbes decorativos se reducen para que no se salgan del recuadro en pantallas angostas */
+    .orb-1{
+        width:220px;
+        height:220px;
+        top:-70px;
+    }
+
+    .orb-2{
+        width:200px;
+        height:200px;
+        bottom:-70px;
+    }
+
+    /* scrollbar delgada acorde al tema, solo para navegadores basados en WebKit */
+    .datos-container::-webkit-scrollbar{
+        width:5px;
+    }
+
+    .datos-container::-webkit-scrollbar-thumb{
+        background:linear-gradient(180deg, var(--color-celeste), var(--color-morado));
+        border-radius:999px;
+    }
+
+    /* ---------------------------------------------------------------
+       FIX: texto cortado en vez de saltar de línea.
+       En flex/grid, los items tienen min-width:auto por defecto, así
+       que si un texto era más largo que el espacio disponible, en vez
+       de envolver a la siguiente línea se desbordaba del contenedor.
+       Con overflow-x:hidden en .datos-container ese desborde quedaba
+       recortado en seco (de ahí las palabras "cortadas"). Forzamos
+       min-width:0 en los contenedores flex/grid para que sí puedan
+       encogerse, y overflow-wrap en los textos para que salten de línea
+       si aún así no caben.
+    ------------------------------------------------------------------ */
+    .info-card,
+    .card-content,
+    .social-card,
+    .social-info,
+    .progress-card,
+    .progress-header,
+    .stats-panel,
+    .social-panel{
+        min-width:0;
+    }
+
+    .card-content h3,
+    .card-content span,
+    .datos-header p,
+    .datos-header h2,
+    .social-info strong,
+    .social-info span,
+    .progress-header span,
+    .datos-footer span{
+        overflow-wrap:break-word;
+        word-break:break-word;
+        hyphens:auto;
+    }
+
+    /* el nombre de LinkedIn/Instagram/WhatsApp no necesita partirse a la
+       mitad; que primero encoja el texto secundario antes de que el
+       título salte de línea de forma rara */
+    .social-info strong{
+        white-space:normal;
+    }
 }
 
+/* Celulares estándar */
 @media (max-width:500px){
 
+    .datos-container{
+        padding:14px;
+        border-radius:16px;
+    }
+
+    .mini-title{
+        font-size:.62rem;
+        letter-spacing:.18em;
+    }
+
+    .datos-container .datos-header h2{
+        font-size:1.5rem;
+        line-height:1.15;
+    }
+
     .datos-header p{
-
         font-size:.78rem;
+        line-height:1.5;
+    }
 
+    /* tarjetas superiores: icono y texto un poco más compactos */
+    .info-card{
+        padding:12px 14px;
+    }
+
+    .card-icon{
+        width:36px;
+        height:36px;
+        margin-bottom:8px;
+    }
+
+    .card-icon svg{
+        width:17px;
+        height:17px;
+    }
+
+    .card-content span{
+        font-size:.66rem;
+        letter-spacing:.1em;
+    }
+
+    .card-content h3{
+        font-size:.84rem;
     }
 
     .panel-title h3{
-
         font-size:.8rem;
+    }
 
+    .panel-title span{
+        width:8px;
+        height:8px;
+    }
+
+    .stats-panel,
+    .social-panel{
+        padding:12px;
     }
 
     .progress-header span{
-
         font-size:.75rem;
+    }
 
+    .progress-header strong{
+        font-size:.75rem;
+    }
+
+    .progress-track{
+        height:7px;
+    }
+
+    .social-icon{
+        width:32px;
+        height:32px;
+    }
+
+    .social-icon svg{
+        width:14px;
+        height:14px;
     }
 
     .social-info strong{
-
         font-size:.78rem;
-
     }
 
     .social-info span{
-
         font-size:.62rem;
-
     }
 
+    .datos-footer span{
+        font-size:.72rem;
+    }
+
+    .orb-1,
+    .orb-2{
+        display:none; /* en celular aportan poco y sólo consumen rendimiento */
+    }
+}
+
+/* Celulares pequeños (iPhone SE y similares) */
+@media (max-width:360px){
+
+    .datos-container .datos-header h2{
+        font-size:1.3rem;
+    }
+
+    .card-content h3{
+        font-size:.78rem;
+    }
+
+    .social-info span{
+        font-size:.58rem;
+    }
+}
+
+/* Evita que el contenido se corte por overflow horizontal en pantallas muy angostas */
+@media (max-width:768px){
+    .datos-container,
+    .cards-grid,
+    .bottom-grid{
+        max-width:100%;
+    }
 }

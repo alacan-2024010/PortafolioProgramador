@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "../../../styles/DatosGenerales.css";
 
-/* ===========================
-   ICONOS
-=========================== */
-
 const IconLocation = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
     <path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z" />
@@ -71,10 +67,6 @@ const IconWork = () => (
   </svg>
 );
 
-/* ===========================
-   TARJETAS
-=========================== */
-
 const datos = [
   {
     titulo: "Edad",
@@ -102,14 +94,11 @@ const datos = [
   }
 ];
 
-/* ===========================
-   ESTADÍSTICAS
-=========================== */
 
 const estadisticas = [
   {
     nombre: "Backend",
-    porcentaje: 90
+    porcentaje: 80
   },
   {
     nombre: "Frontend",
@@ -117,7 +106,7 @@ const estadisticas = [
   },
   {
     nombre: "Bases de Datos",
-    porcentaje: 85
+    porcentaje: 90
   },
   {
     nombre: "Aprendizaje",
@@ -125,9 +114,6 @@ const estadisticas = [
   }
 ];
 
-/* ===========================
-   REDES
-=========================== */
 
 const redes = [
   {
@@ -179,9 +165,6 @@ const useCountUp = (target, duration = 1200) => {
   return value;
 };
 
-/* ===========================
-   TARJETA SUPERIOR
-=========================== */
 
 const InfoCard = ({ titulo, valor, icono, color }) => {
   return (
@@ -200,10 +183,6 @@ const InfoCard = ({ titulo, valor, icono, color }) => {
     </article>
   );
 };
-
-/* ===========================
-   BARRA DE PROGRESO
-=========================== */
 
 const ProgressBar = ({ nombre, porcentaje }) => {
 
@@ -239,10 +218,6 @@ const ProgressBar = ({ nombre, porcentaje }) => {
   );
 
 };
-
-/* ===========================
-   TARJETA RED SOCIAL
-=========================== */
 
 const SocialCard = ({ nombre, detalle, href, icono }) => {
 
@@ -302,10 +277,6 @@ const useParallax = () => {
 
 };
 
-/* ===========================
-   COMPONENTE PRINCIPAL
-=========================== */
-
 export const DatosGenerales = () => {
 
   const panelRef = useParallax();
@@ -333,8 +304,7 @@ export const DatosGenerales = () => {
 
         <p>
           Aquí encontrarás un resumen de mi perfil como
-          desarrollador, mi experiencia, formación y
-          las tecnologías con las que trabajo actualmente.
+          desarrollador, mi experiencia y formación.
         </p>
 
       </header>
