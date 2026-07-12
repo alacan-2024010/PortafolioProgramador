@@ -12,7 +12,7 @@ const SECCIONES = [
 
 export const Sidebar = ({
   nombre = "Alan Francisco Lacán Flores",
-  fotoUrl = null, // pásale una URL cuando tengas la foto
+  fotoUrl = null, 
   activeSection,
   onSectionClick,
 }) => {
@@ -20,28 +20,29 @@ export const Sidebar = ({
 
   const handleClick = (id) => {
     onSectionClick(id);
-    setAbierto(false); // al elegir una sección, cierra el panel en móvil
+    setAbierto(false); 
   };
 
   return (
     <>
-      {/* Botón hamburguesa: solo visible en móvil (ver CSS) */}
-      <button
-        className="sidebar-toggle"
-        onClick={() => setAbierto((v) => !v)}
-        aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
-        aria-expanded={abierto}
-      >
-        {abierto ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M6 6l12 12M18 6L6 18" />
-          </svg>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        )}
-      </button>
+      <div className="sidebar-topbar-mobile">
+        <button
+          className="sidebar-toggle"
+          onClick={() => setAbierto((v) => !v)}
+          aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={abierto}
+        >
+          {abierto ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          )}
+        </button>
+      </div>
 
       {/* Overlay oscuro detrás del panel, cierra al tocar afuera */}
       {abierto && (

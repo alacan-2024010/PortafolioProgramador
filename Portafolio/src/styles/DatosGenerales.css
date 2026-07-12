@@ -208,10 +208,19 @@ HEADER
 ==========================*/
 
 .datos-header{
+    margin-top:34px;
+    text-align:center;
+}
 
-    position:relative;
-    z-index:2;
+.datos-header p{
+    max-width:100%;
+}
 
+.datos-header h2::after{
+    left:0;
+    right:0;
+    margin:0 auto;
+    transform:none;
 }
 
 .mini-title{
@@ -1001,10 +1010,6 @@ FOOTER
 
 }
 
-/*==========================
-RESPONSIVE
-==========================*/
-
 /* Tablet / pantallas medianas: 2 columnas de tarjetas, paneles apilados */
 @media (max-width:1100px){
 
@@ -1025,11 +1030,6 @@ RESPONSIVE
         padding:16px;
         border-radius:18px;
         gap:14px;
-
-        /* el contenedor original usaba height:100% + overflow:hidden,
-           lo cual en celular corta el contenido porque no le sobra alto
-           para las 4 tarjetas + 2 paneles apilados. En móvil dejamos que
-           el contenido defina su propia altura y habilitamos scroll vertical. */
         height:auto;
         max-height:100dvh;
         overflow-y:auto;
@@ -1037,11 +1037,40 @@ RESPONSIVE
         -webkit-overflow-scrolling:touch;
     }
 
-    /* las esquinas decorativas se reducen para no chocar con el contenido */
     .datos-container::before,
     .datos-container::after{
-        width:24px;
-        height:24px;
+        width:18px;
+        height:18px;
+    }
+
+    .datos-container::before{
+        top:10px;
+        left:10px;
+    }
+
+    .datos-container::after{
+        content:none;
+    }
+
+    .datos-footer{
+        position:relative;
+        padding-bottom:28px;
+    }
+
+    .datos-footer::after{
+        content:"";
+        position:absolute;
+        bottom:0;
+        right:0;
+        width:18px;
+        height:18px;
+        border-bottom:2px solid var(--color-morado);
+        border-right:2px solid var(--color-morado);
+        border-bottom-right-radius:10px;
+        opacity:.75;
+        filter:drop-shadow(0 0 6px rgba(168,85,247,.5));
+        pointer-events:none;
+        z-index:3;
     }
 
     .cards-grid{
@@ -1071,7 +1100,6 @@ RESPONSIVE
         padding:10px 12px;
     }
 
-    /* los orbes decorativos se reducen para que no se salgan del recuadro en pantallas angostas */
     .orb-1{
         width:220px;
         height:220px;
@@ -1084,7 +1112,6 @@ RESPONSIVE
         bottom:-70px;
     }
 
-    /* scrollbar delgada acorde al tema, solo para navegadores basados en WebKit */
     .datos-container::-webkit-scrollbar{
         width:5px;
     }
@@ -1094,17 +1121,6 @@ RESPONSIVE
         border-radius:999px;
     }
 
-    /* ---------------------------------------------------------------
-       FIX: texto cortado en vez de saltar de línea.
-       En flex/grid, los items tienen min-width:auto por defecto, así
-       que si un texto era más largo que el espacio disponible, en vez
-       de envolver a la siguiente línea se desbordaba del contenedor.
-       Con overflow-x:hidden en .datos-container ese desborde quedaba
-       recortado en seco (de ahí las palabras "cortadas"). Forzamos
-       min-width:0 en los contenedores flex/grid para que sí puedan
-       encogerse, y overflow-wrap en los textos para que salten de línea
-       si aún así no caben.
-    ------------------------------------------------------------------ */
     .info-card,
     .card-content,
     .social-card,
@@ -1129,9 +1145,6 @@ RESPONSIVE
         hyphens:auto;
     }
 
-    /* el nombre de LinkedIn/Instagram/WhatsApp no necesita partirse a la
-       mitad; que primero encoja el texto secundario antes de que el
-       título salte de línea de forma rara */
     .social-info strong{
         white-space:normal;
     }
@@ -1160,7 +1173,6 @@ RESPONSIVE
         line-height:1.5;
     }
 
-    /* tarjetas superiores: icono y texto un poco más compactos */
     .info-card{
         padding:12px 14px;
     }
@@ -1235,11 +1247,10 @@ RESPONSIVE
 
     .orb-1,
     .orb-2{
-        display:none; /* en celular aportan poco y sólo consumen rendimiento */
+        display:none; 
     }
 }
 
-/* Celulares pequeños (iPhone SE y similares) */
 @media (max-width:360px){
 
     .datos-container .datos-header h2{
@@ -1255,7 +1266,6 @@ RESPONSIVE
     }
 }
 
-/* Evita que el contenido se corte por overflow horizontal en pantallas muy angostas */
 @media (max-width:768px){
     .datos-container,
     .cards-grid,

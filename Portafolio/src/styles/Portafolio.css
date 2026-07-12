@@ -40,8 +40,14 @@ html, body, #root {
 
 @media (max-width: 900px) {
 
-  .portafolio-seccion > *:first-child {
-    padding-top: 64px !important;
-    box-sizing: border-box !important;
+  .portafolio-layout {
+    flex-direction: column;
+    height: 100dvh;
+  }
+
+  .portafolio-vista {
+    flex: 1;
+    min-height: 0;
+    height: auto;
   }
 }
