@@ -8,10 +8,6 @@
     --text2:#c7d6e8;
 }
 
-/*==========================
-ANIMACIONES DE ENTRADA
-==========================*/
-
 @keyframes fadeInUp{
     from{
         opacity:0;
@@ -70,10 +66,6 @@ ANIMACIONES DE ENTRADA
         transform:scale(1.25);
     }
 }
-
-/*==========================
-CONTENEDOR
-==========================*/
 
 .datos-container{
     width:100%;
@@ -137,10 +129,6 @@ CONTENEDOR
 
 }
 
-/*==========================
-GRID DE FONDO
-==========================*/
-
 .grid-bg{
     position:absolute;
     inset:0;
@@ -153,10 +141,6 @@ GRID DE FONDO
 
     background-size:38px 38px;
 }
-
-/*==========================
-ORBES
-==========================*/
 
 .bg-orb{
     position:absolute;
@@ -203,12 +187,8 @@ ORBES
 
 }
 
-/*==========================
-HEADER
-==========================*/
-
 .datos-header{
-    margin-top:34px;
+    margin-top:8px;
     text-align:center;
 }
 
@@ -347,26 +327,21 @@ HEADER
 }
 
 .datos-header p{
-
     max-width:720px;
+    width:100%;
+    margin:0 auto;
 
     color:var(--text2);
-
     line-height:1.4;
-
     font-family:"Fredoka",sans-serif;
-
     font-size:.94rem;
+
+    text-align:center;
 
     opacity:0;
     animation:fadeInUp .65s ease forwards;
     animation-delay:.25s;
-
 }
-
-/*==========================
-TARJETAS SUPERIORES
-==========================*/
 
 .cards-grid{
     position:relative;
@@ -421,10 +396,6 @@ TARJETAS SUPERIORES
 .cards-grid .info-card:nth-child(3){ animation-delay:.3s; }
 .cards-grid .info-card:nth-child(4){ animation-delay:.4s; }
 
-/*==========================
-GLOW
-==========================*/
-
 .card-glow{
 
     position:absolute;
@@ -450,10 +421,6 @@ GLOW
     opacity:.45;
 
 }
-
-/*==========================
-COLORES
-==========================*/
 
 .info-card.cyan{
 
@@ -503,10 +470,6 @@ COLORES
 
 }
 
-/*==========================
-ICONO
-==========================*/
-
 .card-icon{
 
     width:42px;
@@ -548,10 +511,6 @@ ICONO
 
 }
 
-/*==========================
-CONTENIDO
-==========================*/
-
 .card-content{
 
     display:flex;
@@ -577,10 +536,6 @@ CONTENIDO
     font-family:"Fredoka",sans-serif;
 }
 
-/*==========================
-CONTENEDOR INFERIOR
-==========================*/
-
 .bottom-grid{
     position: relative;
     z-index: 2;
@@ -591,10 +546,6 @@ CONTENEDOR INFERIOR
 
     gap:18px;
 }
-
-/*==========================
-PANELES
-==========================*/
 
 .stats-panel,
 .social-panel{
@@ -642,10 +593,6 @@ PANELES
 
 }
 
-/*==========================
-TÍTULOS
-==========================*/
-
 .panel-title{
 
     display:flex;
@@ -684,10 +631,6 @@ TÍTULOS
     letter-spacing:.08em;
 
 }
-
-/*==========================
-ESTADÍSTICAS
-==========================*/
 
 .stats-list{
 
@@ -777,10 +720,6 @@ ESTADÍSTICAS
 
 }
 
-/*==========================
-EFECTO BRILLO
-==========================*/
-
 .progress-shine{
 
     position:absolute;
@@ -815,10 +754,6 @@ EFECTO BRILLO
     }
 
 }
-
-/*==========================
-REDES SOCIALES
-==========================*/
 
 .social-list{
 
