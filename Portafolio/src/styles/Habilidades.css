@@ -40,6 +40,11 @@
         radial-gradient(circle at 10% 100%, rgba(168,85,247,.14), transparent 55%),
         linear-gradient(160deg, #0b1120 0%, #10182b 45%, #140f24 100%);
     border-radius:22px;
+    box-sizing:border-box;
+}
+
+.habilidades-container *{
+    box-sizing:border-box;
 }
 
 .habilidades-container .bg-orb{
@@ -80,6 +85,7 @@
     position:relative;
     z-index:2;
     text-align:center;
+    padding:0 8px;
 }
 
 .habilidades-header h2{
@@ -88,7 +94,7 @@
     font-family:'Orbitron', sans-serif;
     font-weight:800;
     letter-spacing:.02em;
-    font-size:clamp(2.6rem,4.2vw,4rem);
+    font-size:clamp(2rem,8vw,4rem);
     margin-bottom:12px;
     background:linear-gradient(90deg, var(--color-celeste), var(--color-morado), var(--color-celeste));
     background-size:200% auto;
@@ -109,7 +115,7 @@
     line-height:1.6;
     font-family:"Fredoka", sans-serif;
     font-weight:600;
-    font-size:clamp(1.05rem,1.4vw,1.3rem);
+    font-size:clamp(.95rem,3.6vw,1.3rem);
     letter-spacing:.01em;
     opacity:0;
     animation:habilidades-fade-up .7s ease forwards .25s;
@@ -146,6 +152,11 @@
 }
 
 .habilidades-carrusel:hover .habilidades-track{
+    animation-play-state:paused;
+}
+
+/* En touch/móvil no hay hover real: permitir pausar con :active/tap sostenido */
+.habilidades-carrusel:active .habilidades-track{
     animation-play-state:paused;
 }
 
@@ -271,18 +282,38 @@
     color:var(--skill-color);
 }
 
+/* Tablets y móviles grandes */
 @media (max-width:768px){
     .habilidades-container{
+        height:100%;
+        max-height:100%;
+        overflow-y:auto;
+        overflow-x:hidden;
+        -webkit-overflow-scrolling:touch;
         padding:22px 16px;
-        gap:26px;
+        gap:22px;
+        justify-content:center;
+        scrollbar-width:none;
+    }
+
+    .habilidades-container::-webkit-scrollbar{
+        display:none;
     }
 
     .habilidades-header h2{
-        font-size:1.7rem;
+        font-size:clamp(1.8rem,7vw,2.4rem);
     }
 
     .habilidades-header p{
-        font-size:.92rem;
+        font-size:.95rem;
+    }
+
+    .habilidades-carrusel{
+        padding:40px 0 44px;
+    }
+
+    .habilidades-track{
+        gap:18px;
     }
 
     .skill-card{
@@ -308,10 +339,119 @@
 
     .skill-nombre{
         font-size:1rem;
+        min-height:2.2em;
     }
 
     .skill-nivel{
         font-size:.85rem;
+    }
+}
+
+/* Móviles medianos */
+@media (max-width:480px){
+    .habilidades-container{
+        padding:18px 12px;
+        gap:20px;
+        border-radius:16px;
+    }
+
+    .habilidades-header{
+        padding:0 4px;
+    }
+
+    .habilidades-header h2{
+        font-size:clamp(1.5rem,8vw,1.9rem);
+        margin-bottom:8px;
+    }
+
+    .habilidades-header p{
+        font-size:.85rem;
+        line-height:1.5;
+    }
+
+    .habilidades-carrusel{
+        padding:28px 0 32px;
+        mask-image:linear-gradient(
+            90deg,
+            transparent 0,
+            black 3%,
+            black 97%,
+            transparent 100%
+        );
+        -webkit-mask-image:linear-gradient(
+            90deg,
+            transparent 0,
+            black 3%,
+            black 97%,
+            transparent 100%
+        );
+    }
+
+    .habilidades-track{
+        gap:14px;
+        animation-duration:28s;
+    }
+
+    .skill-card{
+        width:150px;
+        padding:20px 14px 16px;
+        gap:10px;
+        border-radius:18px;
+    }
+
+    .skill-card:hover{
+        transform:none;
+    }
+
+    .skill-badge{
+        width:56px;
+        height:56px;
+        border-radius:14px;
+        border-width:1.5px;
+    }
+
+    .skill-badge span{
+        font-size:.9rem;
+    }
+
+    .skill-badge img{
+        width:30px;
+        height:30px;
+    }
+
+    .skill-nombre{
+        font-size:.85rem;
+        min-height:2em;
+    }
+
+    .skill-bar-track{
+        height:6px;
+    }
+
+    .skill-nivel{
+        font-size:.72rem;
+    }
+}
+
+/* Móviles muy pequeños */
+@media (max-width:360px){
+    .habilidades-header h2{
+        font-size:1.4rem;
+    }
+
+    .skill-card{
+        width:130px;
+        padding:16px 10px 14px;
+    }
+
+    .skill-badge{
+        width:48px;
+        height:48px;
+    }
+
+    .skill-badge img{
+        width:26px;
+        height:26px;
     }
 }
 
