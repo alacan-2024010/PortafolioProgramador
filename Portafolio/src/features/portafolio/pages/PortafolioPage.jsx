@@ -3,13 +3,14 @@ import { Sidebar } from "../components/Sidebar.jsx";
 import { SobreMi } from "../components/SobreMi.jsx";
 import { DatosGenerales } from "../components/DatosGenerales.jsx";
 import {Habilidades} from "../components/Habilidades.jsx"
+import {Educacion} from "../components/Educacion.jsx"
 import "../../../styles/Portafolio.css";
 
 const VISTAS = {
   "sobre-mi": SobreMi,
   "datos-generales": DatosGenerales,
   "habilidades": Habilidades,
-  //"curriculum": Curriculum,
+  "curriculum": Educacion,
   //"proyectos": Proyectos,
   //"contacto": Contacto,
 };
