@@ -12,7 +12,7 @@ const VISTAS = {
   "habilidades": Habilidades,
   "curriculum": Educacion,
   //"proyectos": Proyectos,
-  //"contacto": Contacto,
+  //"contacto": Contactame,
 };
 
 export const PortafolioPage = () => {
