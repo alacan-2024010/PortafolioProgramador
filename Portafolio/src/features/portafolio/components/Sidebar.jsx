@@ -1,4 +1,5 @@
 import { useState } from "react";
+import fotoPortafolio from "../../../assets/FotografiaPortafolio.png"
 import "../../../styles/Sidebar.css";
 
 const SECCIONES = [
@@ -12,7 +13,7 @@ const SECCIONES = [
 
 export const Sidebar = ({
   nombre = "Alan Francisco Lacán Flores",
-  fotoUrl = null, 
+  fotoUrl = fotoPortafolio, 
   activeSection,
   onSectionClick,
 }) => {
