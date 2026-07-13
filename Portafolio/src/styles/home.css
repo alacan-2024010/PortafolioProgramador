@@ -164,29 +164,21 @@ body {
 }
 
 .home-foto {
-  width: 160px;
-  height: 160px;
+  width: 220px;
+  height: 220px;
   flex-shrink: 0;
   border-radius: var(--radius-full);
-  padding: 4px;
-  background: var(--gradient-brand);
-  display: grid;
-  place-items: center;
-  filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.25));
+  overflow: hidden;
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.55);
 }
 
-.home-foto span {
+.home-foto img {
   width: 100%;
   height: 100%;
-  display: grid;
-  place-items: center;
+  object-fit: cover;
+  object-position: center 20%; 
   border-radius: var(--radius-full);
-  background-color: var(--color-surface);
-  color: var(--color-text-primary);
-  font-family: var(--font-mono);
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  display: block;
 }
 
 .home-nombre-bloque {
@@ -341,22 +333,43 @@ body {
 .terminal-tok--punct { color: var(--color-text-muted); }
 
 @media (max-width: 500px) {
+
+  .home-intro-simbolo--chico {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+  }
+
+  .home {
+    padding: var(--spacing-md) var(--spacing-sm);
+    gap: var(--spacing-md);
+  }
+
+  .home-intro-simbolo {
+    font-size: 6rem;
+  }
+
+  .home-contenido {
+    gap: var(--spacing-md);
+  }
+
   .home-header {
     flex-direction: column;
     text-align: center;
+    gap: var(--spacing-sm);
   }
 
   .home-nombre {
-    font-size: 2.2rem;
+    font-size: 2rem;
+  }
+
+  .home-titulo {
+    font-size: 0.85rem;
+    justify-content: center;
   }
 
   .home-foto {
-    width: 96px;
-    height: 96px;
-  }
-
-  .home-foto span {
-    font-size: 1.4rem;
+    width: 140px;
+    height: 140px;
   }
 
   .home-frase-bloque {
@@ -364,7 +377,30 @@ body {
   }
 
   .home-frase {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .home-frase-comilla {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-intro-simbolo--chico {
+    font-size: 1.5rem;
+  }
+
+  .home-nombre {
+    font-size: 1.6rem;
+  }
+
+  .home-foto {
+    width: 110px;
+    height: 110px;
+  }
+
+  .home-frase {
     font-size: 0.9rem;
-    white-space: normal;
   }
 }

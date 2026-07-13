@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PortafolioPage } from '../../portafolio/pages/PortafolioPage.jsx';
+import fotoPerfil from '../../../assets/FotografiaPrincipal.png';
 import '../../../styles/Home.css';
 
 const TIEMPO_SIMBOLO_MS = 1500;
@@ -37,7 +38,7 @@ export const HomePage = () => {
       <div className={`home-contenido ${faseCargada ? 'home-contenido--visible' : ''}`}>
         <div className="home-header">
           <div className="home-foto">
-            <span>AL</span>
+            <img src={fotoPerfil} alt="Alan Lacán" />
           </div>
           <div className="home-nombre-bloque">
             <h1 className="home-nombre">Alan Lacán Flores</h1>
