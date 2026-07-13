@@ -12,7 +12,7 @@ export const sendContactEmail = async ({ name, email, message }) => {
     subject: `Nuevo mensaje de portafolio: ${name}`,
     html: `
       <div style="font-family: sans-serif; line-height: 1.6;">
-        <h2>Nuevo mensaje desde tu portafolio</h2>
+        <h2>Alguien quiere contactarme desde mi Portafolio</h2>
         <p><strong>Nombre:</strong> ${name}</p>
         <p><strong>Correo:</strong> ${email}</p>
         <p><strong>Mensaje:</strong></p>
