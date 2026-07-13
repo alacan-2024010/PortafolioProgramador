@@ -4,6 +4,7 @@ import { SobreMi } from "../components/SobreMi.jsx";
 import { DatosGenerales } from "../components/DatosGenerales.jsx";
 import {Habilidades} from "../components/Habilidades.jsx"
 import {Educacion} from "../components/Educacion.jsx"
+import { Proyectos } from "../components/Proyectos.jsx";
 import "../../../styles/Portafolio.css";
 
 const VISTAS = {
@@ -11,7 +12,7 @@ const VISTAS = {
   "datos-generales": DatosGenerales,
   "habilidades": Habilidades,
   "curriculum": Educacion,
-  //"proyectos": Proyectos,
+  "proyectos": Proyectos,
 };
 
 export const PortafolioPage = () => {

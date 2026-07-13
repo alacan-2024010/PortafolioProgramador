@@ -8,7 +8,6 @@ const SECCIONES = [
   { id: "habilidades", numero: "03", label: "Habilidades" },
   { id: "curriculum", numero: "04", label: "Educación" },
   { id: "proyectos", numero: "05", label: "Proyectos" },
-  { id: "contacto", numero: "06", label: "Contacto" },
 ];
 
 export const Sidebar = ({
