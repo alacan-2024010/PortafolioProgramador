@@ -1,4 +1,6 @@
+import { useState } from "react";
 import "../../../styles/SobreMi.css";
+import { ModalContacto } from "./ModalContacto";
 
 const IconServidor = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -129,6 +131,7 @@ const HABILIDADES = [
 ];
 
 export const SobreMi = () => {
+  const [modalAbierto, setModalAbierto] = useState(false);
   return (
     <div className="sobremi-frame">
 
@@ -173,18 +176,30 @@ export const SobreMi = () => {
               Contáctame
             </span>
             <div className="sobremi-contacto">
-              {CONTACTO_RAPIDO.map((c) => (
-                <a
-                  key={c.id}
-                  href={c.href}
-                  className={`contacto-item contacto-item--${c.color}`}
-                  target={c.href.startsWith("http") ? "_blank" : undefined}
-                  rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                >
-                  <span className="contacto-icono">{c.icono}</span>
-                  <span className="contacto-label">{c.label}</span>
-                </a>
-              ))}
+              {CONTACTO_RAPIDO.map((c) =>
+                c.id === "email" ? (
+                  <button
+                    key={c.id}
+                    type="button"
+                    className={`contacto-item contacto-item--${c.color}`}
+                    onClick={() => setModalAbierto(true)}
+                  >
+                    <span className="contacto-icono">{c.icono}</span>
+                    <span className="contacto-label">{c.label}</span>
+                  </button>
+                ) : (
+                  <a
+                    key={c.id}
+                    href={c.href}
+                    className={`contacto-item contacto-item--${c.color}`}
+                    target={c.href.startsWith("http") ? "_blank" : undefined}
+                    rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  >
+                    <span className="contacto-icono">{c.icono}</span>
+                    <span className="contacto-label">{c.label}</span>
+                  </a>
+                )
+              )}
             </div>
           </div>
 
@@ -199,6 +214,7 @@ export const SobreMi = () => {
 
         </div>
       </div>
+      <ModalContacto isOpen={modalAbierto} onClose={() => setModalAbierto(false)} />
     </div>
   );
 };

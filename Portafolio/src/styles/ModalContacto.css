@@ -1,0 +1,158 @@
+.modal-contacto-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6, 9, 18, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: modalFadeIn 0.2s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-contacto {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(160deg, rgba(14, 19, 34, 0.97), rgba(10, 13, 24, 0.97));
+  border: 1px solid rgba(88, 196, 255, 0.25);
+  border-radius: 10px;
+  padding: 2rem 1.75rem 1.75rem;
+  box-shadow: 0 0 0 1px rgba(155, 92, 255, 0.08), 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: modalPopIn 0.25s ease-out;
+}
+
+@keyframes modalPopIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-contacto-cerrar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.9rem;
+  background: none;
+  border: none;
+  color: #8fa3c0;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.modal-contacto-cerrar:hover {
+  color: #58c4ff;
+}
+
+.modal-contacto-titulo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #58c4ff, #9b5cff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0 0 0.35rem;
+}
+
+.modal-contacto-subtitulo {
+  color: #8fa3c0;
+  font-size: 0.9rem;
+  margin: 0 0 1.4rem;
+}
+
+.modal-contacto-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-contacto-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: #a9b8cf;
+}
+
+.modal-contacto-campo input,
+.modal-contacto-campo textarea {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(143, 163, 192, 0.25);
+  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  color: #e8edf5;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.modal-contacto-campo input:focus,
+.modal-contacto-campo textarea:focus {
+  outline: none;
+  border-color: #58c4ff;
+  box-shadow: 0 0 0 3px rgba(88, 196, 255, 0.15);
+}
+
+.modal-contacto-error {
+  color: #ff6b7a;
+  font-size: 0.82rem;
+  margin: -0.4rem 0 0;
+}
+
+.modal-contacto-btn {
+  margin-top: 0.3rem;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #58c4ff, #9b5cff);
+  color: #06090f;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.modal-contacto-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.modal-contacto-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.modal-contacto-exito {
+  text-align: center;
+  padding: 1rem 0 0.25rem;
+}
+
+.modal-contacto-exito-icono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(74, 222, 128, 0.12);
+  color: #4ade80;
+  font-size: 1.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.modal-contacto-exito h3 {
+  color: #e8edf5;
+  margin: 0 0 0.5rem;
+}
+
+.modal-contacto-exito p {
+  color: #8fa3c0;
+  font-size: 0.9rem;
+  margin: 0 0 1.3rem;
+}
