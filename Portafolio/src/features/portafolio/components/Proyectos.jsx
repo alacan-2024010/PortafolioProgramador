@@ -1,9 +1,19 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Users, User } from "lucide-react";
 import "../../../styles/Proyectos.css";
+//KinalBank
 import ImgKinalBankPortada from "../../../assets/KinalBankPrincipal.png"
+import ImgKinalBankAuth from "../../../assets/KinalBankAuth.png"
+import ImgKinalBankRegister from "../../../assets/KinalBankRegister.png"
+import ImgKinalBankDashboard from "../../../assets/KinalBankDashboard.png"
+import ImgKinalBankMovimientos from "../../../assets/KinalBankMovimientos.png"
+import ImgKinalBankTransacciones from "../../../assets/KinalBankTransacciones.png"
+import ImgKinalBankProductos from "../../../assets/KinalBankProductos.png"
+//EcoKinal
 import ImgEcoKinalPortada from "../../../assets/EcoKinalPrincipal.png"
+//Huellitas
 import ImgHuellitasPortada from "../../../assets/HuellitasPrincipal.png"
+//KinalGourmet
 import ImgGourmetPortada from "../../../assets/KinalGourmetPortada.png"
 
 function GithubIcon({ size = 17 }) {
@@ -35,12 +45,12 @@ const PROJECTS = [
     live: "https://app-movil-sistema-bancario-hfca.vercel.app/",
     images: [
         ImgKinalBankPortada,
-        { mock: true, label: "Inicio de sesión", accent: "#3b82f6" },
-        { mock: true, label: "Crear cuenta", accent: "#6366f1" },
-        { mock: true, label: "Dashboard principal", accent: "#22d3ee" },
-        { mock: true, label: "Mis cuentas", accent: "#0ea5e9" },
-        { mock: true, label: "Movimientos", accent: "#8b5cf6" },
-        { mock: true, label: "Transferir fondos", accent: "#3b82f6" },
+        ImgKinalBankAuth,
+        ImgKinalBankRegister,
+        ImgKinalBankDashboard,
+        ImgKinalBankMovimientos,
+        ImgKinalBankTransacciones,
+        ImgKinalBankProductos
     ],
   },
   {
@@ -136,6 +146,10 @@ function ProjectModal({ project, onClose }) {
   const [imgIndex, setImgIndex] = useState(0);
   const total = project.images.length;
 
+  // Imagen actualmente mostrada en el carrusel del modal
+  const currentImage = project.images[imgIndex];
+  const isRealShot = typeof currentImage === "string";
+
   const next = useCallback(
     () => setImgIndex((i) => (i + 1) % total),
     [total]
@@ -168,7 +182,23 @@ function ProjectModal({ project, onClose }) {
 
         <div className="modal-gallery">
           <div className="gallery-frame">
-            <Frame image={project.images[imgIndex]} />
+            {isRealShot ? (
+              <>
+                <img
+                  src={currentImage}
+                  className="real-shot-bg"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <img
+                  src={currentImage}
+                  className="real-shot"
+                  alt={project.title}
+                />
+              </>
+            ) : (
+              <MockScreen label={currentImage.label} accent={currentImage.accent} />
+            )}
           </div>
           {total > 1 && (
             <>
