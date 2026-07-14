@@ -309,36 +309,33 @@ export const Proyectos = () => {
   const [active, setActive] = useState(null);
   const [paused, setPaused] = useState(false);
   const trackRef = useRef(null);
-  const innerRef = useRef(null);
+  const groupRef = useRef(null);
   const [distance, setDistance] = useState(0);
 
-  // Mide cuánto tiene que viajar el carrusel (ancho total del contenido - ancho visible)
+  // Mide el ancho de UN set de tarjetas (más el gap) para que el loop sea perfecto
   useEffect(() => {
-    const track = trackRef.current;
-    const inner = innerRef.current;
-    if (!track || !inner) return;
+    const group = groupRef.current;
+    if (!group) return;
 
     const measure = () => {
-      const d = inner.scrollWidth - track.clientWidth;
+      // 26px = gap definido en .track-inner, para que el salto sea invisible
+      const d = group.scrollWidth + 26;
       setDistance(d > 0 ? d : 0);
     };
 
     measure();
 
     const ro = new ResizeObserver(measure);
-    ro.observe(track);
-    ro.observe(inner);
-    window.addEventListener("resize", measure);
+    ro.observe(group);
 
     // por si las imágenes tardan en cargar y cambian el ancho real
-    const imgs = inner.querySelectorAll("img");
+    const imgs = group.querySelectorAll("img");
     imgs.forEach((img) => {
       if (!img.complete) img.addEventListener("load", measure, { once: true });
     });
 
     return () => {
       ro.disconnect();
-      window.removeEventListener("resize", measure);
     };
   }, []);
 
@@ -351,7 +348,7 @@ export const Proyectos = () => {
       <div className="gallery-head">
         <div>
           <h2>Proyectos</h2>
-          <p>Aplicaciones que he construido — capturas, stack técnico y enlaces al código y al demo en vivo.</p>
+          <p>Proyectos que van más allá del código — mira el resultado, explora el stack y pruébalo tú mismo.</p>
         </div>
       </div>
 
@@ -365,16 +362,22 @@ export const Proyectos = () => {
       >
         <div
           className="track-inner"
-          ref={innerRef}
           style={{
             "--scroll-distance": `${distance}px`,
             "--scroll-duration": `${duration}s`,
             animationPlayState: isPaused ? "paused" : "running",
           }}
         >
-          {PROJECTS.map((p, i) => (
-            <ProjectCard key={p.id} project={p} index={i} onOpen={setActive} />
-          ))}
+          <div className="track-group" ref={groupRef}>
+            {PROJECTS.map((p, i) => (
+              <ProjectCard key={p.id} project={p} index={i} onOpen={setActive} />
+            ))}
+          </div>
+          <div className="track-group" aria-hidden="true">
+            {PROJECTS.map((p, i) => (
+              <ProjectCard key={`dup-${p.id}`} project={p} index={i} onOpen={setActive} />
+            ))}
+          </div>
         </div>
       </div>
 

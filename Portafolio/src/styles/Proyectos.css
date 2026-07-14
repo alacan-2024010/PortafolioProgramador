@@ -39,22 +39,32 @@
 }
 .gallery-head h2 {
     font-family: var(--font-display);
-    font-size: clamp(32px, 4vw, 58px);
+    font-size: clamp(36px, 4.5vw, 64px);
     font-weight: 700;
-    margin: 0 0 8px;
+    margin: 0 0 12px;
     letter-spacing: -0.03em;
     line-height: 1;
-    background: linear-gradient(90deg, #a78bfa, #22d3ee);
+    background: linear-gradient(100deg, #a78bfa 0%, #67e8f9 35%, #c4b5fd 65%, #22d3ee 100%);
+    background-size: 250% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    filter: drop-shadow(0 0 26px rgba(139,92,246,0.55));
+    animation: shimmer 6s ease-in-out infinite;
+}
+@keyframes shimmer {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
 }
 .gallery-head p {
     margin: 0;
-    color: var(--muted);
-    font-size: clamp(14px, 1.2vw, 19px);
-    line-height: 1.5;
-    max-width: 640px;
+    color: #f1f3ff;
+    font-weight: 600;
+    font-size: clamp(17px, 1.6vw, 24px);
+    line-height: 1.6;
+    max-width: 700px;
+    text-shadow: 0 0 20px rgba(103,232,249,0.25);
 }
 
 .track {
@@ -79,8 +89,14 @@
     animation-duration: var(--scroll-duration, 8s);
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-fill-mode: both;
+    animation-direction: normal;
+    animation-fill-mode: none;
+}
+
+.track-group {
+    display: flex;
+    align-items: stretch;
+    gap: 26px;
 }
 
 @keyframes autoscroll {
@@ -187,16 +203,23 @@
 }
 .card-body h3 {
     font-family: var(--font-display);
-    margin: 6px 0 4px;
-    font-size: 21px;
+    margin: 8px 0 5px;
+    font-size: 25px;
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    color: #ffffff;
+    text-shadow: 0 0 18px var(--psoft, rgba(255,255,255,0.25));
+    transition: text-shadow .35s;
+}
+.project-card:hover .card-body h3 {
+    text-shadow: 0 0 24px var(--pcolor), 0 0 6px var(--pcolor);
 }
 .card-body p {
     margin: 0;
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.45;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #c3c8ea;
+    line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -205,15 +228,18 @@
 
 .type-pill {
     display: inline-flex; align-items: center; gap: 5px;
-    font-size: 11.5px; font-weight: 600;
-    color: var(--pcolor);
-    background: var(--psoft, rgba(255,255,255,0.06));
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: #060814;
+    background: var(--pcolor);
     border: 1px solid var(--pcolor);
-    padding: 3px 9px; border-radius: 999px;
+    padding: 4px 10px; border-radius: 999px;
     flex: 0 0 auto;
     width: fit-content;
+    box-shadow: 0 0 14px var(--psoft, rgba(255,255,255,0.3));
 }
-.type-pill.small { font-size: 10.5px; padding: 2px 8px; }
+.type-pill.small { font-size: 11px; padding: 3px 9px; }
 
 .mock-screen {
     --accent: #888;
