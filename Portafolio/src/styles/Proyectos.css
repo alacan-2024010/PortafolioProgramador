@@ -34,12 +34,7 @@
 }
 .gallery-head {
     position: relative;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
     margin-bottom: 32px;
-    flex-wrap: wrap;
-    gap: 20px;
     flex: 0 0 auto;
 }
 .gallery-head h2 {
@@ -61,18 +56,6 @@
     line-height: 1.5;
     max-width: 640px;
 }
-.arrow-controls { display: flex; gap: 10px; flex: 0 0 auto; }
-.arrow-btn {
-    width: 42px; height: 42px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.04);
-    color: var(--text);
-    display: grid; place-items: center;
-    cursor: pointer;
-    transition: border-color .2s, transform .2s, background .2s;
-}
-.arrow-btn:hover { border-color: #a78bfa; background: rgba(167,139,250,0.12); transform: translateY(-2px); }
 
 .track {
     position: relative;
@@ -81,18 +64,34 @@
     height: 420px;
     box-sizing: border-box;
     display: flex;
-    align-items: center;
-    gap: 26px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    align-items: stretch;
+    overflow: hidden;
     padding: 16px 4px 20px;
-    scrollbar-width: none;
 }
-.track::-webkit-scrollbar { display: none; }
+
+.track-inner {
+    display: flex;
+    align-items: stretch;
+    gap: 26px;
+    width: max-content;
+    will-change: transform;
+    animation-name: autoscroll;
+    animation-duration: var(--scroll-duration, 8s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-fill-mode: both;
+}
+
+@keyframes autoscroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-1 * var(--scroll-distance, 0px))); }
+}
 
 .project-card {
     position: relative;
     flex: 0 0 340px;
+    flex-shrink: 0;
     width: 340px;
     height: 100%;
     max-height: 100%;
@@ -318,4 +317,5 @@
 @media (prefers-reduced-motion: reduce) {
     .project-card, .ring, .modal-overlay, .modal-panel { animation: none !important; }
     .project-card:hover { transform: none; }
+    .track-inner { animation: none !important; }
 }

@@ -28,7 +28,7 @@ const PROJECTS = [
     description:
       "Plataforma de banca digital que simula un sistema bancario completo: registro y autenticación de usuarios, dashboard con balance en tiempo real, gestión de cuentas, historial de movimientos, transferencias entre cuentas y un marketplace de productos y servicios bancarios.",
     skills: ["JavaScript", "React", "PostgreSQL", "MongoDB", "API REST", "Autenticación", "UI/UX"],
-    type: "grupal",
+    type: "Grupal",
     color: "#3b82f6",
     colorSoft: "rgba(59,130,246,0.18)",
     github: "https://github.com/aalvarez-2024004/AppMovil-SistemaBancario",
@@ -50,7 +50,7 @@ const PROJECTS = [
     description:
       "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
     skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
-    type: "grupal",
+    type: "Grupal",
     color: "#22c55e",
     colorSoft: "rgba(34,197,94,0.18)",
     github: "https://github.com/TODO/ecoapp",
@@ -69,7 +69,7 @@ const PROJECTS = [
     description:
       "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
     skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
-    type: "grupal",
+    type: "Individual",
     color: "#f59e0b",
     colorSoft: "rgba(245,158,11,0.18)",
     github: "https://github.com/TODO/huellitas",
@@ -88,7 +88,7 @@ const PROJECTS = [
     description:
       "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
     skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
-    type: "individual",
+    type: "Grupal",
     color: "#ff761be7",
     colorSoft: "rgba(236,72,153,0.18)",
     github: "https://github.com/TODO/kinal-gourmet-house",
@@ -277,71 +277,44 @@ function ProjectCard({ project, onOpen, index }) {
 
 export const Proyectos = () => {
   const [active, setActive] = useState(null);
+  const [paused, setPaused] = useState(false);
   const trackRef = useRef(null);
-  const pausedRef = useRef(false);
-  const resumeTimeoutRef = useRef(null);
+  const innerRef = useRef(null);
+  const [distance, setDistance] = useState(0);
 
-  const scrollBy = (dir) => {
-    if (!trackRef.current) return;
-    pausedRef.current = true;
-    trackRef.current.scrollBy({ left: dir * 360, behavior: "smooth" });
-    if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-    resumeTimeoutRef.current = window.setTimeout(() => {
-      pausedRef.current = false;
-    }, 700);
-  };
-
+  // Mide cuánto tiene que viajar el carrusel (ancho total del contenido - ancho visible)
   useEffect(() => {
     const track = trackRef.current;
-    if (!track) return;
+    const inner = innerRef.current;
+    if (!track || !inner) return;
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduceMotion) return;
-
-    const SPEED = 0.55;
-    const directionRef = { current: 1 };
-    let rafId;
-
-    const step = () => {
-      if (!pausedRef.current) {
-        const maxScroll = track.scrollWidth - track.clientWidth;
-        if (maxScroll > 0) {
-          track.scrollLeft += SPEED * directionRef.current;
-          if (track.scrollLeft >= maxScroll) {
-            track.scrollLeft = maxScroll;
-            directionRef.current = -1;
-          } else if (track.scrollLeft <= 0) {
-            track.scrollLeft = 0;
-            directionRef.current = 1;
-          }
-        }
-      }
-      rafId = requestAnimationFrame(step);
+    const measure = () => {
+      const d = inner.scrollWidth - track.clientWidth;
+      setDistance(d > 0 ? d : 0);
     };
-    rafId = requestAnimationFrame(step);
 
-    const pause = () => (pausedRef.current = true);
-    const resume = () => (pausedRef.current = false);
-    track.addEventListener("mouseenter", pause);
-    track.addEventListener("mouseleave", resume);
-    track.addEventListener("touchstart", pause, { passive: true });
-    track.addEventListener("touchend", resume);
+    measure();
+
+    const ro = new ResizeObserver(measure);
+    ro.observe(track);
+    ro.observe(inner);
+    window.addEventListener("resize", measure);
+
+    // por si las imágenes tardan en cargar y cambian el ancho real
+    const imgs = inner.querySelectorAll("img");
+    imgs.forEach((img) => {
+      if (!img.complete) img.addEventListener("load", measure, { once: true });
+    });
 
     return () => {
-      cancelAnimationFrame(rafId);
-      if (resumeTimeoutRef.current) window.clearTimeout(resumeTimeoutRef.current);
-      track.removeEventListener("mouseenter", pause);
-      track.removeEventListener("mouseleave", resume);
-      track.removeEventListener("touchstart", pause);
-      track.removeEventListener("touchend", resume);
+      ro.disconnect();
+      window.removeEventListener("resize", measure);
     };
   }, []);
 
-  useEffect(() => {
-    pausedRef.current = !!active;
-  }, [active]);
+  const isPaused = paused || !!active;
+  // Duración proporcional a la distancia para que la velocidad sea constante
+  const duration = Math.max(distance / 110, 2.5); // ~110px/seg, mínimo 2.5s
 
   return (
     <section className="gallery-section">
@@ -350,20 +323,29 @@ export const Proyectos = () => {
           <h2>Proyectos</h2>
           <p>Aplicaciones que he construido — capturas, stack técnico y enlaces al código y al demo en vivo.</p>
         </div>
-        <div className="arrow-controls">
-          <button className="arrow-btn" onClick={() => scrollBy(-1)} aria-label="Anterior">
-            <ChevronLeft size={18} />
-          </button>
-          <button className="arrow-btn" onClick={() => scrollBy(1)} aria-label="Siguiente">
-            <ChevronRight size={18} />
-          </button>
-        </div>
       </div>
 
-      <div className="track" ref={trackRef}>
-        {PROJECTS.map((p, i) => (
-          <ProjectCard key={p.id} project={p} index={i} onOpen={setActive} />
-        ))}
+      <div
+        className="track"
+        ref={trackRef}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onTouchStart={() => setPaused(true)}
+        onTouchEnd={() => setPaused(false)}
+      >
+        <div
+          className="track-inner"
+          ref={innerRef}
+          style={{
+            "--scroll-distance": `${distance}px`,
+            "--scroll-duration": `${duration}s`,
+            animationPlayState: isPaused ? "paused" : "running",
+          }}
+        >
+          {PROJECTS.map((p, i) => (
+            <ProjectCard key={p.id} project={p} index={i} onOpen={setActive} />
+          ))}
+        </div>
       </div>
 
       {active && <ProjectModal project={active} onClose={() => setActive(null)} />}
