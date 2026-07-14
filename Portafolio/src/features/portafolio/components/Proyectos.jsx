@@ -28,7 +28,7 @@ const PROJECTS = [
     description:
       "Plataforma de banca digital que simula un sistema bancario completo: registro y autenticación de usuarios, dashboard con balance en tiempo real, gestión de cuentas, historial de movimientos, transferencias entre cuentas y un marketplace de productos y servicios bancarios.",
     skills: ["JavaScript", "React", "PostgreSQL", "MongoDB", "API REST", "Autenticación", "UI/UX"],
-    type: "Grupal",
+    type: "grupal",
     color: "#3b82f6",
     colorSoft: "rgba(59,130,246,0.18)",
     github: "https://github.com/aalvarez-2024004/AppMovil-SistemaBancario",
@@ -50,7 +50,7 @@ const PROJECTS = [
     description:
       "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
     skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
-    type: "Grupal",
+    type: "grupal",
     color: "#22c55e",
     colorSoft: "rgba(34,197,94,0.18)",
     github: "https://github.com/TODO/ecoapp",
@@ -88,7 +88,7 @@ const PROJECTS = [
     description:
       "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
     skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
-    type: "Grupal",
+    type: "grupal",
     color: "#ff761be7",
     colorSoft: "rgba(236,72,153,0.18)",
     github: "https://github.com/TODO/kinal-gourmet-house",
