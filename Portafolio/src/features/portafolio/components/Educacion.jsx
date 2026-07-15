@@ -1,11 +1,11 @@
 import "../../../styles/Educacion.css";
+import { useLanguage } from "../../../context/LanguageContext";
+import { translations } from "../../../context/translations";
 
+// tags = nombres de tecnologías, no se traducen
 const EDUCACION = [
   {
-    titulo: "Fundación Kinal",
-    sub: "Perito en Informática",
-    fecha: "2024 — Actualidad",
-    desc: "Formación enfocada en desarrollo de software: lógica de programación, bases de datos, desarrollo web y trabajo en equipo mediante proyectos.",
+    id: "kinal",
     tags: [
       "Java",
       "JavaScript",
@@ -26,10 +26,7 @@ const EDUCACION = [
 
 const EXPERIENCIA = [
   {
-    titulo: "Práctica Supervisada",
-    sub: "EMPAGUA",
-    fecha: "2026 (próximamente)",
-    desc: "Práctica supervisada en EMPAGUA (Empresa Municipal de Agua de la Ciudad de Guatemala), como parte del proceso de formación de Fundación Kinal. Actualizaré esta sección con el rol, funciones y tecnologías utilizadas conforme avance la práctica.",
+    id: "empagua",
     tags: [],
   },
 ];
@@ -53,6 +50,9 @@ const TimelineItem = ({ titulo, sub, fecha, desc, tags = [] }) => (
 );
 
 export const Educacion = () => {
+  const { language } = useLanguage();
+  const t = translations[language].educacionExperiencia;
+
   return (
     <section className="ee-container">
       <span className="bg-orb orb-1" />
@@ -62,7 +62,7 @@ export const Educacion = () => {
       <header className="ee-header">
         <div className="ee-header-top">
           <div className="ee-header-titleblock">
-            <h2>Educación y Experiencia</h2>
+            <h2>{t.header.titulo}</h2>
             <div className="ee-divider" />
           </div>
 
@@ -73,7 +73,7 @@ export const Educacion = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Descargar CV
+            {t.header.cvBtn}
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"
@@ -87,8 +87,7 @@ export const Educacion = () => {
         </div>
 
         <p>
-          Mi formación como desarrollador y los proyectos y prácticas en los
-          que he aplicado lo aprendido.
+          {t.header.parrafo}
         </p>
       </header>
 
@@ -96,11 +95,15 @@ export const Educacion = () => {
         <div className="ee-panel ee-panel-edu" style={{ "--ee-color": "#38bdf8" }}>
           <h3 className="ee-panel-title">
             <span className="ee-panel-dot" />
-            Educación
+            {t.panelEducacion}
           </h3>
           <div className="ee-timeline">
             {EDUCACION.map((item) => (
-              <TimelineItem key={item.titulo} {...item} />
+              <TimelineItem
+                key={item.id}
+                {...t.educacion[item.id]}
+                tags={item.tags}
+              />
             ))}
           </div>
         </div>
@@ -108,11 +111,15 @@ export const Educacion = () => {
         <div className="ee-panel ee-panel-exp" style={{ "--ee-color": "#a855f7" }}>
           <h3 className="ee-panel-title">
             <span className="ee-panel-dot" />
-            Experiencia
+            {t.panelExperiencia}
           </h3>
           <div className="ee-timeline">
             {EXPERIENCIA.map((item) => (
-              <TimelineItem key={item.titulo} {...item} />
+              <TimelineItem
+                key={item.id}
+                {...t.experiencia[item.id]}
+                tags={item.tags}
+              />
             ))}
           </div>
         </div>
@@ -120,8 +127,7 @@ export const Educacion = () => {
 
       <div className="ee-footer">
         <p>
-          Siempre en constante aprendizaje, aplicando cada día lo que
-          estudio.
+          {t.footer}
         </p>
       </div>
     </section>

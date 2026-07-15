@@ -56,6 +56,34 @@ export const translations = {
       parrafo:
         "Tecnologías y herramientas con las que trabajo día a día para construir aplicaciones completas.",
     },
+    educacionExperiencia: {
+      header: {
+        titulo: "Educación y Experiencia",
+        parrafo:
+          "Mi formación como desarrollador y los proyectos y prácticas en los que he aplicado lo aprendido.",
+        cvBtn: "Descargar CV",
+      },
+      panelEducacion: "Educación",
+      panelExperiencia: "Experiencia",
+      educacion: {
+        kinal: {
+          titulo: "Fundación Kinal",
+          sub: "Perito en Informática",
+          fecha: "2024 — Actualidad",
+          desc: "Formación enfocada en desarrollo de software: lógica de programación, bases de datos, desarrollo web y trabajo en equipo mediante proyectos.",
+        },
+      },
+      experiencia: {
+        empagua: {
+          titulo: "Práctica Supervisada",
+          sub: "EMPAGUA",
+          fecha: "2026 (próximamente)",
+          desc: "Práctica supervisada en EMPAGUA (Empresa Municipal de Agua de la Ciudad de Guatemala), como parte del proceso de formación de Fundación Kinal. Actualizaré esta sección con el rol, funciones y tecnologías utilizadas conforme avance la práctica.",
+        },
+      },
+      footer:
+        "Siempre en constante aprendizaje, aplicando cada día lo que estudio.",
+    },
   },
   en: {
     nav: {
@@ -113,6 +141,34 @@ export const translations = {
       titulo: "Skills",
       parrafo:
         "Technologies and tools I work with every day to build complete applications.",
+    },
+    educacionExperiencia: {
+      header: {
+        titulo: "Education and Experience",
+        parrafo:
+          "My background as a developer and the projects and internships where I've applied what I've learned.",
+        cvBtn: "Download CV",
+      },
+      panelEducacion: "Education",
+      panelExperiencia: "Experience",
+      educacion: {
+        kinal: {
+          titulo: "Fundación Kinal",
+          sub: "IT Technician",
+          fecha: "2024 — Present",
+          desc: "Training focused on software development: programming logic, databases, web development, and teamwork through projects.",
+        },
+      },
+      experiencia: {
+        empagua: {
+          titulo: "Supervised Internship",
+          sub: "EMPAGUA",
+          fecha: "2026 (coming soon)",
+          desc: "Supervised internship at EMPAGUA (Guatemala City's Municipal Water Company), as part of Fundación Kinal's training program. I'll update this section with the role, duties, and technologies used as the internship progresses.",
+        },
+      },
+      footer:
+        "Always learning, applying what I study every day.",
     },
   },
 };
