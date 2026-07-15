@@ -1,8 +1,11 @@
 import { useState } from "react";
 import "../../../styles/Habilidades.css";
+import { useLanguage } from "../../../context/LanguageContext";
+import { translations } from "../../../context/translations";
 
 const ICON_BASE = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
 
+// Nombres de tecnologías: no se traducen, son nombres propios de herramientas
 const HABILIDADES = [
   { nombre: "Java", corto: "JV", nivel: 85, color: "#f89820", logo: "java/java-original" },
   { nombre: "JavaScript", corto: "JS", nivel: 88, color: "#f7df1e", logo: "javascript/javascript-original" },
@@ -51,6 +54,9 @@ const SkillCard = ({ nombre, corto, nivel, color, logo }) => {
 };
 
 export const Habilidades = () => {
+  const { language } = useLanguage();
+  const t = translations[language].habilidades;
+
   // Se duplica el arreglo para lograr un loop de carrusel continuo y sin cortes
   const track = [...HABILIDADES, ...HABILIDADES];
 
@@ -61,10 +67,9 @@ export const Habilidades = () => {
       <span className="grid-bg" />
 
       <header className="habilidades-header">
-        <h2>Habilidades</h2>
+        <h2>{t.titulo}</h2>
         <p>
-          Tecnologías y herramientas con las que trabajo día a día
-          para construir aplicaciones completas.
+          {t.parrafo}
         </p>
       </header>
 

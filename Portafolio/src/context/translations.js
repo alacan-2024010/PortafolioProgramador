@@ -51,6 +51,11 @@ export const translations = {
       },
       footer: "Siempre aprendiendo nuevas tecnologías y mejorando mis habilidades.",
     },
+    habilidades: {
+      titulo: "Habilidades",
+      parrafo:
+        "Tecnologías y herramientas con las que trabajo día a día para construir aplicaciones completas.",
+    },
   },
   en: {
     nav: {
@@ -103,6 +108,11 @@ export const translations = {
         whatsapp: "Message me",
       },
       footer: "Always learning new technologies and improving my skills.",
+    },
+    habilidades: {
+      titulo: "Skills",
+      parrafo:
+        "Technologies and tools I work with every day to build complete applications.",
     },
   },
 };
