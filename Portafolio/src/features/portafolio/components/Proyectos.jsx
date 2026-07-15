@@ -12,6 +12,16 @@ import ImgKinalBankProductos from "../../../assets/KinalBankProductos.png"
 
 //EcoKinal
 import ImgEcoKinalPortada from "../../../assets/EcoKinalPrincipal.png"
+import ImgEcoKinalAuth from "../../../assets/EcoKinalAuth.png"
+import ImgEcoKinalRegister from "../../../assets/EcoKinalRegister.png"
+import ImgEcoKinalDashboard from "../../../assets/EcoKinalDashboard.png"
+import ImgEcoKinalDetector from "../../../assets/EcoKinalDetector.png"
+import ImgEcoKinalForo from "../../../assets/EcoKinalForo.png"
+import ImgEcoKinalGamificacion from "../../../assets/EcoKinalGamificacion.png"
+import ImgEcoKinalImpacto from "../../../assets/EcoKinalImpacto.png"
+import ImgEcoKinalMapa from "../../../assets/EcoKinalMapa.png"
+import ImgEcoKinalEcoBot from "../../../assets/EcoKinalEcoBot.png"
+
 
 //Huellitas
 import ImgHuellitasPortada from "../../../assets/HuellitasPrincipal.png"
@@ -71,22 +81,28 @@ const PROJECTS = [
     ],
   },
   {
-    id: "ecoapp",
-    title: "EcoApp",
-    tagline: "TODO: escribe una línea que describa el proyecto",
+    id: "ecokinal",
+    title: "EcoKinal",
+    tagline: "Conciencia ambiental: identifica y aprende a reciclar",
     description:
-      "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
-    skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
+      "Plataforma que promueve la conciencia ambiental en la sociedad. El usuario puede subir o tomar una foto de un residuo y el sistema detecta automáticamente en qué tipo de recipiente debe depositarse. Incluye EcoBot, un asistente virtual que resuelve dudas sobre cómo reciclar correctamente, además de un mapa de puntos de reciclaje, un foro comunitario y funciones de gamificación e indicadores de impacto ambiental.",
+    skills: ["JavaScript", "React", "Node.js", "MongoDB", "PostgreSQL", "Google Cloud Vision API", "Gemini API"],
     type: "grupal",
     color: "#22c55e",
     colorSoft: "rgba(34,197,94,0.18)",
-    github: "https://github.com/TODO/ecoapp",
-    live: "",
+    github: "https://github.com/aalvarez-2024004/EcoApp.git",
+    live: "https://app-movil-eco-kinal.vercel.app/",
     images: [
         ImgEcoKinalPortada,
-        { mock: true, label: "Pantalla 1", accent: "#22c55e" },
-        { mock: true, label: "Pantalla 2", accent: "#16a34a" },
-        { mock: true, label: "Pantalla 3", accent: "#4ade80" },
+        ImgEcoKinalAuth,
+        ImgEcoKinalRegister,
+        ImgEcoKinalDashboard,
+        ImgEcoKinalDetector,
+        ImgEcoKinalForo,
+        ImgEcoKinalGamificacion,
+        ImgEcoKinalImpacto,
+        ImgEcoKinalMapa,
+        ImgEcoKinalEcoBot
     ],
   },
   {
