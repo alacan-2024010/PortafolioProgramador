@@ -1,26 +1,30 @@
 import { useState } from "react";
 import fotoPortafolio from "../../../assets/FotografiaPortafolio.png"
+import { useLanguage } from "../../../context/LanguageContext";
+import { translations } from "../../../context/translations";
 import "../../../styles/Sidebar.css";
 
-const SECCIONES = [
-  { id: "sobre-mi", numero: "01", label: "Sobre mí" },
-  { id: "datos-generales", numero: "02", label: "Datos generales" },
-  { id: "habilidades", numero: "03", label: "Habilidades" },
-  { id: "curriculum", numero: "04", label: "Educación" },
-  { id: "proyectos", numero: "05", label: "Proyectos" },
+const SECCIONES_IDS = [
+  { id: "sobre-mi", numero: "01" },
+  { id: "datos-generales", numero: "02" },
+  { id: "habilidades", numero: "03" },
+  { id: "curriculum", numero: "04" },
+  { id: "proyectos", numero: "05" },
 ];
 
 export const Sidebar = ({
   nombre = "Alan Francisco Lacán Flores",
-  fotoUrl = fotoPortafolio, 
+  fotoUrl = fotoPortafolio,
   activeSection,
   onSectionClick,
 }) => {
   const [abierto, setAbierto] = useState(false);
+  const { language, setLanguage } = useLanguage();
+  const t = translations[language].nav;
 
   const handleClick = (id) => {
     onSectionClick(id);
-    setAbierto(false); 
+    setAbierto(false);
   };
 
   return (
@@ -73,17 +77,36 @@ export const Sidebar = ({
         </div>
 
         <nav className="sidebar-nav">
-          {SECCIONES.map((s) => (
+          {SECCIONES_IDS.map((s) => (
             <button
               key={s.id}
               className={`sidebar-item ${activeSection === s.id ? "activo" : ""}`}
               onClick={() => handleClick(s.id)}
             >
               <span className="sidebar-num">{s.numero}</span>
-              <span className="sidebar-label">{s.label}</span>
+              <span className="sidebar-label">{t[s.id]}</span>
             </button>
           ))}
         </nav>
+
+        {/* Switch de idioma, anclado abajo */}
+        <div className="lang-toggle-wrap">
+          <button
+            className={`lang-toggle ${language === "en" ? "lang-toggle--en" : ""}`}
+            onClick={() => setLanguage(language === "es" ? "en" : "es")}
+            aria-label="Cambiar idioma"
+          >
+            <span className="lang-toggle-thumb" />
+            <span className="lang-toggle-option">
+              <span className="lang-toggle-flag">🇬🇹</span>
+              <span className="lang-toggle-code">ES</span>
+            </span>
+            <span className="lang-toggle-option">
+              <span className="lang-toggle-flag">🇺🇸</span>
+              <span className="lang-toggle-code">EN</span>
+            </span>
+          </button>
+        </div>
       </aside>
     </>
   );

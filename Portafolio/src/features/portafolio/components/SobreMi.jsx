@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "../../../styles/SobreMi.css";
 import { ModalContacto } from "./ModalContacto";
+import { useLanguage } from "../../../context/LanguageContext";
+import { translations } from "../../../context/translations";
 
 const IconServidor = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
@@ -73,9 +75,6 @@ const IconRayo = () => (
   </svg>
 );
 
-// Logo real de una app, recortado a un solo color con mask-image
-// (así combina con la paleta celeste/morado en vez de traer el
-// rojo de Gmail o el blanco/negro de GitHub tal cual).
 const IconoMarca = ({ src, alt }) => (
   <span
     className="icono-marca"
@@ -85,6 +84,7 @@ const IconoMarca = ({ src, alt }) => (
   />
 );
 
+// Datos de contacto: no se traducen (son datos fijos: email, usuario, teléfono)
 const CONTACTO_RAPIDO = [
   {
     id: "email",
@@ -119,19 +119,24 @@ const CONTACTO_RAPIDO = [
   },
 ];
 
+// El id de cada habilidad se usa como llave para buscar su label
+// traducido en translations.js -> aboutMe.badges[id]
 const HABILIDADES = [
-  { id: "backend", label: "Backend", icono: <IconServidor />, color: "celeste" },
-  { id: "fullstack", label: "Full Stack Jr.", icono: <IconCapas />, color: "azul" },
-  { id: "autodidacta", label: "Autodidacta", icono: <IconLibro />, color: "morado" },
-  { id: "puntual", label: "Puntual", icono: <IconReloj />, color: "verde" },
-  { id: "perseverante", label: "Perseverante", icono: <IconMontana />, color: "celeste" },
-  { id: "equipo", label: "Trabajo en equipo", icono: <IconEquipo />, color: "azul" },
-  { id: "problemas", label: "Resolver problemas", icono: <IconRompecabezas />, color: "morado" },
-  { id: "proactivo", label: "Proactivo", icono: <IconRayo />, color: "verde" },
+  { id: "backend", icono: <IconServidor />, color: "celeste" },
+  { id: "fullstack", icono: <IconCapas />, color: "azul" },
+  { id: "autodidacta", icono: <IconLibro />, color: "morado" },
+  { id: "puntual", icono: <IconReloj />, color: "verde" },
+  { id: "perseverante", icono: <IconMontana />, color: "celeste" },
+  { id: "equipo", icono: <IconEquipo />, color: "azul" },
+  { id: "problemas", icono: <IconRompecabezas />, color: "morado" },
+  { id: "proactivo", icono: <IconRayo />, color: "verde" },
 ];
 
 export const SobreMi = () => {
   const [modalAbierto, setModalAbierto] = useState(false);
+  const { language } = useLanguage();
+  const t = translations[language].aboutMe;
+
   return (
     <div className="sobremi-frame">
 
@@ -147,14 +152,11 @@ export const SobreMi = () => {
         <div className="sobremi-top">
           <div className="sobremi-texto">
             <h2 className="sobremi-titulo-pixel">
-              Un poco sobre mí...
+              {t.titulo}
             </h2>
 
             <p className="seccion-parrafo">
-              Soy Alan, desarrollador Junior Full Stack con enfoque en backend.
-              Soy perseverante: no me rindo fácil ante un problema hasta
-              resolverlo. Como programador, sé que nunca se deja de aprender,
-              y esa es la razón por la que sigo creciendo cada día.
+              {t.parrafo}
             </p>
           </div>
 
@@ -162,7 +164,7 @@ export const SobreMi = () => {
             {HABILIDADES.map((h) => (
               <div key={h.id} className={`lista-item lista-item--${h.color}`}>
                 <span className="lista-item-icono">{h.icono}</span>
-                <span className="lista-item-label">{h.label}</span>
+                <span className="lista-item-label">{t.badges[h.id]}</span>
               </div>
             ))}
           </div>
@@ -173,7 +175,7 @@ export const SobreMi = () => {
           <div className="contacto-columna">
             <span className="contacto-titulo">
               <span className="contacto-titulo-punto" />
-              Contáctame
+              {t.contactTitle}
             </span>
             <div className="sobremi-contacto">
               {CONTACTO_RAPIDO.map((c) =>
@@ -205,7 +207,7 @@ export const SobreMi = () => {
 
           <div className="sobremi-frase-wrap">
             <p className="sobremi-frase">
-              En la vida siempre hay algo por descubrir.
+              {t.quote}
             </p>
             <span className="frame-deco frame-deco--frase">
               <IconSpinner />

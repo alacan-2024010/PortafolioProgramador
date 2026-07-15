@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../../../styles/DatosGenerales.css";
+import { useLanguage } from "../../../context/LanguageContext";
+import { translations } from "../../../context/translations";
 
 const IconLocation = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -67,71 +69,41 @@ const IconWork = () => (
   </svg>
 );
 
+// id se usa para buscar titulo/valor traducidos en translations.js -> datosGenerales.datos[id]
 const datos = [
-  {
-    titulo: "Edad",
-    valor: "18 años",
-    color: "blue",
-    icono: <IconAge />
-  },
-  {
-    titulo: "Experiencia",
-    valor: "3 años programando",
-    color: "green",
-    icono: <IconLaptop />
-  },
-  {
-    titulo: "Educación",
-    valor: "Fundación Kinal",
-    color: "purple",
-    icono: <IconBook />
-  },
-  {
-    titulo: "Ubicación",
-    valor: "Ciudad de Guatemala, Guatemala", 
-    color: "cyan",
-    icono: <IconLocation />
-  }
+  { id: "edad", color: "blue", icono: <IconAge /> },
+  { id: "experiencia", color: "green", icono: <IconLaptop /> },
+  { id: "educacion", color: "purple", icono: <IconBook /> },
+  { id: "ubicacion", color: "cyan", icono: <IconLocation /> },
 ];
 
-
+// id se usa para buscar el nombre traducido en datosGenerales.estadisticas[id]
 const estadisticas = [
-  {
-    nombre: "Backend",
-    porcentaje: 80
-  },
-  {
-    nombre: "Frontend",
-    porcentaje: 70
-  },
-  {
-    nombre: "Bases de Datos",
-    porcentaje: 90
-  },
-  {
-    nombre: "Aprendizaje",
-    porcentaje: 100
-  }
+  { id: "backend", porcentaje: 80 },
+  { id: "frontend", porcentaje: 70 },
+  { id: "basesDatos", porcentaje: 90 },
+  { id: "aprendizaje", porcentaje: 100 },
 ];
 
-
+// El "nombre" (LinkedIn/Instagram/WhatsApp) es marca fija, no se traduce.
+// El "id" se usa para buscar el detalle traducido en datosGenerales.redes[id]
 const redes = [
   {
+    id: "linkedin",
     nombre: "LinkedIn",
-    detalle: "Conecta conmigo",
     href: "https://www.linkedin.com/in/alan-francisco-lacán-flores-173750421/",
     icono: <IconLinkedin />
   },
   {
+    id: "instagram",
     nombre: "Instagram",
-    detalle: "@2211alan",
     href: "https://instagram.com/2211alan",
     icono: <IconInstagram />
   },
   {
+    id: "whatsapp",
     nombre: "WhatsApp",
-    detalle: "Escríbeme",
-    href: "https://wa.me/50258319270", 
+    href: "https://wa.me/50258319270",
     icono: <IconWhatsapp />
   }
 ];
@@ -280,6 +252,8 @@ const useParallax = () => {
 export const DatosGenerales = () => {
 
   const panelRef = useParallax();
+  const { language } = useLanguage();
+  const t = translations[language].datosGenerales;
 
   return (
 
@@ -299,12 +273,11 @@ export const DatosGenerales = () => {
       <header className="datos-header">
 
         <h2>
-          Datos Generales
+          {t.header.titulo}
         </h2>
 
         <p>
-          Aquí encontrarás un resumen de mi perfil como
-          desarrollador, mi experiencia y formación.
+          {t.header.parrafo}
         </p>
 
       </header>
@@ -318,8 +291,11 @@ export const DatosGenerales = () => {
         {datos.map((item) => (
 
           <InfoCard
-            key={item.titulo}
-            {...item}
+            key={item.id}
+            titulo={t.datos[item.id].titulo}
+            valor={t.datos[item.id].valor}
+            icono={item.icono}
+            color={item.color}
           />
 
         ))}
@@ -341,7 +317,7 @@ export const DatosGenerales = () => {
             <span></span>
 
             <h3>
-              Estadísticas
+              {t.statsTitle}
             </h3>
 
           </div>
@@ -351,8 +327,9 @@ export const DatosGenerales = () => {
             {estadisticas.map((item) => (
 
               <ProgressBar
-                key={item.nombre}
-                {...item}
+                key={item.id}
+                nombre={t.estadisticas[item.id]}
+                porcentaje={item.porcentaje}
               />
 
             ))}
@@ -369,7 +346,7 @@ export const DatosGenerales = () => {
             <span></span>
 
             <h3>
-              Conecta Conmigo
+              {t.socialTitle}
             </h3>
 
           </div>
@@ -378,8 +355,11 @@ export const DatosGenerales = () => {
             {redes.map((red) => (
 
               <SocialCard
-                key={red.nombre}
-                {...red}
+                key={red.id}
+                nombre={red.nombre}
+                detalle={t.redes[red.id]}
+                href={red.href}
+                icono={red.icono}
               />
 
             ))}
@@ -390,7 +370,7 @@ export const DatosGenerales = () => {
       <footer className="datos-footer">
         <div className="footer-line"></div>
         <span>
-          Siempre aprendiendo nuevas tecnologías y mejorando mis habilidades.
+          {t.footer}
         </span>
       </footer>
     </section>
