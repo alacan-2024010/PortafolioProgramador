@@ -2,6 +2,7 @@ import { useState } from "react";
 import fotoPortafolio from "../../../assets/FotografiaPortafolio.png"
 import { useLanguage } from "../../../context/LanguageContext";
 import { translations } from "../../../context/translations";
+import { LanguageSwitch } from "./LanguageSwitch";
 import "../../../styles/Sidebar.css";
 
 const SECCIONES_IDS = [
@@ -19,7 +20,7 @@ export const Sidebar = ({
   onSectionClick,
 }) => {
   const [abierto, setAbierto] = useState(false);
-  const { language, setLanguage } = useLanguage();
+  const { language } = useLanguage();
   const t = translations[language].nav;
 
   const handleClick = (id) => {
@@ -91,21 +92,7 @@ export const Sidebar = ({
 
         {/* Switch de idioma, anclado abajo */}
         <div className="lang-toggle-wrap">
-          <button
-            className={`lang-toggle ${language === "en" ? "lang-toggle--en" : ""}`}
-            onClick={() => setLanguage(language === "es" ? "en" : "es")}
-            aria-label="Cambiar idioma"
-          >
-            <span className="lang-toggle-thumb" />
-            <span className="lang-toggle-option">
-              <span className="lang-toggle-flag">🇬🇹</span>
-              <span className="lang-toggle-code">ES</span>
-            </span>
-            <span className="lang-toggle-option">
-              <span className="lang-toggle-flag">🇺🇸</span>
-              <span className="lang-toggle-code">EN</span>
-            </span>
-          </button>
+          <LanguageSwitch />
         </div>
       </aside>
     </>

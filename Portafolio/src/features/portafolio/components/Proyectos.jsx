@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Users, User } from "lucide-react";
 import "../../../styles/Proyectos.css";
-import { useLanguage } from "../../../context/LanguageContext"; 
-import { translations } from "../../../context/translations"; 
+import { useLanguage } from "../../../context/LanguageContext";
+import { translations } from "../../../context/translations";
 
 //KinalBank
 import ImgKinalBankPortada from "../../../assets/KinalBankPrincipal.png"
