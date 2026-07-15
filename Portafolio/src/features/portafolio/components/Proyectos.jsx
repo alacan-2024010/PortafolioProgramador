@@ -15,6 +15,12 @@ import ImgEcoKinalPortada from "../../../assets/EcoKinalPrincipal.png"
 import ImgHuellitasPortada from "../../../assets/HuellitasPrincipal.png"
 //KinalGourmet
 import ImgGourmetPortada from "../../../assets/KinalGourmetPortada.png"
+import ImgKinalGourmetAuth from "../../../assets/KinalGourmetInicioSesion.png"
+import ImgKinalGourmetRegister from "../../../assets/KinalGourmetRegister.png"
+import ImgKinalGourmetDashboard from "../../../assets/KinalGourmetDashboard.png"
+import ImgKinalGourmetPedidos from "../../../assets/KinalGourmetPedidos.png"
+import ImgKinalGourmetFacturacion from "../../../assets/KinalGourmetFacturacion.png"
+import ImgKinalGourmetReservaciones from "../../../assets/KinalGourmetReservaciones.png"
 
 function GithubIcon({ size = 17 }) {
   return (
@@ -37,7 +43,7 @@ const PROJECTS = [
     tagline: "Banca digital segura para Guatemala",
     description:
       "Plataforma de banca digital que simula un sistema bancario completo: registro y autenticación de usuarios, dashboard con balance en tiempo real, gestión de cuentas, historial de movimientos, transferencias entre cuentas y un marketplace de productos y servicios bancarios.",
-    skills: ["JavaScript", "React", "PostgreSQL", "MongoDB", "API REST", "Autenticación", "UI/UX"],
+    skills: ["JavaScript", "React", "PostgreSQL", "MongoDB"],
     type: "grupal",
     color: "#3b82f6",
     colorSoft: "rgba(59,130,246,0.18)",
@@ -94,20 +100,23 @@ const PROJECTS = [
   {
     id: "kinalgourmet",
     title: "KinalGourmetHouse",
-    tagline: "TODO: escribe una línea que describa el proyecto",
+    tagline: "Gestión multi-restaurante: pedidos, reservaciones y facturación",  
     description:
-      "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
-    skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
+      "Aplicación web que permite a un administrador principal crear y gestionar múltiples restaurantes junto con sus respectivos administradores. Cada restaurante puede manejar su menú, pedidos, reservaciones y facturación de forma independiente, mientras que los clientes pueden explorar todos los restaurantes disponibles, ver sus menús y realizar pedidos de lo que más les guste.",
+    skills: ["JavaScript","React", "Node.js", "MongoDB", "PostgreSQL"],
     type: "grupal",
     color: "#ff761be7",
     colorSoft: "rgba(236,72,153,0.18)",
     github: "https://github.com/TODO/kinal-gourmet-house",
-    live: "",
+    live: "https://kinal-gourmet-web.vercel.app/",
     images: [
         ImgGourmetPortada,
-        { mock: true, label: "Pantalla 1", accent: "#ec4899" },
-        { mock: true, label: "Pantalla 2", accent: "#f472b6" },
-        { mock: true, label: "Pantalla 3", accent: "#e879f9" },
+        ImgKinalGourmetAuth,
+        ImgKinalGourmetRegister,
+        ImgKinalGourmetDashboard,
+        ImgKinalGourmetFacturacion,
+        ImgKinalGourmetPedidos,
+        ImgKinalGourmetReservaciones
     ],
   },
 ];
