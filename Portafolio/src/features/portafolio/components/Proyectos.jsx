@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Users, User } from "lucide-react";
 import "../../../styles/Proyectos.css";
+import { useLanguage } from "../../../context/LanguageContext"; 
+import { translations } from "../../../context/translations"; 
+
 //KinalBank
 import ImgKinalBankPortada from "../../../assets/KinalBankPrincipal.png"
 import ImgKinalBankAuth from "../../../assets/KinalBankAuth.png"
@@ -21,7 +24,6 @@ import ImgEcoKinalGamificacion from "../../../assets/EcoKinalGamificacion.png"
 import ImgEcoKinalImpacto from "../../../assets/EcoKinalImpacto.png"
 import ImgEcoKinalMapa from "../../../assets/EcoKinalMapa.png"
 import ImgEcoKinalEcoBot from "../../../assets/EcoKinalEcoBot.png"
-
 
 //Huellitas
 import ImgHuellitasPortada from "../../../assets/HuellitasPrincipal.png"
@@ -57,13 +59,12 @@ function GithubIcon({ size = 17 }) {
   );
 }
 
-const PROJECTS = [
+// Datos fijos de cada proyecto (todo lo que NO depende del idioma).
+// El texto (tagline / description) se agrega en buildProjects() a partir de las traducciones.
+const PROJECTS_BASE = [
   {
     id: "kinalbank",
     title: "KinalBank",
-    tagline: "Banca digital segura para Guatemala",
-    description:
-      "Plataforma de banca digital que simula un sistema bancario completo: registro y autenticación de usuarios, dashboard con balance en tiempo real, gestión de cuentas, historial de movimientos, transferencias entre cuentas y un marketplace de productos y servicios bancarios.",
     skills: ["JavaScript", "React", "PostgreSQL", "MongoDB"],
     type: "grupal",
     color: "#3b82f6",
@@ -83,9 +84,6 @@ const PROJECTS = [
   {
     id: "ecokinal",
     title: "EcoKinal",
-    tagline: "Conciencia ambiental: identifica y aprende a reciclar",
-    description:
-      "Plataforma que promueve la conciencia ambiental en la sociedad. El usuario puede subir o tomar una foto de un residuo y el sistema detecta automáticamente en qué tipo de recipiente debe depositarse. Incluye EcoBot, un asistente virtual que resuelve dudas sobre cómo reciclar correctamente, además de un mapa de puntos de reciclaje, un foro comunitario y funciones de gamificación e indicadores de impacto ambiental.",
     skills: ["JavaScript", "React", "Node.js", "MongoDB", "PostgreSQL", "Google Cloud Vision API", "Gemini API"],
     type: "grupal",
     color: "#22c55e",
@@ -108,11 +106,8 @@ const PROJECTS = [
   {
     id: "huellitas",
     title: "Huellitas S.A",
-    tagline: "Sistema de gestión veterinaria con generación e impresión de reportes",
-    description:
-      "Sistema de escritorio desarrollado para una clínica veterinaria, con inicio de sesión y gestión de la información del negocio. Permite generar e imprimir reportes mediante JasperReports, facilitando el manejo administrativo de la veterinaria.",
     skills: ["JavaFX", "MySQL", "JasperReports"],
-    type: "Individual",
+    type: "individual",
     color: "#f59e0b",
     colorSoft: "rgba(245,158,11,0.18)",
     github: "https://github.com/alacan-2024010/VeterinariaHuellitas.git",
@@ -132,9 +127,6 @@ const PROJECTS = [
   {
     id: "kinalgourmet",
     title: "KinalGourmetHouse",
-    tagline: "Gestión multi-restaurante: pedidos, reservaciones y facturación",  
-    description:
-      "Aplicación web que permite a un administrador principal crear y gestionar múltiples restaurantes junto con sus respectivos administradores. Cada restaurante puede manejar su menú, pedidos, reservaciones y facturación de forma independiente, mientras que los clientes pueden explorar todos los restaurantes disponibles, ver sus menús y realizar pedidos de lo que más les guste.",
     skills: ["JavaScript","React", "Node.js", "MongoDB", "PostgreSQL"],
     type: "grupal",
     color: "#ff761be7",
@@ -152,6 +144,15 @@ const PROJECTS = [
     ],
   },
 ];
+
+// Combina los datos fijos con el texto traducido (t = translations[language].proyectos)
+function buildProjects(t) {
+  return PROJECTS_BASE.map((p) => ({
+    ...p,
+    tagline: t.items[p.id]?.tagline ?? "",
+    description: t.items[p.id]?.description ?? "",
+  }));
+}
 
 /* Ilustración placeholder para una "captura" mock */
 function MockScreen({ label, accent }) {
@@ -183,7 +184,7 @@ function Frame({ image }) {
   return <MockScreen label={image.label} accent={image.accent} />;
 }
 
-function ProjectModal({ project, onClose }) {
+function ProjectModal({ project, onClose, t }) {
   const [imgIndex, setImgIndex] = useState(0);
   const total = project.images.length;
 
@@ -217,7 +218,7 @@ function ProjectModal({ project, onClose }) {
         style={{ "--pcolor": project.color }}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-close" onClick={onClose} aria-label="Cerrar">
+        <button className="modal-close" onClick={onClose} aria-label={t.cerrar}>
           <X size={18} />
         </button>
 
@@ -243,10 +244,10 @@ function ProjectModal({ project, onClose }) {
           </div>
           {total > 1 && (
             <>
-              <button className="nav-btn nav-left" onClick={prev} aria-label="Anterior">
+              <button className="nav-btn nav-left" onClick={prev} aria-label={t.anterior}>
                 <ChevronLeft size={20} />
               </button>
-              <button className="nav-btn nav-right" onClick={next} aria-label="Siguiente">
+              <button className="nav-btn nav-right" onClick={next} aria-label={t.siguiente}>
                 <ChevronRight size={20} />
               </button>
               <div className="dots">
@@ -255,7 +256,7 @@ function ProjectModal({ project, onClose }) {
                     key={i}
                     className={"dot-btn" + (i === imgIndex ? " active" : "")}
                     onClick={() => setImgIndex(i)}
-                    aria-label={`Imagen ${i + 1}`}
+                    aria-label={`${t.imagen} ${i + 1}`}
                   />
                 ))}
               </div>
@@ -268,7 +269,7 @@ function ProjectModal({ project, onClose }) {
             <div>
               <span className="type-pill">
                 {project.type === "grupal" ? <Users size={13} /> : <User size={13} />}
-                {project.type === "grupal" ? "Proyecto grupal" : "Proyecto individual"}
+                {project.type === "grupal" ? t.proyectoGrupal : t.proyectoIndividual}
               </span>
               <h2>{project.title}</h2>
               <p className="tagline">{project.tagline}</p>
@@ -293,7 +294,7 @@ function ProjectModal({ project, onClose }) {
               rel="noreferrer"
             >
               <GithubIcon size={17} />
-              Ver repositorio
+              {t.verRepositorio}
             </a>
             {project.live ? (
               <a
@@ -303,12 +304,12 @@ function ProjectModal({ project, onClose }) {
                 rel="noreferrer"
               >
                 <ExternalLink size={17} />
-                Ver demo en vivo
+                {t.verDemo}
               </a>
             ) : !project.noLive ? (
               <span className="cta live disabled">
                 <ExternalLink size={17} />
-                Demo próximamente
+                {t.demoProximamente}
               </span>
             ) : null}
           </div>
@@ -318,7 +319,7 @@ function ProjectModal({ project, onClose }) {
   );
 }
 
-function ProjectCard({ project, onOpen, index }) {
+function ProjectCard({ project, onOpen, index, t }) {
   return (
     <button
       className="project-card"
@@ -330,14 +331,14 @@ function ProjectCard({ project, onOpen, index }) {
         <Frame image={project.images[0]} />
         <div className="thumb-overlay">
           <span className="open-hint">
-            Ver proyecto <ExternalLink size={13} />
+            {t.verProyecto} <ExternalLink size={13} />
           </span>
         </div>
       </div>
       <div className="card-body">
         <span className="type-pill small">
           {project.type === "grupal" ? <Users size={11} /> : <User size={11} />}
-          {project.type === "grupal" ? "Grupal" : "Individual"}
+          {project.type === "grupal" ? t.grupal : t.individual}
         </span>
         <h3>{project.title}</h3>
         <p>{project.tagline}</p>
@@ -347,6 +348,10 @@ function ProjectCard({ project, onOpen, index }) {
 }
 
 export const Proyectos = () => {
+  const { language } = useLanguage();
+  const t = translations[language].proyectos;
+  const PROJECTS = buildProjects(t);
+
   const [active, setActive] = useState(null);
   const [paused, setPaused] = useState(false);
   const trackRef = useRef(null);
@@ -388,8 +393,8 @@ export const Proyectos = () => {
     <section className="gallery-section">
       <div className="gallery-head">
         <div>
-          <h2>Proyectos</h2>
-          <p>Proyectos que van más allá del código — mira el resultado, explora el stack y pruébalo tú mismo.</p>
+          <h2>{t.titulo}</h2>
+          <p>{t.subtitulo}</p>
         </div>
       </div>
 
@@ -411,18 +416,18 @@ export const Proyectos = () => {
         >
           <div className="track-group" ref={groupRef}>
             {PROJECTS.map((p, i) => (
-              <ProjectCard key={p.id} project={p} index={i} onOpen={setActive} />
+              <ProjectCard key={p.id} project={p} index={i} onOpen={setActive} t={t} />
             ))}
           </div>
           <div className="track-group" aria-hidden="true">
             {PROJECTS.map((p, i) => (
-              <ProjectCard key={`dup-${p.id}`} project={p} index={i} onOpen={setActive} />
+              <ProjectCard key={`dup-${p.id}`} project={p} index={i} onOpen={setActive} t={t} />
             ))}
           </div>
         </div>
       </div>
 
-      {active && <ProjectModal project={active} onClose={() => setActive(null)} />}
+      {active && <ProjectModal project={active} onClose={() => setActive(null)} t={t} />}
     </section>
   );
 }
