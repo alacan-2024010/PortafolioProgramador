@@ -9,10 +9,21 @@ import ImgKinalBankDashboard from "../../../assets/KinalBankDashboard.png"
 import ImgKinalBankMovimientos from "../../../assets/KinalBankMovimientos.png"
 import ImgKinalBankTransacciones from "../../../assets/KinalBankTransacciones.png"
 import ImgKinalBankProductos from "../../../assets/KinalBankProductos.png"
+
 //EcoKinal
 import ImgEcoKinalPortada from "../../../assets/EcoKinalPrincipal.png"
+
 //Huellitas
 import ImgHuellitasPortada from "../../../assets/HuellitasPrincipal.png"
+import ImgHuellitasAuth from "../../../assets/HuellitasAuth.png"
+import ImgHuellitasDashboard from "../../../assets/HuellitasDashboard.png"
+import ImgHuellitasClientes from "../../../assets/HuellitasClientes.png"
+import ImgHuellitasCitas from "../../../assets/HuellitasCitas.png"
+import ImgHuellitasMascotas from "../../../assets/HuellitasMascotas.png"
+import ImgHuellitasRecetas from "../../../assets/HuellitasRecetas.png" 
+import ImgHuellitasVeterinarios from "../../../assets/HuellitasVeterinarios.png" 
+import ImgHuellitasReportes from "../../../assets/ReporteRecetas.png"
+
 //KinalGourmet
 import ImgGourmetPortada from "../../../assets/KinalGourmetPortada.png"
 import ImgKinalGourmetAuth from "../../../assets/KinalGourmetInicioSesion.png"
@@ -81,20 +92,25 @@ const PROJECTS = [
   {
     id: "huellitas",
     title: "Huellitas S.A",
-    tagline: "TODO: escribe una línea que describa el proyecto",
+    tagline: "Sistema de gestión veterinaria con generación e impresión de reportes",
     description:
-      "TODO: descripción general del proyecto — qué problema resuelve y qué hace la aplicación.",
-    skills: ["TODO: tecnología 1", "TODO: tecnología 2", "TODO: tecnología 3"],
+      "Sistema de escritorio desarrollado para una clínica veterinaria, con inicio de sesión y gestión de la información del negocio. Permite generar e imprimir reportes mediante JasperReports, facilitando el manejo administrativo de la veterinaria.",
+    skills: ["JavaFX", "MySQL", "JasperReports"],
     type: "Individual",
     color: "#f59e0b",
     colorSoft: "rgba(245,158,11,0.18)",
-    github: "https://github.com/TODO/huellitas",
-    live: "",
+    github: "https://github.com/alacan-2024010/VeterinariaHuellitas.git",
+    noLive: true,
     images: [
         ImgHuellitasPortada,
-        { mock: true, label: "Pantalla 1", accent: "#f59e0b" },
-        { mock: true, label: "Pantalla 2", accent: "#fb923c" },
-        { mock: true, label: "Pantalla 3", accent: "#fbbf24" },
+        ImgHuellitasAuth,
+        ImgHuellitasDashboard,
+        ImgHuellitasClientes,
+        ImgHuellitasMascotas,
+        ImgHuellitasCitas,
+        ImgHuellitasVeterinarios,
+        ImgHuellitasRecetas,
+        ImgHuellitasReportes
     ],
   },
   {
@@ -107,7 +123,7 @@ const PROJECTS = [
     type: "grupal",
     color: "#ff761be7",
     colorSoft: "rgba(236,72,153,0.18)",
-    github: "https://github.com/TODO/kinal-gourmet-house",
+    github: "https://github.com/jrealiquez-2021549/AppMovil-SistemaRestaurante.git",
     live: "https://kinal-gourmet-web.vercel.app/",
     images: [
         ImgGourmetPortada,
@@ -273,12 +289,12 @@ function ProjectModal({ project, onClose }) {
                 <ExternalLink size={17} />
                 Ver demo en vivo
               </a>
-            ) : (
+            ) : !project.noLive ? (
               <span className="cta live disabled">
                 <ExternalLink size={17} />
                 Demo próximamente
               </span>
-            )}
+            ) : null}
           </div>
         </div>
       </div>
