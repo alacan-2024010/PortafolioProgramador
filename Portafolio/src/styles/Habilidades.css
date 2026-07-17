@@ -151,6 +151,7 @@
     gap:26px;
     width:max-content;
     animation:habilidades-scroll 42s linear infinite;
+    will-change:transform;
 }
 
 .habilidades-carrusel:hover .habilidades-track{
@@ -165,6 +166,24 @@
 @keyframes habilidades-scroll{
     from{ transform:translateX(0); }
     to{ transform:translateX(-50%); }
+}
+
+/* --- Glow suave por opacidad (NO box-shadow) sobre una capa fija --- */
+@keyframes skill-glow-pulse{
+    0%,100%{ opacity:.35; }
+    50%{ opacity:.85; }
+}
+
+/* --- Flotación leve del ícono, solo transform --- */
+@keyframes skill-badge-float{
+    0%,100%{ transform:translateY(0) scale(1); }
+    50%{ transform:translateY(-4px) scale(1.03); }
+}
+
+/* --- Barrido de luz simple con opacidad, sin rotar ni desplazar mucho --- */
+@keyframes skill-shine{
+    0%,100%{ opacity:0; }
+    50%{ opacity:1; }
 }
 
 .skill-card{
@@ -185,6 +204,7 @@
         rgba(24,35,56,.88)
     );
     border:1px solid rgba(255,255,255,.08);
+    box-shadow:0 0 22px -8px var(--skill-color);
     transition:
         transform .4s cubic-bezier(.2,.8,.2,1),
         border-color .4s,
@@ -192,15 +212,7 @@
     cursor:default;
 }
 
-.skill-card:hover{
-    transform:translateY(-16px) scale(1.1);
-    border-color:var(--skill-color);
-    box-shadow:
-        0 26px 50px rgba(0,0,0,.5),
-        0 0 34px -4px var(--skill-color);
-    z-index:5;
-}
-
+/* Capa de glow fija (no anima box-shadow, solo su opacidad) */
 .skill-card-glow{
     position:absolute;
     inset:0;
@@ -209,13 +221,44 @@
         var(--skill-color),
         transparent 65%
     );
-    opacity:0;
-    transition:opacity .4s;
+    opacity:.12;
+    animation:skill-glow-pulse 3.6s ease-in-out infinite;
+    animation-delay:calc((var(--i, 0)) * .3s);
     pointer-events:none;
+    transition:opacity .4s;
+    will-change:opacity;
 }
 
 .skill-card:hover .skill-card-glow{
-    opacity:.18;
+    animation-play-state:paused;
+    opacity:.28;
+}
+
+/* Línea de brillo diagonal fija en posición, solo cambia opacidad */
+.skill-card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        115deg,
+        transparent 40%,
+        rgba(255,255,255,.10) 50%,
+        transparent 60%
+    );
+    pointer-events:none;
+    opacity:0;
+    animation:skill-shine 4.5s ease-in-out infinite;
+    animation-delay:calc((var(--i, 0)) * .5s);
+    will-change:opacity;
+}
+
+.skill-card:hover{
+    transform:translateY(-14px) scale(1.08);
+    border-color:var(--skill-color);
+    box-shadow:
+        0 26px 50px rgba(0,0,0,.5),
+        0 0 34px -4px var(--skill-color);
+    z-index:5;
 }
 
 .skill-badge{
@@ -228,7 +271,10 @@
     background:color-mix(in srgb, var(--skill-color) 16%, transparent);
     border:2px solid var(--skill-color);
     box-shadow:0 0 28px -6px var(--skill-color);
+    animation:skill-badge-float 3.2s ease-in-out infinite;
+    animation-delay:calc((var(--i, 0)) * .25s);
     transition:transform .4s;
+    will-change:transform;
 }
 
 .skill-badge span{
@@ -246,7 +292,8 @@
 }
 
 .skill-card:hover .skill-badge{
-    transform:rotate(-8deg) scale(1.08);
+    animation-play-state:paused;
+    transform:rotate(-8deg) scale(1.1);
 }
 
 .skill-nombre{
@@ -284,18 +331,19 @@
     color:var(--skill-color);
 }
 
-
 /* ---- Pantallas táctiles: sin hover real, evitar estado "pegado" ---- */
 @media (hover:none){
     .skill-card:hover{
         transform:none;
-        box-shadow:none;
+        box-shadow:0 0 22px -8px var(--skill-color);
         border-color:rgba(255,255,255,.08);
     }
     .skill-card:hover .skill-card-glow{
-        opacity:0;
+        animation-play-state:running;
+        opacity:.12;
     }
     .skill-card:hover .skill-badge{
+        animation-play-state:running;
         transform:none;
     }
     /* feedback al tocar, sin dejarlo trabado */
@@ -305,7 +353,7 @@
         box-shadow:0 14px 30px rgba(0,0,0,.4), 0 0 20px -6px var(--skill-color);
     }
     .skill-card:active .skill-card-glow{
-        opacity:.18;
+        opacity:.28;
     }
     .skill-card:active .skill-badge{
         transform:rotate(-6deg) scale(1.05);
@@ -433,6 +481,18 @@
         transform:none;
     }
 
+    /* En móvil, alargar duración (no apagar) para que sea más liviano
+       sin dejar las tarjetas "muertas" */
+    .skill-card-glow{
+        animation-duration:5s;
+    }
+    .skill-card::after{
+        animation-duration:6s;
+    }
+    .skill-badge{
+        animation-duration:4.5s;
+    }
+
     .skill-badge{
         width:56px;
         height:56px;
@@ -552,5 +612,11 @@
         animation:none !important;
         opacity:1 !important;
         transform:none !important;
+    }
+
+    .skill-card-glow,
+    .skill-card::after,
+    .skill-badge{
+        animation:none !important;
     }
 }
