@@ -45,7 +45,6 @@
   background: transparent;
 }
 
-/* ---- Esquinas tipo mira de cámara ---- */
 .frame-corner {
   position: absolute;
   width: 44px;
@@ -126,7 +125,6 @@
   gap: 32px;
 }
 
-/* ---- Columna de texto ---- */
 .sobremi-texto {
   display: flex;
   flex-direction: column;
@@ -362,7 +360,6 @@
   color: var(--color-text-primary);
 }
 
-/* ---- Frase de cierre ---- */
 .sobremi-frase-wrap {
   position: relative;
   display: flex;
@@ -449,6 +446,30 @@
 @keyframes deco-girar {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+.sobremi-lista-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: start;
+  width: 100%;
+}
+
+.sobremi-lista-subtitulo {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  opacity: 0;
+  margin-top: 6px;
+  animation: sobremi-rise-dim .5s ease forwards .85s;
+}
+
+.sobremi-lista-grupo .sobremi-lista-subtitulo:first-child {
+  margin-top: 0;
 }
 
 .sobremi-lista {
@@ -562,7 +583,8 @@
   .sobremi-frase,
   .sobremi-frame .sobremi-titulo-pixel,
   .sobremi-frame .sobremi-titulo-pixel::after,
-  .sobremi-frase-wrap .frame-deco--frase {
+  .sobremi-frase-wrap .frame-deco--frase,
+  .sobremi-lista-subtitulo {
     animation: none !important;
   }
   .frame-corner,
@@ -570,11 +592,13 @@
   .seccion-parrafo,
   .lista-item,
   .contacto-item,
-  .sobremi-frase-wrap {
+  .sobremi-frase-wrap,
+  .sobremi-lista-subtitulo {
     opacity: 1 !important;
     transform: none !important;
   }
   .sobremi-eyebrow { opacity: .75 !important; }
+  .sobremi-lista-subtitulo { opacity: .75 !important; }
   .sobremi-frame .sobremi-titulo-pixel {
     clip-path: inset(0 0 0 0) !important;
   }
@@ -583,7 +607,6 @@
   }
 }
 
-/* ---- Responsive ---- */
 @media (max-width: 900px) {
   .sobremi-frame {
     height: 100%;
@@ -626,6 +649,14 @@
   .sobremi-footer {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  .sobremi-lista-grupo {
+    align-items: center;
+  }
+
+  .sobremi-lista-subtitulo {
+    text-align: center;
   }
 
   .sobremi-contacto {

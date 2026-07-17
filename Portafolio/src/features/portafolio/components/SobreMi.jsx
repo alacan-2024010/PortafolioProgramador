@@ -119,11 +119,14 @@ const CONTACTO_RAPIDO = [
   },
 ];
 
-// El id de cada habilidad se usa como llave para buscar su label
-// traducido en translations.js -> aboutMe.badges[id]
-const HABILIDADES = [
+// Perfil profesional: qué tipo de desarrollador eres
+const PERFIL = [
   { id: "backend", icono: <IconServidor />, color: "celeste" },
   { id: "fullstack", icono: <IconCapas />, color: "azul" },
+];
+
+// Cualidades personales: cómo trabajas
+const CUALIDADES = [
   { id: "autodidacta", icono: <IconLibro />, color: "morado" },
   { id: "puntual", icono: <IconReloj />, color: "verde" },
   { id: "perseverante", icono: <IconMontana />, color: "celeste" },
@@ -160,13 +163,26 @@ export const SobreMi = () => {
             </p>
           </div>
 
-          <div className="sobremi-lista">
-            {HABILIDADES.map((h) => (
-              <div key={h.id} className={`lista-item lista-item--${h.color}`}>
-                <span className="lista-item-icono">{h.icono}</span>
-                <span className="lista-item-label">{t.badges[h.id]}</span>
-              </div>
-            ))}
+          <div className="sobremi-lista-grupo">
+            <span className="sobremi-lista-subtitulo">Perfil</span>
+            <div className="sobremi-lista">
+              {PERFIL.map((h) => (
+                <div key={h.id} className={`lista-item lista-item--${h.color}`}>
+                  <span className="lista-item-icono">{h.icono}</span>
+                  <span className="lista-item-label">{t.badges[h.id]}</span>
+                </div>
+              ))}
+            </div>
+
+            <span className="sobremi-lista-subtitulo">Cualidades</span>
+            <div className="sobremi-lista">
+              {CUALIDADES.map((h) => (
+                <div key={h.id} className={`lista-item lista-item--${h.color}`}>
+                  <span className="lista-item-icono">{h.icono}</span>
+                  <span className="lista-item-label">{t.badges[h.id]}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
