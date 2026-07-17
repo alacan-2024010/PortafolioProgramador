@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap');
 
+@property --ee-progress{
+    syntax:'<number>';
+    inherits:false;
+    initial-value:0;
+}
+
 @keyframes ee-fade-up{
     from{ opacity:0; transform:translateY(24px); }
     to{ opacity:1; transform:translateY(0); }
@@ -18,6 +24,21 @@
 @keyframes ee-dot-pulse{
     0%,100%{ box-shadow:0 0 0 0 var(--ee-color,#38bdf8); }
     50%{ box-shadow:0 0 0 6px transparent; }
+}
+
+@keyframes ee-fecha-pulse{
+    0%,100%{ box-shadow:0 0 0 0 color-mix(in srgb, var(--ee-color) 60%, transparent); }
+    50%{ box-shadow:0 0 0 5px transparent; }
+}
+
+@keyframes ee-item-in{
+    from{ opacity:0; transform:translateX(-18px); }
+    to{ opacity:1; transform:translateX(0); }
+}
+
+@keyframes ee-cv-arrow-bounce{
+    0%,100%{ transform:translateY(0); opacity:1; }
+    50%{ transform:translateY(3px); opacity:.6; }
 }
 
 .ee-container{
@@ -148,6 +169,7 @@
     width:100%;
 }
 
+/* --- Panel --- */
 .ee-panel{
     position:relative;
     border-radius:20px;
@@ -160,6 +182,13 @@
     border:1px solid rgba(255,255,255,.08);
     opacity:0;
     animation:ee-fade-up .7s ease forwards .35s;
+    transition:border-color .4s, box-shadow .4s, transform .4s;
+}
+
+.ee-panel:hover{
+    border-color:color-mix(in srgb, var(--ee-color) 55%, transparent);
+    box-shadow:0 20px 46px rgba(0,0,0,.4), 0 0 30px -10px var(--ee-color);
+    transform:translateY(-4px);
 }
 
 .ee-panel.ee-panel-edu{
@@ -171,6 +200,14 @@
     animation-delay:.45s;
 }
 
+.ee-panel-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:22px;
+}
+
 .ee-panel-title{
     display:flex;
     align-items:center;
@@ -179,7 +216,7 @@
     font-weight:700;
     font-size:1.15rem;
     color:#fff;
-    margin-bottom:22px;
+    margin:0;
 }
 
 .ee-panel-dot{
@@ -190,6 +227,42 @@
     animation:ee-dot-pulse 2s ease-in-out infinite;
 }
 
+/* --- Anillo de progreso --- */
+.ee-ring{
+    position:relative;
+    width:46px;
+    height:46px;
+    flex:0 0 auto;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:conic-gradient(
+        var(--ee-color) calc(var(--ee-progress) * 3.6deg),
+        rgba(255,255,255,.09) 0deg
+    );
+    transition:--ee-progress 1.4s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 0 16px -6px var(--ee-color);
+}
+
+.ee-ring::before{
+    content:"";
+    position:absolute;
+    inset:4px;
+    border-radius:50%;
+    background:#0e1526;
+}
+
+.ee-ring-value{
+    position:relative;
+    z-index:1;
+    font-family:var(--font-mono, monospace);
+    font-size:.68rem;
+    font-weight:700;
+    color:var(--ee-color);
+}
+
+/* --- Timeline --- */
 .ee-timeline{
     position:relative;
     display:flex;
@@ -201,6 +274,13 @@
     position:relative;
     padding:0 0 26px 26px;
     border-left:2px solid rgba(255,255,255,.1);
+    opacity:0;
+    transform:translateX(-18px);
+}
+
+.ee-panel-inview .ee-timeline-item{
+    animation:ee-item-in .6s ease forwards;
+    animation-delay:var(--ee-delay, 0s);
 }
 
 .ee-timeline-item:last-child{
@@ -237,6 +317,9 @@
 }
 
 .ee-item-fecha{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
     flex:0 0 auto;
     font-family:var(--font-mono, monospace);
     font-size:.72rem;
@@ -248,6 +331,18 @@
     padding:3px 10px;
     border-radius:999px;
     white-space:nowrap;
+}
+
+.ee-item-fecha--pendiente{
+    animation:ee-fecha-pulse 2s ease-in-out infinite;
+}
+
+.ee-fecha-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:var(--ee-color);
+    flex:0 0 auto;
 }
 
 .ee-item-sub{
@@ -295,6 +390,7 @@
     box-shadow:0 0 18px -4px var(--ee-color);
 }
 
+/* --- Footer --- */
 .ee-footer{
     position:relative;
     z-index:2;
@@ -312,6 +408,7 @@
     letter-spacing:.01em;
 }
 
+/* --- Botón CV --- */
 .ee-cv-btn{
     flex:0 0 auto;
     display:inline-flex;
@@ -338,17 +435,17 @@
     width:18px;
     height:18px;
     flex:0 0 auto;
-    transition:transform .3s;
+    overflow:visible;
+}
+
+.ee-cv-arrow{
+    animation:ee-cv-arrow-bounce 1.6s ease-in-out infinite;
 }
 
 .ee-cv-btn:hover{
     transform:translateY(-3px);
     background-position:100% 50%;
     box-shadow:0 14px 36px -6px rgba(168,85,247,.6);
-}
-
-.ee-cv-btn:hover svg{
-    transform:translateY(2px);
 }
 
 .ee-cv-btn:active{
@@ -405,9 +502,21 @@
         padding:20px 18px 18px;
     }
 
+    .ee-panel-head{
+        margin-bottom:18px;
+    }
+
     .ee-panel-title{
         font-size:1.02rem;
-        margin-bottom:18px;
+    }
+
+    .ee-ring{
+        width:40px;
+        height:40px;
+    }
+
+    .ee-ring-value{
+        font-size:.62rem;
     }
 
     .ee-item-titulo{
@@ -453,10 +562,27 @@
         border-radius:16px;
     }
 
+    .ee-panel:hover{
+        transform:none;
+    }
+
+    .ee-panel-head{
+        margin-bottom:14px;
+        gap:10px;
+    }
+
     .ee-panel-title{
         font-size:.94rem;
-        margin-bottom:14px;
         gap:8px;
+    }
+
+    .ee-ring{
+        width:36px;
+        height:36px;
+    }
+
+    .ee-ring-value{
+        font-size:.56rem;
     }
 
     .ee-timeline-item{
@@ -536,6 +662,48 @@
     .ee-item-desc{
         font-size:.72rem;
     }
+
+    .ee-ring{
+        width:32px;
+        height:32px;
+    }
+
+    .ee-ring-value{
+        font-size:.5rem;
+    }
+}
+
+/* Móvil en horizontal (landscape) con poca altura */
+@media (max-height:480px) and (orientation:landscape){
+    .ee-container{
+        height:100%;
+        max-height:100%;
+        overflow-y:auto;
+        overflow-x:hidden;
+        padding:14px 20px;
+        gap:14px;
+        justify-content:flex-start;
+    }
+
+    .ee-container .bg-orb{
+        display:none;
+    }
+
+    .ee-header-top h2{
+        font-size:clamp(1.3rem,6vw,1.8rem);
+    }
+
+    .ee-header p{
+        font-size:.78rem;
+    }
+
+    .ee-panel{
+        padding:14px 14px 12px;
+    }
+
+    .ee-panel-head{
+        margin-bottom:12px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -544,13 +712,20 @@
     .ee-header p,
     .ee-panel,
     .ee-footer,
-    .ee-cv-btn{
+    .ee-cv-btn,
+    .ee-cv-arrow{
         animation:none !important;
         opacity:1 !important;
         transform:none !important;
     }
 
-    .ee-panel-dot{
+    .ee-panel-dot,
+    .ee-item-fecha--pendiente{
         animation:none;
+    }
+
+    .ee-timeline-item{
+        opacity:1 !important;
+        transform:none !important;
     }
 }
