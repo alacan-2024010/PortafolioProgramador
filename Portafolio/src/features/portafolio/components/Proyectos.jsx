@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { ExternalLink, X, ChevronLeft, ChevronRight, Users, User } from "lucide-react";
+import { ExternalLink, X, ChevronLeft, ChevronRight, Users, User, Images } from "lucide-react";
 import "../../../styles/Proyectos.css";
 import { useLanguage } from "../../../context/LanguageContext";
 import { translations } from "../../../context/translations";
@@ -320,15 +320,52 @@ function ProjectModal({ project, onClose, t }) {
 }
 
 function ProjectCard({ project, onOpen, index, t }) {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = useCallback((e) => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;   // 0 a 1
+    const py = (e.clientY - rect.top) / rect.height;    // 0 a 1
+
+    // Rango de inclinación: -7deg a 7deg
+    const rotateY = (px - 0.5) * 14;
+    const rotateX = (0.5 - py) * 14;
+
+    el.style.setProperty("--rx", `${rotateX}deg`);
+    el.style.setProperty("--ry", `${rotateY}deg`);
+    el.style.setProperty("--mx", `${px * 100}%`);
+    el.style.setProperty("--my", `${py * 100}%`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const el = cardRef.current;
+    if (!el) return;
+    el.style.setProperty("--rx", "0deg");
+    el.style.setProperty("--ry", "0deg");
+  }, []);
+
   return (
     <button
+      ref={cardRef}
       className="project-card"
       style={{ "--pcolor": project.color, "--psoft": project.colorSoft, "--i": index }}
       onClick={() => onOpen(project)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
       <span className="ring" aria-hidden="true" />
+      <span className="tilt-glare" aria-hidden="true" />
       <div className="card-thumb">
         <Frame image={project.images[0]} />
+        {project.images.length > 1 && (
+          <span className="shots-badge">
+            <Images size={12} />
+            {project.images.length}
+          </span>
+        )}
         <div className="thumb-overlay">
           <span className="open-hint">
             {t.verProyecto} <ExternalLink size={13} />
