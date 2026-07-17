@@ -28,6 +28,8 @@
 .habilidades-container{
     width:100%;
     height:100%;
+    max-width:1600px;
+    margin:0 auto;
     position:relative;
     overflow:hidden;
     padding:clamp(16px,2vw,28px);
@@ -282,6 +284,34 @@
     color:var(--skill-color);
 }
 
+
+/* ---- Pantallas táctiles: sin hover real, evitar estado "pegado" ---- */
+@media (hover:none){
+    .skill-card:hover{
+        transform:none;
+        box-shadow:none;
+        border-color:rgba(255,255,255,.08);
+    }
+    .skill-card:hover .skill-card-glow{
+        opacity:0;
+    }
+    .skill-card:hover .skill-badge{
+        transform:none;
+    }
+    /* feedback al tocar, sin dejarlo trabado */
+    .skill-card:active{
+        transform:translateY(-6px) scale(1.03);
+        border-color:var(--skill-color);
+        box-shadow:0 14px 30px rgba(0,0,0,.4), 0 0 20px -6px var(--skill-color);
+    }
+    .skill-card:active .skill-card-glow{
+        opacity:.18;
+    }
+    .skill-card:active .skill-badge{
+        transform:rotate(-6deg) scale(1.05);
+    }
+}
+
 /* Tablets y móviles grandes */
 @media (max-width:768px){
     .habilidades-container{
@@ -452,6 +482,63 @@
     .skill-badge img{
         width:26px;
         height:26px;
+    }
+}
+
+/* Móvil en horizontal (landscape) con poca altura */
+@media (max-height:480px) and (orientation:landscape){
+    .habilidades-container{
+        height:100%;
+        max-height:100%;
+        overflow-y:auto;
+        overflow-x:hidden;
+        padding:14px 20px;
+        gap:14px;
+        justify-content:flex-start;
+    }
+
+    .habilidades-container .bg-orb{
+        display:none;
+    }
+
+    .habilidades-header h2{
+        font-size:clamp(1.4rem,6vw,1.9rem);
+        margin-bottom:6px;
+    }
+
+    .habilidades-header p{
+        font-size:.8rem;
+        line-height:1.4;
+    }
+
+    .habilidades-carrusel{
+        padding:16px 0 18px;
+    }
+
+    .habilidades-track{
+        gap:14px;
+    }
+
+    .skill-card{
+        width:150px;
+        padding:16px 14px 14px;
+        gap:10px;
+    }
+
+    .skill-badge{
+        width:56px;
+        height:56px;
+        border-radius:14px;
+    }
+
+    .skill-badge img{
+        width:30px;
+        height:30px;
+    }
+
+    .skill-nombre{
+        font-size:.85rem;
+        min-height:1.8em;
     }
 }
 
