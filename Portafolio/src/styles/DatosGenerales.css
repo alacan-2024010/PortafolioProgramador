@@ -70,6 +70,8 @@
 .datos-container{
     width:100%;
     height:100%;
+    max-width:1500px;
+    margin:0 auto;
     position:relative;
     overflow:hidden;
     padding:clamp(16px,2vw,28px);
@@ -841,6 +843,7 @@
 .social-info{
 
     flex:1;
+    min-width:0;
 
     display:flex;
 
@@ -869,6 +872,10 @@
     font-family:var(--font-mono);
 
     letter-spacing:.06em;
+
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
 
 }
 
@@ -1008,8 +1015,9 @@ FOOTER
         z-index:3;
     }
 
+    /* De 500px a 768px aprovechamos 2 columnas; abajo de 500px, 1 sola (ver media siguiente) */
     .cards-grid{
-        grid-template-columns:1fr;
+        grid-template-columns:repeat(2,1fr);
         gap:10px;
     }
 
@@ -1106,6 +1114,10 @@ FOOTER
     .datos-header p{
         font-size:.78rem;
         line-height:1.5;
+    }
+
+    .cards-grid{
+        grid-template-columns:1fr;
     }
 
     .info-card{
@@ -1206,5 +1218,71 @@ FOOTER
     .cards-grid,
     .bottom-grid{
         max-width:100%;
+    }
+}
+
+/* Modo horizontal en celular (altura reducida): evita que el contenido se corte */
+@media (max-height:480px) and (orientation:landscape){
+
+    .datos-container{
+        height:auto;
+        max-height:100dvh;
+        overflow-y:auto;
+        padding:10px 18px;
+        gap:8px;
+    }
+
+    .bg-orb{
+        display:none;
+    }
+
+    .datos-header{
+        margin-top:2px;
+    }
+
+    .datos-container .datos-header h2{
+        font-size:1.4rem;
+        margin-bottom:6px;
+    }
+
+    .datos-header p{
+        font-size:.72rem;
+    }
+
+    .cards-grid{
+        grid-template-columns:repeat(4,1fr);
+        gap:8px;
+    }
+
+    .info-card{
+        padding:8px 10px;
+    }
+
+    .card-icon{
+        width:28px;
+        height:28px;
+        margin-bottom:4px;
+    }
+
+    .bottom-grid{
+        grid-template-columns:1fr 1fr;
+        gap:8px;
+    }
+}
+
+/* Pantallas táctiles: hover no siempre aplica, evita estados "pegados" */
+@media (hover:none){
+    .info-card:hover,
+    .social-card:hover{
+        transform:none;
+    }
+}
+
+/* Respeta la preferencia de reducir animaciones */
+@media (prefers-reduced-motion:reduce){
+    *{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
     }
 }
