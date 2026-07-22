@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../../styles/SobreMi.css";
+import "../../../../styles/SobreMi.css";
 import { ModalContacto } from "../../components/ModalContacto";
 import { useLanguage } from "../../../../context/LanguageContext";
 import { translations } from "../../../../context/translations";

@@ -2,10 +2,10 @@ import { useState, useRef, useEffect } from "react";
 import { Sidebar } from "../../components/Sidebar.jsx";
 import { SobreMi } from "../SobreMi/SobreMi.jsx";
 import { DatosGenerales } from "../DatosGenerales/DatosGenerales.jsx";
-import {Habilidades} from "../../components/Habilidades.jsx"
+import {Habilidades} from "../Habilidades/Habilidades.jsx"
 import {Educacion} from "../../components/Educacion.jsx"
 import { Proyectos } from "../../components/Proyectos.jsx";
-import "../../../styles/Portafolio.css";
+import "../../../../styles/Portafolio.css";
 
 const VISTAS = {
   "sobre-mi": SobreMi,

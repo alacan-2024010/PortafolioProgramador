@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../../../styles/Habilidades.css";
+import "../../../../styles/Habilidades.css";
 import { useLanguage } from "../../../../context/LanguageContext";
 import { translations } from "../../../../context/translations";
 import { HABILIDADES } from "./DataHabilidades";

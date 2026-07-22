@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { PortafolioPage } from '../../portafolio/pages/PortafolioPage.jsx';
+import { PortafolioPage } from '../../portafolio/pages/PortafolioPage/PortafolioPage';
 import fotoPerfil from '../../../assets/FotografiaPrincipal.png';
 import '../../../styles/Home.css';
 

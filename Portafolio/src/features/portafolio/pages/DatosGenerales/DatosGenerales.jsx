@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import "../../../styles/DatosGenerales.css";
+import "../../../../styles/DatosGenerales.css";
 import { useLanguage } from "../../../../context/LanguageContext";
 import { translations } from "../../../../context/translations";
 
