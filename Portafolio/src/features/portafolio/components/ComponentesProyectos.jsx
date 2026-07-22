@@ -1,3 +1,7 @@
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { X, ChevronLeft, ChevronRight, Users, User, Images, ExternalLink } from "lucide-react";
+import { GithubIcon } from "../pages/Proyectos/IconosProyectos";
+
 /* Ilustración placeholder para una "captura" mock */
 export function MockScreen({ label, accent }) {
   return (

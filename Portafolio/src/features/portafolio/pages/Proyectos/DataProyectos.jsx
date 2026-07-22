@@ -15,15 +15,7 @@ export const PROJECTS_BASE = [
     colorSoft: "rgba(59,130,246,0.18)",
     github: "https://github.com/aalvarez-2024004/AppMovil-SistemaBancario",
     live: "https://app-movil-sistema-bancario-hfca.vercel.app/",
-    images: [
-        ImgKinalBankPortada,
-        ImgKinalBankAuth,
-        ImgKinalBankRegister,
-        ImgKinalBankDashboard,
-        ImgKinalBankMovimientos,
-        ImgKinalBankTransacciones,
-        ImgKinalBankProductos
-    ],
+    images: kinalBankImages,
   },
   {
     id: "ecokinal",
@@ -34,18 +26,7 @@ export const PROJECTS_BASE = [
     colorSoft: "rgba(34,197,94,0.18)",
     github: "https://github.com/aalvarez-2024004/EcoApp.git",
     live: "https://app-movil-eco-kinal.vercel.app/",
-    images: [
-        ImgEcoKinalPortada,
-        ImgEcoKinalAuth,
-        ImgEcoKinalRegister,
-        ImgEcoKinalDashboard,
-        ImgEcoKinalDetector,
-        ImgEcoKinalForo,
-        ImgEcoKinalGamificacion,
-        ImgEcoKinalImpacto,
-        ImgEcoKinalMapa,
-        ImgEcoKinalEcoBot
-    ],
+    images: ecoKinalImages,
   },
   {
     id: "huellitas",
@@ -56,17 +37,7 @@ export const PROJECTS_BASE = [
     colorSoft: "rgba(245,158,11,0.18)",
     github: "https://github.com/alacan-2024010/VeterinariaHuellitas.git",
     noLive: true,
-    images: [
-        ImgHuellitasPortada,
-        ImgHuellitasAuth,
-        ImgHuellitasDashboard,
-        ImgHuellitasClientes,
-        ImgHuellitasMascotas,
-        ImgHuellitasCitas,
-        ImgHuellitasVeterinarios,
-        ImgHuellitasRecetas,
-        ImgHuellitasReportes
-    ],
+    images: huellitasImages,
   },
   {
     id: "kinalgourmet",
@@ -77,15 +48,7 @@ export const PROJECTS_BASE = [
     colorSoft: "rgba(236,72,153,0.18)",
     github: "https://github.com/jrealiquez-2021549/AppMovil-SistemaRestaurante.git",
     live: "https://kinal-gourmet-web.vercel.app/",
-    images: [
-        ImgGourmetPortada,
-        ImgKinalGourmetAuth,
-        ImgKinalGourmetRegister,
-        ImgKinalGourmetDashboard,
-        ImgKinalGourmetFacturacion,
-        ImgKinalGourmetPedidos,
-        ImgKinalGourmetReservaciones
-    ],
+    images: kinalGourmetImages,
   },
 ];
 

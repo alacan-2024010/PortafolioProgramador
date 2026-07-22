@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight, Users, User, Images } from "lucide-react";
-import "../../../styles/Proyectos.css";
+import "../../../../styles/Proyectos.css";
 import { useLanguage } from "../../../../context/LanguageContext";
 import { translations } from "../../../../context/translations";
 import {MockScreen, Frame, ProjectModal, ProjectCard} from "../../components/ComponentesProyectos"
