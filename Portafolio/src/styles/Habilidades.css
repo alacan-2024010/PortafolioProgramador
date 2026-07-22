@@ -41,7 +41,7 @@
         radial-gradient(circle at 85% 0%, rgba(56,189,248,.12), transparent 55%),
         radial-gradient(circle at 10% 100%, rgba(168,85,247,.14), transparent 55%),
         linear-gradient(160deg, #0b1120 0%, #10182b 45%, #140f24 100%);
-    border-radius:22px;
+    border-radius:0;
     box-sizing:border-box;
 }
 
@@ -430,7 +430,7 @@
     .habilidades-container{
         padding:18px 12px;
         gap:20px;
-        border-radius:16px;
+        border-radius:0;
     }
 
     .habilidades-header{

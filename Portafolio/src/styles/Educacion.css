@@ -466,14 +466,34 @@
         overflow-y:auto;
         overflow-x:hidden;
         -webkit-overflow-scrolling:touch;
-        scrollbar-width:none;
         padding:24px 16px;
         gap:20px;
         justify-content:flex-start;
+
+        /* Firefox */
+        scrollbar-width:thin;
+        scrollbar-color:var(--color-celeste) rgba(255,255,255,.06);
     }
 
+    /* Chrome, Safari, Edge */
     .ee-container::-webkit-scrollbar{
-        display:none;
+        width:6px;
+        display:block;
+    }
+
+    .ee-container::-webkit-scrollbar-track{
+        background:rgba(255,255,255,.06);
+        border-radius:999px;
+    }
+
+    .ee-container::-webkit-scrollbar-thumb{
+        background:linear-gradient(180deg, var(--color-celeste), var(--color-morado));
+        border-radius:999px;
+        box-shadow:0 0 10px -2px var(--color-celeste);
+    }
+
+    .ee-container::-webkit-scrollbar-thumb:hover{
+        background:var(--color-morado);
     }
 
     .ee-header-top{

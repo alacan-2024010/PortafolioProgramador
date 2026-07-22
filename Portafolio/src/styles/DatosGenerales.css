@@ -67,6 +67,11 @@
     }
 }
 
+/* ==========================
+   CONTENEDOR PRINCIPAL
+   (mantiene border-radius, esquinas decorativas y overflow:hidden;
+   el scroll ya NO vive aquí, para que nunca corte las esquinas)
+========================== */
 .datos-container{
     width:100%;
     height:100%;
@@ -74,17 +79,14 @@
     margin:0 auto;
     position:relative;
     overflow:hidden;
-    padding:clamp(16px,2vw,28px);
+    padding:0;
     display:flex;
     flex-direction:column;
-    justify-content:space-between;
-    gap:clamp(12px,1.4vw,18px);
     background:
         radial-gradient(circle at 85% 0%, rgba(56,189,248,.12), transparent 55%),
         radial-gradient(circle at 10% 100%, rgba(168,85,247,.14), transparent 55%),
         linear-gradient(160deg, #0b1120 0%, #10182b 45%, #140f24 100%);
-    border-radius:22px;
-
+    border-radius:0;
 }
 
 .datos-container::before,
@@ -107,7 +109,7 @@
     border-top:2px solid var(--color-celeste);
     border-left:2px solid var(--color-celeste);
 
-    border-top-left-radius:10px;
+    border-top-left-radius:0;
 
     opacity:.75;
 
@@ -123,12 +125,55 @@
     border-bottom:2px solid var(--color-morado);
     border-right:2px solid var(--color-morado);
 
-    border-bottom-right-radius:10px;
+    border-bottom-right-radius:0;
 
     opacity:.75;
 
     filter:drop-shadow(0 0 6px rgba(168,85,247,.5));
 
+}
+
+/* ==========================
+   WRAPPER DE SCROLL
+   (aquí vive el overflow-y y el padding real del contenido;
+   así el scrollbar queda "adentro" del marco redondeado)
+========================== */
+.datos-scroll{
+    position:relative;
+    z-index:2;
+    flex:1;
+    width:100%;
+    height:100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    padding:clamp(16px,2vw,28px);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    gap:clamp(12px,1.4vw,18px);
+
+    scrollbar-width:thin;
+    scrollbar-color:var(--color-celeste) rgba(255,255,255,.06);
+}
+
+.datos-scroll::-webkit-scrollbar{
+    width:6px;
+}
+
+.datos-scroll::-webkit-scrollbar-track{
+    background:rgba(255,255,255,.06);
+    border-radius:999px;
+}
+
+.datos-scroll::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg, var(--color-celeste), var(--color-morado));
+    border-radius:999px;
+    box-shadow:0 0 10px -2px var(--color-celeste);
+}
+
+.datos-scroll::-webkit-scrollbar-thumb:hover{
+    background:var(--color-morado);
 }
 
 .grid-bg{
@@ -969,14 +1014,16 @@ FOOTER
 @media (max-width:768px){
 
     .datos-container{
+        border-radius:0;
+        height:auto;
+        max-height:100dvh;
+    }
+
+    .datos-scroll{
         padding:16px;
-        border-radius:18px;
         gap:14px;
         height:auto;
         max-height:100dvh;
-        overflow-y:auto;
-        overflow-x:hidden;
-        -webkit-overflow-scrolling:touch;
     }
 
     .datos-container::before,
@@ -1008,7 +1055,7 @@ FOOTER
         height:18px;
         border-bottom:2px solid var(--color-morado);
         border-right:2px solid var(--color-morado);
-        border-bottom-right-radius:10px;
+        border-bottom-right-radius:0;
         opacity:.75;
         filter:drop-shadow(0 0 6px rgba(168,85,247,.5));
         pointer-events:none;
@@ -1055,15 +1102,6 @@ FOOTER
         bottom:-70px;
     }
 
-    .datos-container::-webkit-scrollbar{
-        width:5px;
-    }
-
-    .datos-container::-webkit-scrollbar-thumb{
-        background:linear-gradient(180deg, var(--color-celeste), var(--color-morado));
-        border-radius:999px;
-    }
-
     .info-card,
     .card-content,
     .social-card,
@@ -1097,8 +1135,11 @@ FOOTER
 @media (max-width:500px){
 
     .datos-container{
+        border-radius:0;
+    }
+
+    .datos-scroll{
         padding:14px;
-        border-radius:16px;
     }
 
     .mini-title{
@@ -1227,7 +1268,11 @@ FOOTER
     .datos-container{
         height:auto;
         max-height:100dvh;
-        overflow-y:auto;
+    }
+
+    .datos-scroll{
+        height:auto;
+        max-height:100dvh;
         padding:10px 18px;
         gap:8px;
     }
