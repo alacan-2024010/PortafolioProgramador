@@ -4,7 +4,7 @@ import { SobreMi } from "../SobreMi/SobreMi.jsx";
 import { DatosGenerales } from "../DatosGenerales/DatosGenerales.jsx";
 import {Habilidades} from "../Habilidades/Habilidades.jsx"
 import {Educacion} from "../Educacion/Educacion.jsx"
-import { Proyectos } from "../../components/Proyectos.jsx";
+import { Proyectos } from "../Proyectos/Proyectos.jsx";
 import "../../../../styles/Portafolio.css";
 
 const VISTAS = {
