@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import "../../../../styles/DatosGenerales.css";
 import { useLanguage } from "../../../../context/LanguageContext";
 import { translations } from "../../../../context/translations";
+import{datos, estadisticas, redes} from "./DataGenerales"
+import{useParallax} from "./HooksGenerales"
+import { InfoCard, SocialCard,ProgressBar } from "../../components/ComponentesGenerales";
 
 export const DatosGenerales = () => {
 

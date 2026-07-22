@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ICON_BASE } from "../pages/Habilidades/DataHabilidades";
 
 export const SkillCard = ({ nombre, corto, nivel, color, logo }) => {
