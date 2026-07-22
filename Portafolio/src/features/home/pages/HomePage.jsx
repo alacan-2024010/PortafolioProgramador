@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PortafolioPage } from '../../portafolio/pages/PortafolioPage/PortafolioPage';
 import fotoPerfil from '../../../assets/FotografiaPrincipal.png';
-import "../../../styles/Home.css"
+import "../../../styles/Principal.css"
 
 const TIEMPO_SIMBOLO_MS = 1500;
 const TIEMPO_TOTAL_BIENVENIDA_MS = 8000;
