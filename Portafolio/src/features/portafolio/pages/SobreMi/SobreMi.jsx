@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "../../../styles/SobreMi.css";
-import { ModalContacto } from "./ModalContacto";
-import { useLanguage } from "../../../context/LanguageContext";
-import { translations } from "../../../context/translations";
+import { ModalContacto } from "../../components/ModalContacto";
+import { useLanguage } from "../../../../context/LanguageContext";
+import { translations } from "../../../../context/translations";
 
 const IconServidor = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">

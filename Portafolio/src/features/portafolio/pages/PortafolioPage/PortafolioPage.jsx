@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { Sidebar } from "../components/Sidebar.jsx";
-import { SobreMi } from "../components/SobreMi.jsx";
-import { DatosGenerales } from "../components/DatosGenerales.jsx";
-import {Habilidades} from "../components/Habilidades.jsx"
-import {Educacion} from "../components/Educacion.jsx"
-import { Proyectos } from "../components/Proyectos.jsx";
+import { Sidebar } from "../../components/Sidebar.jsx";
+import { SobreMi } from "../SobreMi/SobreMi.jsx";
+import { DatosGenerales } from "../DatosGenerales/DatosGenerales.jsx";
+import {Habilidades} from "../../components/Habilidades.jsx"
+import {Educacion} from "../../components/Educacion.jsx"
+import { Proyectos } from "../../components/Proyectos.jsx";
 import "../../../styles/Portafolio.css";
 
 const VISTAS = {
