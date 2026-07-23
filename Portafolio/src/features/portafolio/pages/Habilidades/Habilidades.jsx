@@ -55,7 +55,13 @@ export const Habilidades = () => {
             ‹
           </button>
 
-          <div className="habilidades-track-mobile" ref={scrollRef}>
+          {/* onTouchStart vacío: habilita el pseudo-estado :active en iOS Safari,
+              que de otra forma no se activa con solo tocar (necesita un listener táctil) */}
+          <div
+            className="habilidades-track-mobile"
+            ref={scrollRef}
+            onTouchStart={() => {}}
+          >
             {HABILIDADES.map((skill) => (
               <SkillCard key={skill.nombre} {...skill} />
             ))}

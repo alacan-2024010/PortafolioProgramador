@@ -401,17 +401,32 @@
         animation-play-state:running;
         transform:none;
     }
-    /* feedback al tocar, sin dejarlo trabado */
+
+    /* Brillo al tocar la tarjeta con el dedo */
+    .skill-card{
+        transition:
+            transform .25s ease,
+            border-color .25s ease,
+            box-shadow .25s ease;
+    }
     .skill-card:active{
-        transform:translateY(-6px) scale(1.03);
+        transform:translateY(-6px) scale(1.04);
         border-color:var(--skill-color);
-        box-shadow:0 14px 30px rgba(0,0,0,.4), 0 0 20px -6px var(--skill-color);
+        box-shadow:
+            0 0 0 1px var(--skill-color),
+            0 0 30px -4px var(--skill-color),
+            0 14px 30px rgba(0,0,0,.4);
+        z-index:5;
     }
     .skill-card:active .skill-card-glow{
-        opacity:.28;
+        opacity:.32;
     }
     .skill-card:active .skill-badge{
-        transform:rotate(-6deg) scale(1.05);
+        transform:rotate(-6deg) scale(1.08);
+        box-shadow:0 0 36px -4px var(--skill-color);
+    }
+    .skill-card:active .skill-nombre{
+        text-shadow:0 0 16px var(--skill-color);
     }
 }
 

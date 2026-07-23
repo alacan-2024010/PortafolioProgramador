@@ -22,6 +22,9 @@
     position: relative;
     overflow: hidden;
 }
+.gallery-section *{
+    box-sizing: border-box;
+}
 .gallery-section::before {
     content: "";
     position: absolute;
@@ -67,6 +70,9 @@
     text-shadow: 0 0 20px rgba(103,232,249,0.25);
 }
 
+/* ============================
+   Track DESKTOP (auto-scroll)
+   ============================ */
 .track {
     position: relative;
     flex: 1 1 auto;
@@ -116,6 +122,109 @@
 @keyframes autoscroll {
     from { transform: translateX(0); }
     to { transform: translateX(calc(-1 * var(--scroll-distance, 0px))); }
+}
+
+/* ============================
+   Track MÓVIL (un slide completo a la vez)
+   ============================ */
+.track-mobile-wrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    padding-bottom: 28px; /* espacio para los dots */
+}
+
+.track-mobile {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: clamp(240px, 68vw, 320px);
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+
+.track-mobile.is-dragging {
+    transition: none;
+}
+
+.mobile-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    padding: 8px 44px; /* deja espacio para las flechas a los costados */
+    transition: filter .25s ease;
+}
+
+.mobile-slide .project-card {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 300px;
+    animation: none;
+}
+
+/* Glow al tocar/arrastrar la tarjeta activa */
+.mobile-slide.is-active-touch .project-card {
+    border-color: var(--pcolor, #8b5cf6);
+    box-shadow:
+        0 0 0 1px var(--pcolor, #8b5cf6),
+        0 0 28px -4px var(--pcolor, #8b5cf6),
+        0 14px 30px -18px rgba(0,0,0,0.65);
+}
+
+.mobile-slide.is-active-touch .card-body h3 {
+    text-shadow: 0 0 20px var(--pcolor, #8b5cf6), 0 0 6px var(--pcolor, #8b5cf6);
+}
+
+.track-flecha {
+    position: absolute;
+    top: calc(50% - 14px);
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(6,8,20,0.6);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.track-flecha:active {
+    background: var(--pcolor, #8b5cf6);
+    border-color: var(--pcolor, #8b5cf6);
+}
+
+.track-flecha-izq { left: 0; }
+.track-flecha-der { right: 0; }
+
+.mobile-dots {
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+.mobile-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    cursor: pointer;
+    transition: background .2s, width .2s;
+}
+
+.mobile-dot.active {
+    background: var(--pcolor, #8b5cf6);
+    width: 16px;
+    border-radius: 4px;
 }
 
 /* --- Project card (incluye tilt 3D + brillo que sigue el cursor) --- */
@@ -278,6 +387,12 @@
     color: #ffffff;
     text-shadow: 0 0 18px var(--psoft, rgba(255,255,255,0.25));
     transition: text-shadow .35s;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-word;
+    line-height: 1.15;
 }
 .project-card:hover .card-body h3,
 .project-card:focus-visible .card-body h3 {
@@ -463,13 +578,8 @@
 /* ===== Móvil grande / tablet vertical ===== */
 @media (max-width: 720px) {
     .gallery-head p { font-size: 15.5px; }
-    .project-card { flex-basis: 260px; width: 260px; }
-    .track {
-        height: clamp(220px, 62vw, 300px);
-        padding: 12px 4px 16px;
-    }
     .card-body { padding: 14px 16px 16px; }
-    .card-body h3 { font-size: 21px; margin: 6px 0 4px; }
+    .card-body h3 { font-size: 20px; margin: 6px 0 4px; }
     .card-body p { font-size: 13.5px; }
     .shots-badge { font-size: 10px; padding: 3px 7px; top: 8px; right: 8px; }
 
@@ -500,9 +610,10 @@
 @media (max-width: 420px) {
     .gallery-head h2 { font-size: clamp(26px, 9vw, 40px); }
     .gallery-head p { font-size: 13.5px; }
-    .project-card { flex-basis: 220px; width: 220px; }
-    .track { height: clamp(200px, 62vw, 260px); }
-    .card-body h3 { font-size: 19px; }
+    .mobile-slide { padding: 8px 36px; }
+    .mobile-slide .project-card { max-width: 260px; }
+    .track-mobile { height: clamp(220px, 68vw, 280px); }
+    .card-body h3 { font-size: 18px; }
     .card-body p { -webkit-line-clamp: 2; font-size: 12.5px; }
     .type-pill.small { font-size: 10px; padding: 3px 8px; }
     .shots-badge { font-size: 9.5px; padding: 3px 6px; }
@@ -518,10 +629,11 @@
 @media (max-width: 340px) {
     .gallery-section { padding: 20px 10px 28px; }
     .gallery-head h2 { font-size: 24px; }
-    .project-card { flex-basis: 185px; width: 185px; }
-    .track { height: 230px; }
+    .mobile-slide { padding: 8px 32px; }
+    .mobile-slide .project-card { max-width: 220px; }
+    .track-mobile { height: 230px; }
     .card-body { padding: 12px 14px 14px; }
-    .card-body h3 { font-size: 17px; }
+    .card-body h3 { font-size: 16px; }
     .card-body p { font-size: 11.5px; }
     .type-pill { font-size: 10px; padding: 3px 8px; }
     .modal-header h2 { font-size: 19px; }
@@ -533,10 +645,10 @@
     .gallery-head { margin-bottom: 14px; }
     .gallery-head h2 { font-size: clamp(22px, 5vw, 30px); margin-bottom: 6px; }
     .gallery-head p { font-size: 13px; line-height: 1.4; -webkit-line-clamp: 1; }
-    .track { height: clamp(150px, 40vh, 220px); padding: 8px 4px 10px; }
-    .project-card { flex-basis: 200px; width: 200px; }
+    .track-mobile { height: clamp(150px, 40vh, 220px); }
+    .mobile-slide { padding: 6px 40px; }
     .card-body { padding: 10px 14px 12px; }
-    .card-body h3 { font-size: 17px; margin: 4px 0 2px; }
+    .card-body h3 { font-size: 16px; margin: 4px 0 2px; }
     .card-body p { -webkit-line-clamp: 1; font-size: 11.5px; }
 
     .modal-overlay { padding: 10px; align-items: center; }
@@ -567,4 +679,5 @@
     .project-card { transition: none !important; }
     .tilt-glare { display: none; }
     .track-inner { animation: none !important; }
+    .track-mobile { transition: none !important; }
 }
