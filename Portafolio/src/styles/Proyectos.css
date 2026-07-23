@@ -133,7 +133,10 @@
     min-height: 0;
     overflow: hidden;
     padding-bottom: 28px; /* espacio para los dots */
+    display: flex;
+    align-items: center;
 }
+
 
 .track-mobile {
     display: flex;
