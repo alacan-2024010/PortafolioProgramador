@@ -580,6 +580,10 @@
 
 /* ===== Móvil grande / tablet vertical ===== */
 @media (max-width: 720px) {
+    .track-mobile-wrap {
+        min-height: 300px; 
+        padding-top: 30px; 
+    }
     .gallery-head p { font-size: 15.5px; }
     .card-body { padding: 14px 16px 16px; }
     .card-body h3 { font-size: 20px; margin: 6px 0 4px; }
