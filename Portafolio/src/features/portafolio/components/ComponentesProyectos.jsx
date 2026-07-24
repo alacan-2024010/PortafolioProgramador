@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { X, ChevronLeft, ChevronRight, Users, User, Images, ExternalLink } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Users, User, Images, ExternalLink, ZoomIn } from "lucide-react";
 import { GithubIcon } from "../pages/Proyectos/IconosProyectos";
 
 /* Ilustración placeholder para una "captura" mock */
@@ -34,6 +34,7 @@ export function Frame({ image }) {
 
 export function ProjectModal({ project, onClose, t }) {
   const [imgIndex, setImgIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
   const total = project.images.length;
 
   // Imagen actualmente mostrada en el carrusel del modal
@@ -49,15 +50,23 @@ export function ProjectModal({ project, onClose, t }) {
     [total]
   );
 
+  // Si cambia la imagen, cerramos el zoom para no dejarlo "pegado"
+  useEffect(() => {
+    setIsZoomed(false);
+  }, [imgIndex]);
+
   useEffect(() => {
     function onKey(e) {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
+      if (e.key === "Escape") {
+        if (isZoomed) setIsZoomed(false);
+        else onClose();
+      }
+      if (e.key === "ArrowRight" && !isZoomed) next();
+      if (e.key === "ArrowLeft" && !isZoomed) prev();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, next, prev]);
+  }, [onClose, next, prev, isZoomed]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -80,11 +89,21 @@ export function ProjectModal({ project, onClose, t }) {
                   alt=""
                   aria-hidden="true"
                 />
-                <img
-                  src={currentImage}
-                  className="real-shot"
-                  alt={project.title}
-                />
+                <button
+                  type="button"
+                  className="real-shot-zoom-btn"
+                  onClick={() => setIsZoomed(true)}
+                  aria-label={t.ampliar || "Ampliar imagen"}
+                >
+                  <img
+                    src={currentImage}
+                    className="real-shot"
+                    alt={project.title}
+                  />
+                  <span className="zoom-hint">
+                    <ZoomIn size={16} />
+                  </span>
+                </button>
               </>
             ) : (
               <MockScreen label={currentImage.label} accent={currentImage.accent} />
@@ -163,6 +182,62 @@ export function ProjectModal({ project, onClose, t }) {
           </div>
         </div>
       </div>
+
+      {isZoomed && isRealShot && (
+        <div
+          className="lightbox-overlay"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsZoomed(false);
+          }}
+        >
+          <button
+            type="button"
+            className="lightbox-close"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsZoomed(false);
+            }}
+            aria-label={t.cerrar}
+          >
+            <X size={22} />
+          </button>
+
+          {total > 1 && (
+            <>
+              <button
+                type="button"
+                className="lightbox-nav lightbox-nav-left"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prev();
+                }}
+                aria-label={t.anterior}
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                type="button"
+                className="lightbox-nav lightbox-nav-right"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  next();
+                }}
+                aria-label={t.siguiente}
+              >
+                <ChevronRight size={24} />
+              </button>
+            </>
+          )}
+
+          <img
+            src={currentImage}
+            alt={project.title}
+            className="lightbox-image"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }

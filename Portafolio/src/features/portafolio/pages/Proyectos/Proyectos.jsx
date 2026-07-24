@@ -122,24 +122,6 @@ export const Proyectos = () => {
             ))}
           </div>
 
-          <button
-            type="button"
-            className="track-flecha track-flecha-izq"
-            onClick={() => goToSlide(-1)}
-            aria-label="Anterior"
-          >
-            <ChevronLeft size={20} />
-          </button>
-
-          <button
-            type="button"
-            className="track-flecha track-flecha-der"
-            onClick={() => goToSlide(1)}
-            aria-label="Siguiente"
-          >
-            <ChevronRight size={20} />
-          </button>
-
           <div className="mobile-dots">
             {PROJECTS.map((_, i) => (
               <span

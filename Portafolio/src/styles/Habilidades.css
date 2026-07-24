@@ -124,7 +124,9 @@
 }
 
 /* ============================
-   Carrusel DESKTOP (auto-scroll)
+   Carrusel automático (desktop y móvil)
+   El movimiento del track lo controla JS (requestAnimationFrame)
+   para poder combinar el giro automático con el arrastre táctil/mouse.
    ============================ */
 .habilidades-carrusel{
     position:relative;
@@ -153,74 +155,20 @@
     align-items:stretch;
     gap:26px;
     width:max-content;
-    animation:habilidades-scroll 42s linear infinite;
     will-change:transform;
 }
 
-.habilidades-carrusel:hover .habilidades-track{
-    animation-play-state:paused;
+/* Track arrastrable: permite drag horizontal con el dedo o el mouse
+   sin bloquear el scroll vertical de la página */
+.habilidades-track-draggable{
+    touch-action:pan-y;
+    cursor:grab;
+    -webkit-user-select:none;
+    user-select:none;
 }
 
-/* En touch/móvil no hay hover real: permitir pausar con :active/tap sostenido */
-.habilidades-carrusel:active .habilidades-track{
-    animation-play-state:paused;
-}
-
-@keyframes habilidades-scroll{
-    from{ transform:translateX(0); }
-    to{ transform:translateX(-50%); }
-}
-
-/* ============================
-   Carrusel MÓVIL (scroll manual + flechas)
-   ============================ */
-.habilidades-carrusel-mobile{
-    position:relative;
-    z-index:2;
-    width:100%;
-    display:flex;
-    align-items:center;
-    gap:6px;
-}
-
-.habilidades-track-mobile{
-    display:flex;
-    align-items:stretch;
-    gap:14px;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-    padding:16px 4px;
-}
-
-.habilidades-track-mobile::-webkit-scrollbar{
-    display:none;
-}
-
-.habilidades-track-mobile .skill-card{
-    scroll-snap-align:center;
-}
-
-.habilidades-flecha{
-    flex:0 0 auto;
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.15);
-    background:rgba(17,24,39,.85);
-    color:#e4ecfb;
-    font-size:1.4rem;
-    line-height:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-}
-
-.habilidades-flecha:active{
-    background:rgba(56,189,248,.25);
-    border-color:var(--color-celeste);
+.habilidades-track-draggable:active{
+    cursor:grabbing;
 }
 
 /* --- Glow suave por opacidad (NO box-shadow) sobre una capa fija --- */
@@ -456,7 +404,11 @@
         font-size:.95rem;
     }
 
-    .habilidades-track-mobile{
+    .habilidades-carrusel{
+        padding:32px 0 36px;
+    }
+
+    .habilidades-track{
         gap:18px;
     }
 
@@ -513,14 +465,12 @@
         line-height:1.5;
     }
 
-    .habilidades-track-mobile{
-        gap:14px;
+    .habilidades-carrusel{
+        padding:24px 0 28px;
     }
 
-    .habilidades-flecha{
-        width:32px;
-        height:32px;
-        font-size:1.2rem;
+    .habilidades-track{
+        gap:14px;
     }
 
     .skill-card{
@@ -624,7 +574,7 @@
         line-height:1.4;
     }
 
-    .habilidades-track-mobile{
+    .habilidades-track{
         gap:14px;
     }
 
@@ -652,10 +602,6 @@
 }
 
 @media (prefers-reduced-motion: reduce){
-    .habilidades-track{
-        animation:none;
-    }
-
     .habilidades-header h2,
     .habilidades-header p{
         animation:none !important;
