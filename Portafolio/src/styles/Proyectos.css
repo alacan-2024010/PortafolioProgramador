@@ -298,9 +298,37 @@
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-.card-thumb .real-shot, .card-thumb .mock-screen {
+.card-thumb .real-shot-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(20px) brightness(0.55) saturate(1.2);
+    transform: scale(1.15);
+    z-index: 1;
+}
+
+.card-thumb .real-shot {
+    position: relative;
+    z-index: 2;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center;
+}
+
+.card-thumb .mock-screen {
+    position: relative;
+    z-index: 2;
     display: block;
     width: 100%;
     height: 100%;
@@ -308,6 +336,7 @@
 }
 .thumb-overlay {
     position: absolute; inset: 0;
+    z-index: 3;
     background: linear-gradient(180deg, transparent 40%, rgba(6,8,20,0.92));
     display: flex; align-items: flex-end; justify-content: flex-start;
     padding: 12px;
@@ -341,7 +370,7 @@
     padding: 4px 8px;
     border-radius: 999px;
     backdrop-filter: blur(4px);
-    z-index: 2;
+    z-index: 3;
 }
 
 .card-body {
@@ -435,7 +464,7 @@
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .modal-panel {
     --pcolor: #8b5cf6;
-    width: min(920px, 100%);
+    width: min(1100px, 100%);
     max-height: 88vh;
     max-height: 88dvh;
     overflow-y: auto;
@@ -460,9 +489,12 @@
 }
 .modal-close:hover { background: rgba(0,0,0,0.75); }
 
+/* Marco de la galería del modal: proporción adaptable, altura tope 420px */
 .modal-gallery {
     position: relative;
-    height: clamp(180px, 32vw, 340px);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 420px;
     overflow: hidden;
     background: #05070f;
 }
@@ -471,6 +503,9 @@
     height: 100%;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #05070f;
 }
 .gallery-frame .real-shot-bg {
@@ -483,16 +518,18 @@
     transform: scale(1.15); /* evita bordes borrosos visibles */
     z-index: 1;
 }
+/* La imagen se muestra en su tamaño natural (no se agranda) y solo se
+   reduce si no cabe en el marco, sin recortarse jamás. */
 .gallery-frame .real-shot {
     position: relative;
     z-index: 2;
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
     object-position: center;
-    display: block;
 }
 .gallery-frame .mock-screen {
     width: 100%;
@@ -501,17 +538,23 @@
     z-index: 2;
 }
 
-/* Botón invisible que envuelve la imagen del modal para poder ampliarla */
+/* Botón que envuelve la imagen del modal para poder ampliarla.
+   Se ajusta al tamaño real de la imagen (no al del marco completo),
+   así el área clickeable coincide con lo que realmente se ve. */
 .real-shot-zoom-btn {
     position: relative;
     z-index: 2;
-    width: 100%;
-    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 0;
+    min-height: 0;
     padding: 0;
     margin: 0;
     border: none;
     background: transparent;
-    display: block;
     cursor: zoom-in;
     font: inherit;
 }
@@ -687,6 +730,7 @@
         animation: slideUp .25s ease;
     }
     .modal-gallery {
+        max-height: 260px;
         padding-top: 8px;
     }
     .modal-info {
@@ -709,6 +753,7 @@
     .type-pill.small { font-size: 10px; padding: 3px 8px; }
     .shots-badge { font-size: 9.5px; padding: 3px 6px; }
 
+    .modal-gallery { max-height: 220px; }
     .modal-info { padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
     .description { font-size: 13.5px; }
     .skill-chip { font-size: 11.5px; padding: 5px 10px; }
@@ -728,6 +773,7 @@
     .card-body p { font-size: 11.5px; }
     .type-pill { font-size: 10px; padding: 3px 8px; }
     .modal-header h2 { font-size: 19px; }
+    .modal-gallery { max-height: 190px; }
 }
 
 /* ===== Móvil / tablet en horizontal con poca altura ===== */
@@ -744,7 +790,7 @@
 
     .modal-overlay { padding: 10px; align-items: center; }
     .modal-panel { max-height: 96vh; max-height: 96dvh; border-radius: 16px; }
-    .modal-gallery { height: 130px; }
+    .modal-gallery { max-height: 130px; }
     .modal-info { padding: 12px 16px 16px; }
 }
 

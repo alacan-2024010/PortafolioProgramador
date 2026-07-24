@@ -2,6 +2,25 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight, Users, User, Images, ExternalLink, ZoomIn } from "lucide-react";
 import { GithubIcon } from "../pages/Proyectos/IconosProyectos";
 
+const MOBILE_BREAKPOINT = 720;
+
+/* Detecta si estamos en viewport móvil, para decidir si se permite
+   ampliar (zoom) la imagen del modal. En computadora esa función
+   queda deshabilitada. */
+function useIsMobile(breakpoint = MOBILE_BREAKPOINT) {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth <= breakpoint : false
+  );
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= breakpoint);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [breakpoint]);
+
+  return isMobile;
+}
+
 /* Ilustración placeholder para una "captura" mock */
 export function MockScreen({ label, accent }) {
   return (
@@ -27,7 +46,12 @@ export function MockScreen({ label, accent }) {
 
 export function Frame({ image }) {
   if (typeof image === "string") {
-    return <img src={image} alt="" className="real-shot" />;
+    return (
+      <>
+        <img src={image} alt="" className="real-shot-bg" aria-hidden="true" />
+        <img src={image} alt="" className="real-shot" />
+      </>
+    );
   }
   return <MockScreen label={image.label} accent={image.accent} />;
 }
@@ -35,6 +59,7 @@ export function Frame({ image }) {
 export function ProjectModal({ project, onClose, t }) {
   const [imgIndex, setImgIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
+  const isMobile = useIsMobile();
   const total = project.images.length;
 
   // Imagen actualmente mostrada en el carrusel del modal
@@ -82,29 +107,45 @@ export function ProjectModal({ project, onClose, t }) {
         <div className="modal-gallery">
           <div className="gallery-frame">
             {isRealShot ? (
-              <>
-                <img
-                  src={currentImage}
-                  className="real-shot-bg"
-                  alt=""
-                  aria-hidden="true"
-                />
-                <button
-                  type="button"
-                  className="real-shot-zoom-btn"
-                  onClick={() => setIsZoomed(true)}
-                  aria-label={t.ampliar || "Ampliar imagen"}
-                >
+              isMobile ? (
+                <>
+                  <img
+                    src={currentImage}
+                    className="real-shot-bg"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                  <button
+                    type="button"
+                    className="real-shot-zoom-btn"
+                    onClick={() => setIsZoomed(true)}
+                    aria-label={t.ampliar || "Ampliar imagen"}
+                  >
+                    <img
+                      src={currentImage}
+                      className="real-shot"
+                      alt={project.title}
+                    />
+                    <span className="zoom-hint">
+                      <ZoomIn size={16} />
+                    </span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <img
+                    src={currentImage}
+                    className="real-shot-bg"
+                    alt=""
+                    aria-hidden="true"
+                  />
                   <img
                     src={currentImage}
                     className="real-shot"
                     alt={project.title}
                   />
-                  <span className="zoom-hint">
-                    <ZoomIn size={16} />
-                  </span>
-                </button>
-              </>
+                </>
+              )
             ) : (
               <MockScreen label={currentImage.label} accent={currentImage.accent} />
             )}
@@ -183,7 +224,7 @@ export function ProjectModal({ project, onClose, t }) {
         </div>
       </div>
 
-      {isZoomed && isRealShot && (
+      {isZoomed && isRealShot && isMobile && (
         <div
           className="lightbox-overlay"
           onClick={(e) => {
