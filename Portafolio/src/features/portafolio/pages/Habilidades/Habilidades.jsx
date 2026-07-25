@@ -91,8 +91,17 @@ export const Habilidades = () => {
     applyTransform();
   };
 
-  const endDrag = () => {
+  const endDrag = (e) => {
     isDraggingRef.current = false;
+
+    // Salvavidas: en algunos navegadores, tras un touch, el mouseenter
+    // sintético puede dejar hoverPausedRef atorado en `true`. Como en
+    // táctil no existe un "mouse real" que luego dispare mouseleave,
+    // al soltar el dedo forzamos hoverPausedRef a false salvo que el
+    // puntero que soltó sea explícitamente un mouse.
+    if (e?.pointerType !== "mouse") {
+      hoverPausedRef.current = false;
+    }
   };
 
   return (
@@ -108,8 +117,16 @@ export const Habilidades = () => {
 
       <div
         className="habilidades-carrusel"
-        onMouseEnter={() => { hoverPausedRef.current = true; }}
-        onMouseLeave={() => { hoverPausedRef.current = false; }}
+        onPointerEnter={(e) => {
+          // Solo pausar por "hover" cuando el puntero es un mouse real.
+          // En táctil no existe un hover verdadero, y depender de
+          // mouseenter/mouseleave sintéticos dejaba el carrusel pausado
+          // para siempre después del primer toque.
+          if (e.pointerType === "mouse") hoverPausedRef.current = true;
+        }}
+        onPointerLeave={(e) => {
+          if (e.pointerType === "mouse") hoverPausedRef.current = false;
+        }}
       >
         <div
           className="habilidades-track habilidades-track-draggable"

@@ -373,9 +373,7 @@
 /* ---- Frase de cierre ---- */
 .sobremi-frase-wrap {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 100%;
   height: auto;
   align-self: center;
@@ -430,15 +428,18 @@
 .sobremi-frase::before { top: -1px; }
 .sobremi-frase::after { bottom: -1px; }
 
+/* Ícono decorativo giratorio — ÚNICA definición base.
+   Se ancla al borde inferior-derecho de la burbuja (mitad afuera, mitad adentro).
+   Los breakpoints de abajo SOLO ajustan tamaño/posición, no se repiten ni se pisan. */
 .sobremi-frase-wrap .frame-deco--frase {
   position: absolute;
   top: auto;
-  bottom: -11px;
-  right: -11px;
+  bottom: -8px;
+  right: -8px;
   left: auto;
   transform: none;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -845,6 +846,13 @@
   .sobremi-frase-wrap {
     margin-top: 20px;
   }
+
+  .sobremi-frase-wrap .frame-deco--frase {
+    width: 20px;
+    height: 20px;
+    bottom: -6px;
+    right: -6px;
+  }
 }
 
 /* Celulares estándar */
@@ -880,6 +888,13 @@
 
   .sobremi-frase {
     line-height: 1.5;
+  }
+
+  .sobremi-frase-wrap .frame-deco--frase {
+    width: 18px;
+    height: 18px;
+    bottom: -5px;
+    right: -5px;
   }
 }
 
