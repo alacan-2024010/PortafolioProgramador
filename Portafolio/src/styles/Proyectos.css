@@ -538,19 +538,22 @@
     z-index: 2;
 }
 
-/* Botón que envuelve la imagen del modal para poder ampliarla.
-   Se ajusta al tamaño real de la imagen (no al del marco completo),
-   así el área clickeable coincide con lo que realmente se ve. */
+/* Botón que envuelve la imagen del modal para poder ampliarla (solo móvil).
+   IMPORTANTE: usa position:absolute + inset:0 (en vez de inline-flex sin
+   altura propia) para que tenga un tamaño DEFINIDO igual al de
+   .gallery-frame. Así el max-height:100% !important de .real-shot (que
+   está dentro de este botón) se calcula contra una altura real, en vez
+   de depender del tamaño natural de la imagen — que era lo que causaba
+   que la imagen se viera "zoomeada"/recortada en el modal en móvil. */
 .real-shot-zoom-btn {
-    position: relative;
+    position: absolute;
+    inset: 0;
     z-index: 2;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
-    max-width: 100%;
-    max-height: 100%;
-    min-width: 0;
-    min-height: 0;
+    width: 100%;
+    height: 100%;
     padding: 0;
     margin: 0;
     border: none;

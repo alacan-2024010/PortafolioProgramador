@@ -1,11 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&display=swap');
 
-@property --ee-progress{
-    syntax:'<number>';
-    inherits:false;
-    initial-value:0;
-}
-
 @keyframes ee-fade-up{
     from{ opacity:0; transform:translateY(24px); }
     to{ opacity:1; transform:translateY(0); }
@@ -227,30 +221,39 @@
     animation:ee-dot-pulse 2s ease-in-out infinite;
 }
 
-/* --- Anillo de progreso --- */
+/* --- Anillo de progreso (SVG stroke, sin @property) ---
+   .ee-ring es el contenedor cuadrado; su tamaño en px lo siguen
+   controlando las media queries de abajo, exactamente como antes.
+   El <svg> interno se escala al 100% del contenedor via viewBox,
+   así que el grosor del trazo escala proporcionalmente solo. */
 .ee-ring{
     position:relative;
     width:46px;
     height:46px;
     flex:0 0 auto;
-    border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:conic-gradient(
-        var(--ee-color) calc(var(--ee-progress) * 3.6deg),
-        rgba(255,255,255,.09) 0deg
-    );
-    transition:--ee-progress 1.4s cubic-bezier(.2,.8,.2,1);
-    box-shadow:0 0 16px -6px var(--ee-color);
+    filter:drop-shadow(0 0 10px color-mix(in srgb, var(--ee-color) 55%, transparent));
 }
 
-.ee-ring::before{
-    content:"";
+.ee-ring-svg{
     position:absolute;
-    inset:4px;
-    border-radius:50%;
-    background:#0e1526;
+    inset:0;
+    /* Rota -90deg para que el trazo empiece arriba (12 en punto),
+       igual que el conic-gradient original, en vez del default
+       de SVG que arranca a las 3 en punto. */
+    transform:rotate(-90deg);
+}
+
+.ee-ring-track{
+    stroke:rgba(255,255,255,.09);
+}
+
+.ee-ring-fill{
+    stroke:var(--ee-color);
+    stroke-linecap:round;
+    transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1);
 }
 
 .ee-ring-value{
@@ -747,5 +750,9 @@
     .ee-timeline-item{
         opacity:1 !important;
         transform:none !important;
+    }
+
+    .ee-ring-fill{
+        transition:none !important;
     }
 }

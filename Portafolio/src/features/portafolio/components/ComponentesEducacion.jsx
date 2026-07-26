@@ -1,16 +1,49 @@
 import { useInView } from "../pages/Educacion/HooksEducacion";
 
-export const ProgressRing = ({ progreso, inView, color }) => (
-  <div
-    className="ee-ring"
-    style={{
-      "--ee-color": color,
-      "--ee-progress": inView ? progreso : 0,
-    }}
-  >
-    <span className="ee-ring-value">{inView ? progreso : 0}%</span>
-  </div>
-);
+// Tamaño base del anillo en unidades SVG (coincide con el tamaño visual
+// por defecto de 46px). El viewBox usa siempre estas unidades; el tamaño
+// real en pantalla lo sigue controlando el CSS de .ee-ring (con sus
+// media queries), porque el <svg> se escala al 100% del contenedor.
+const RING_SIZE = 46;
+const RING_STROKE = 4;
+const RING_RADIUS = (RING_SIZE - RING_STROKE) / 2;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+
+export const ProgressRing = ({ progreso, inView, color }) => {
+  const value = inView ? progreso : 0;
+  const offset = RING_CIRCUMFERENCE - (value / 100) * RING_CIRCUMFERENCE;
+
+  return (
+    <div className="ee-ring" style={{ "--ee-color": color }}>
+      <svg
+        className="ee-ring-svg"
+        viewBox={`0 0 ${RING_SIZE} ${RING_SIZE}`}
+        width="100%"
+        height="100%"
+      >
+        <circle
+          className="ee-ring-track"
+          cx={RING_SIZE / 2}
+          cy={RING_SIZE / 2}
+          r={RING_RADIUS}
+          fill="none"
+          strokeWidth={RING_STROKE}
+        />
+        <circle
+          className="ee-ring-fill"
+          cx={RING_SIZE / 2}
+          cy={RING_SIZE / 2}
+          r={RING_RADIUS}
+          fill="none"
+          strokeWidth={RING_STROKE}
+          strokeDasharray={RING_CIRCUMFERENCE}
+          strokeDashoffset={offset}
+        />
+      </svg>
+      <span className="ee-ring-value">{value}%</span>
+    </div>
+  );
+};
 
 export const TimelineItem = ({ titulo, sub, fecha, desc, tags = [], estado, index }) => (
   <div
